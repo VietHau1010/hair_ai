@@ -1,0 +1,26 @@
+{
+  "backbone": "efficientnetv2s",
+  "image_size": 300,
+  "class_order": [
+    "Heart",
+    "Oblong",
+    "Oval",
+    "Round",
+    "Square"
+  ],
+  "input": "RGB float32 0–255; không chia 255",
+  "resize": "resize_with_pad, bilinear, round về uint8 rồi float32",
+  "crop": {
+    "crop_version": "v4_mask_m010_single_face",
+    "margin": 0.1,
+    "mask": true,
+    "single_face_only": true,
+    "max_source_side": 1600,
+    "min_source_side": 48,
+    "crop_saved_max_side": 512,
+    "mediapipe_version": "1.0.1"
+  },
+  "tta_flip": true,
+  "threshold_rule": "max_probability >= threshold[predicted_class]",
+  "uncertain_label": "Không chắc chắn"
+}

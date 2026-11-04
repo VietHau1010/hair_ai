@@ -1,0 +1,317 @@
+<style>
+    .nt-tim-kiem,
+    .nt-tim-kiem * {
+        box-sizing: border-box;
+    }
+
+    .nt-tim-kiem {
+        margin: 24px 0;
+        padding: clamp(20px, 3vw, 30px);
+        border: 1px solid #dce5dd;
+        border-radius: 18px;
+        background: #fffdf8;
+        color: #203329;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .nt-tim-kiem .nt-nhan {
+        display: block;
+        margin-bottom: 8px;
+        color: #496852;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        line-height: 1.5;
+        text-transform: uppercase;
+    }
+
+    .nt-tim-kiem .nt-tieu-de {
+        margin: 0;
+        color: #203329;
+        font-size: clamp(21px, 2.5vw, 27px);
+        font-weight: 650;
+        line-height: 1.35;
+        letter-spacing: normal;
+    }
+
+    .nt-tim-kiem .nt-mo-ta {
+        max-width: 650px;
+        margin: 10px 0 22px;
+        color: #68766d;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .nt-tim-kiem .nt-bieu-mau {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 12px;
+        margin: 0;
+    }
+
+    .nt-tim-kiem .nt-truong {
+        min-width: 0;
+    }
+
+    .nt-tim-kiem .nt-nhan-truong {
+        display: block;
+        margin: 0 0 8px;
+        color: #344e3d;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .nt-tim-kiem .nt-o-nhap {
+        display: flex;
+        align-items: center;
+        min-height: 52px;
+        padding-left: 15px;
+        border: 1px solid #cdd9d0;
+        border-radius: 11px;
+        background: #ffffff;
+        transition:
+            border-color 160ms ease,
+            box-shadow 160ms ease;
+    }
+
+    .nt-tim-kiem .nt-o-nhap:hover {
+        border-color: #9fb7a6;
+    }
+
+    .nt-tim-kiem .nt-o-nhap:focus-within {
+        border-color: #24583d;
+        box-shadow: 0 0 0 3px rgba(36, 88, 61, 0.12);
+    }
+
+    .nt-tim-kiem .nt-bieu-tuong {
+        flex: 0 0 20px;
+        width: 20px;
+        height: 20px;
+        color: #738478;
+        pointer-events: none;
+    }
+
+    .nt-tim-kiem .nt-o-nhap input {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        min-height: 50px;
+        margin: 0;
+        padding: 12px;
+        border: 0;
+        border-radius: 11px;
+        outline: none;
+        background: transparent;
+        color: #203329;
+        font: inherit;
+        font-size: 16px;
+        line-height: 1.5;
+        box-shadow: none;
+    }
+
+    .nt-tim-kiem .nt-o-nhap input::placeholder {
+        color: #7a867e;
+        opacity: 1;
+    }
+
+    .nt-tim-kiem .nt-nut-tim {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-width: 148px;
+        min-height: 52px;
+        margin: 0;
+        padding: 13px 22px;
+        border: 1px solid #24583d;
+        border-radius: 11px;
+        background: #24583d;
+        color: #ffffff;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.5;
+        text-align: center;
+        cursor: pointer;
+        touch-action: manipulation;
+        transition:
+            background-color 160ms ease,
+            border-color 160ms ease;
+    }
+
+    .nt-tim-kiem .nt-nut-tim:hover {
+        border-color: #193f2c;
+        background: #193f2c;
+    }
+
+    .nt-tim-kiem .nt-nut-tim svg {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+    }
+
+    .nt-tim-kiem .nt-chan {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        margin-top: 10px;
+    }
+
+    .nt-tim-kiem .nt-goi-y {
+        margin: 0;
+        color: #68766d;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .nt-tim-kiem .nt-xem-tat-ca {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-height: 44px;
+        padding: 8px 0;
+        border-radius: 5px;
+        color: #24583d;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.5;
+        text-decoration: none;
+        text-underline-offset: 4px;
+        touch-action: manipulation;
+    }
+
+    .nt-tim-kiem .nt-xem-tat-ca:hover {
+        text-decoration: underline;
+    }
+
+    .nt-tim-kiem .nt-xem-tat-ca svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .nt-tim-kiem .nt-nut-tim:focus-visible,
+    .nt-tim-kiem .nt-xem-tat-ca:focus-visible {
+        outline: 3px solid #b8882c;
+        outline-offset: 4px;
+    }
+
+    @media (max-width: 560px) {
+        .nt-tim-kiem {
+            margin: 18px 0;
+            border-radius: 14px;
+        }
+
+        .nt-tim-kiem .nt-bieu-mau {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .nt-tim-kiem .nt-nut-tim {
+            width: 100%;
+        }
+
+        .nt-tim-kiem .nt-chan {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 2px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nt-tim-kiem .nt-o-nhap,
+        .nt-tim-kiem .nt-nut-tim {
+            transition: none;
+        }
+    }
+</style>
+
+<section class="nt-tim-kiem"
+         aria-label="Tìm phong cách người nổi tiếng">
+
+   
+
+    <h2 class="nt-tieu-de">
+        Thử tóc người nổi tiếng
+    </h2>
+
+    <p class="nt-mo-ta">
+        Tìm người bạn thích, chọn kiểu tóc và thử trực tiếp trên camera.
+    </p>
+
+    <form class="nt-bieu-mau"
+          action="{% url 'kieu_toc:nguoi_noi_tieng' %}"
+          method="get"
+          role="search"
+          aria-label="Tìm kiểu tóc người nổi tiếng">
+
+        <label class="nt-truong">
+            <span class="nt-nhan-truong">
+                Tên  idol nam của bạn
+            </span>
+
+            <span class="nt-o-nhap">
+                <svg class="nt-bieu-tuong"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     aria-hidden="true"
+                     focusable="false">
+                    <circle cx="10.5" cy="10.5" r="6.5"></circle>
+                    <path d="m16 16 4.5 4.5"></path>
+                </svg>
+
+                <input type="search"
+                       name="q"
+                       maxlength="100"
+                       value="{{ tu_khoa|default:'' }}"
+                       placeholder="Ví dụ: Sơn Tùng…"
+                       enterkeyhint="search">
+            </span>
+        </label>
+
+        <button class="nt-nut-tim" type="submit">
+            <span>Tìm kiểu tóc</span>
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 aria-hidden="true"
+                 focusable="false">
+                <path d="M5 12h14"></path>
+                <path d="m13 6 6 6-6 6"></path>
+            </svg>
+        </button>
+    </form>
+
+    <div class="nt-chan">
+        <p class="nt-goi-y">
+            Có thể nhập tên có dấu hoặc không dấu, ví dụ “son tung”.
+        </p>
+
+        <a class="nt-xem-tat-ca"
+           href="{% url 'kieu_toc:nguoi_noi_tieng' %}">
+            <span>Xem tất cả phong cách</span>
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 aria-hidden="true"
+                 focusable="false">
+                <path d="M7 17 17 7"></path>
+                <path d="M7 7h10v10"></path>
+            </svg>
+        </a>
+    </div>
+</section>

@@ -1,0 +1,198 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+{% load static %}
+
+{% block noi_dung %}
+<link rel="stylesheet"
+      href="{% static 'thu_toc/quan_tri_nguoi_noi_tieng.css' %}">
+
+<div class="dau-muc">
+    <div>
+        <span class="nhan">NGƯỜI NỔI TIẾNG</span>
+        <h1>{{ nguoi.ten }}</h1>
+
+        <p class="phu">
+            {{ trang.paginator.count }} kiểu tóc ·
+            {% if nguoi.hien_thi %}
+                Đang hiển thị
+            {% else %}
+                Đang ẩn
+            {% endif %}
+        </p>
+    </div>
+
+    <a class="nut nut-phu"
+       href="{% url 'admin:nguoi_noi_tieng' %}">
+        ← Danh sách
+    </a>
+</div>
+
+<div class="hang-nut nt-cach">
+    {% if duoc_them %}
+        <a class="nut"
+           href="{% url 'admin:them_toc_cho_nguoi' nguoi.pk %}">
+            + Thêm ảnh để tự tách tóc
+        </a>
+    {% endif %}
+
+    {% if perms.kieu_toc.add_kieutoc %}
+        <a class="nut nut-phu"
+           href="{% url 'admin:them_png_nguoi_noi_tieng' nguoi.pk %}">
+            + Thêm PNG đã tách
+        </a>
+    {% endif %}
+
+    {% if duoc_sua %}
+        <a class="nut nut-phu"
+           href="{% url 'admin:sua_nguoi_noi_tieng' nguoi.pk %}">
+            Sửa thông tin
+        </a>
+    {% endif %}
+
+    {% if perms.kieu_toc.delete_nguoinoitieng and perms.kieu_toc.delete_kieutoc and perms.kieu_toc.delete_tacvutachtoc %}
+        <a class="nut nut-do"
+           href="{% url 'admin:xoa_toan_bo_nguoi_noi_tieng' nguoi.pk %}">
+            Xóa toàn bộ hồ sơ
+        </a>
+    {% endif %}
+</div>
+
+{% if nguoi.ten_khac %}
+    <p class="phu">
+        Tên khác: {{ nguoi.ten_khac|linebreaksbr }}
+    </p>
+{% endif %}
+
+{% if duoc_xem_toc %}
+    <div class="nt-luoi">
+        {% for toc in trang %}
+            <article class="the nt-the">
+                <div class="nt-anh nt-trong-suot">
+                    {% if toc.anh_thu_toc %}
+                        <img src="{{ toc.anh_thu_toc.url }}"
+                             alt="{{ toc.ten }}"
+                             loading="lazy">
+                    {% else %}
+                        <span>Chưa có ảnh tóc</span>
+                    {% endif %}
+                </div>
+
+                <h2>{{ toc.ten }}</h2>
+
+                <p class="phu">
+                    {% if toc.hien_thi %}
+                        Đang hiển thị
+                    {% else %}
+                        Đang ẩn
+                    {% endif %}
+                </p>
+
+                {% if duoc_sua_toc %}
+                    <a class="nut nut-phu"
+                       href="{% url 'admin:sua_toc_nguoi_noi_tieng' nguoi.pk toc.pk %}">
+                        Sửa tóc, PNG và điểm neo
+                    </a>
+                {% endif %}
+
+                {% if perms.kieu_toc.delete_kieutoc %}
+                    <a class="nut nut-do"
+                       href="{% url 'admin:xoa_toc_nguoi_noi_tieng' nguoi.pk toc.pk %}">
+                        Xóa kiểu tóc
+                    </a>
+                {% endif %}
+            </article>
+
+        {% empty %}
+            <div class="trong">
+                <h2>Chưa có kiểu tóc</h2>
+                <p class="phu">
+                    Thêm ảnh để tự tách tóc
+                    hoặc tải PNG đã tách sẵn.
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <nav class="phan-trang" aria-label="Phân trang tóc">
+        {% if trang.has_previous %}
+            <a class="nut nut-phu"
+               href="?trang={{ trang.previous_page_number }}">
+                ← Trước
+            </a>
+        {% endif %}
+
+        <span class="phu">
+            Trang {{ trang.number }} /
+            {{ trang.paginator.num_pages }}
+        </span>
+
+        {% if trang.has_next %}
+            <a class="nut nut-phu"
+               href="?trang={{ trang.next_page_number }}">
+                Sau →
+            </a>
+        {% endif %}
+    </nav>
+{% else %}
+    <p class="phu">
+        Tài khoản chưa có quyền xem kiểu tóc.
+    </p>
+{% endif %}
+
+{% if duoc_xem_tac_vu %}
+    <section class="the nt-cach-tren">
+        <h2>20 tác vụ gần nhất</h2>
+
+        <div class="nt-tac-vu">
+            {% for viec in cac_tac_vu %}
+                <a class="nt-dong"
+                   href="{% url 'admin:ket_qua_tach_toc' viec.pk %}">
+                    <span>
+                        <strong>{{ viec.ten_kieu_toc }}</strong>
+
+                        <small class="phu">
+                            #{{ viec.pk }} ·
+                            {{ viec.ngay_tao|date:'d/m/Y H:i' }}
+                        </small>
+                    </span>
+
+                    <span class="nhan-trang-thai">
+                        {{ viec.get_trang_thai_display }} →
+                    </span>
+                </a>
+            {% empty %}
+                <p class="phu">Chưa có tác vụ.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+{% if duoc_xoa %}
+    <details class="the nt-cach-tren">
+        <summary>Xóa hồ sơ trống</summary>
+
+        <p class="phu">
+            Chỉ xóa được khi chưa có kiểu tóc hoặc tác vụ.
+            Hồ sơ đã có dữ liệu có thể ẩn trong Sửa thông tin.
+        </p>
+
+        <form method="post"
+              action="{% url 'admin:xoa_nguoi_noi_tieng' nguoi.pk %}">
+            {% csrf_token %}
+
+            <label>
+                <input type="checkbox"
+                       name="xac_nhan"
+                       value="dong_y"
+                       required>
+                Tôi xác nhận xóa hồ sơ này.
+            </label>
+
+            <p></p>
+
+            <button class="nut nut-do" type="submit">
+                Xóa hồ sơ
+            </button>
+        </form>
+    </details>
+{% endif %}
+{% endblock %}

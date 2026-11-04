@@ -1,0 +1,651 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+{% load static %}
+
+{% block noi_dung %}
+<style>
+    .tc-form {
+        max-width: 1100px;
+    }
+
+    .tc-form [hidden] {
+        display: none !important;
+    }
+
+    .tc-khoi {
+        padding: 24px;
+        margin-bottom: 20px;
+        border: 1px solid var(--vien);
+        border-radius: 16px;
+        background: var(--giay, #fff);
+    }
+
+    .tc-khoi h2 {
+        margin: 0 0 8px;
+        font-size: 20px;
+    }
+
+    .tc-mo-ta {
+        margin: 0 0 20px;
+        color: var(--phu);
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    .tc-truong {
+        margin-bottom: 20px;
+        min-width: 0;
+    }
+
+    .tc-truong:last-child {
+        margin-bottom: 0;
+    }
+
+    .tc-truong > label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .tc-truong input:not([type="checkbox"]):not([type="radio"]),
+    .tc-truong textarea,
+    .tc-truong select {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .tc-truong input[type="file"] {
+        padding: 12px;
+        border: 1px dashed var(--vien);
+        border-radius: 10px;
+        background: var(--nhat, #edf4ef);
+        font: inherit;
+        font-size: 14px;
+    }
+
+    .tc-truong input[type="file"]::file-selector-button {
+        margin-right: 12px;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--xanh);
+        color: white;
+        cursor: pointer;
+    }
+
+    .tc-luoi {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .tc-o-anh {
+        padding: 18px;
+        border: 1px solid var(--vien);
+        border-radius: 12px;
+        min-width: 0;
+    }
+
+    .tc-o-anh h3 {
+        margin: 0 0 6px;
+        font-size: 17px;
+    }
+
+    .tc-xem {
+        display: grid;
+        place-items: center;
+        height: 240px;
+        margin: 16px 0;
+        padding: 14px;
+        border: 1px solid var(--vien);
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .tc-xem.tc-trong-suot {
+        background-image:
+            conic-gradient(
+                #e8ede9 25%,
+                transparent 0 50%,
+                #e8ede9 0 75%,
+                transparent 0
+            );
+        background-size: 20px 20px;
+    }
+
+    .tc-xem img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        object-fit: contain;
+    }
+
+    .tc-xem span {
+        color: var(--phu);
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .tc-xoa-anh {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px;
+        margin-top: 14px;
+        border: 1px solid #efd1d1;
+        border-radius: 9px;
+        background: #fff6f6;
+        color: #a43838;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .tc-xoa-anh input {
+        width: 19px;
+        height: 19px;
+        flex: 0 0 auto;
+        accent-color: #a43838;
+    }
+
+    .tc-nang-cao > summary {
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 17px;
+    }
+
+    .tc-nang-cao[open] > summary {
+        margin-bottom: 18px;
+    }
+
+    .tc-thao-tac {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 18px 24px;
+        border: 1px solid var(--vien);
+        border-radius: 14px;
+        background: var(--giay, #fff);
+    }
+
+    .tc-thao-tac .nut {
+        min-height: 46px;
+    }
+
+    .tc-thao-tac .tc-xoa-toc {
+        margin-left: auto;
+    }
+
+    .tc-form .errorlist {
+        padding-left: 20px;
+        color: #a43838;
+        font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+        .tc-luoi {
+            grid-template-columns: 1fr;
+        }
+
+        .tc-khoi {
+            padding: 18px;
+        }
+
+        .tc-thao-tac {
+            padding: 16px;
+        }
+
+        .tc-thao-tac .tc-xoa-toc {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<div class="dau-muc">
+    <div>
+        <span class="nhan">
+            {% if la_ho_so %}
+                HỒ SƠ NGƯỜI NỔI TIẾNG
+            {% else %}
+                QUẢN LÝ KIỂU TÓC
+            {% endif %}
+        </span>
+
+        <h1>{{ tieu_de }}</h1>
+
+        <p class="phu">
+            {% if nguoi %}
+                {{ nguoi.ten }} ·
+            {% endif %}
+
+            {% if la_ho_so %}
+                Nhập thông tin để tạo hồ sơ.
+            {% else %}
+                Sửa thông tin, thay ảnh rồi bấm Lưu.
+            {% endif %}
+        </p>
+    </div>
+
+    {% if nguoi %}
+        <a class="nut nut-phu"
+           href="{% url 'admin:chi_tiet_nguoi_noi_tieng' nguoi.pk %}">
+            ← Về hồ sơ
+        </a>
+    {% else %}
+        <a class="nut nut-phu"
+           href="{% url 'admin:nguoi_noi_tieng' %}">
+            ← Danh sách
+        </a>
+    {% endif %}
+</div>
+
+<form method="post"
+      enctype="multipart/form-data"
+      class="tc-form"
+      id="tc_bieu_mau">
+    {% csrf_token %}
+
+    {% for truong in bieu_mau.hidden_fields %}
+        {{ truong }}
+        {{ truong.errors }}
+    {% endfor %}
+
+    {% if bieu_mau.errors %}
+        <div class="thong-bao error" role="alert">
+            <strong>Chưa lưu được thay đổi.</strong>
+            Kiểm tra các mục có thông báo lỗi bên dưới.
+            {{ bieu_mau.non_field_errors }}
+        </div>
+    {% endif %}
+
+    {% if la_ho_so %}
+        <section class="tc-khoi">
+            <h2>Thông tin hồ sơ</h2>
+
+            <p class="tc-mo-ta">
+                Một người có thể có nhiều kiểu tóc.
+                Bạn thêm tóc sau khi tạo hồ sơ.
+            </p>
+
+            {% for truong in bieu_mau.visible_fields %}
+                <div class="tc-truong">
+                    <label for="{{ truong.id_for_label }}">
+                        {{ truong.label }}
+                        {% if truong.field.required %} *{% endif %}
+                    </label>
+
+                    {{ truong }}
+
+                    {% if truong.help_text %}
+                        <div class="giup">{{ truong.help_text }}</div>
+                    {% endif %}
+
+                    {{ truong.errors }}
+                </div>
+            {% endfor %}
+        </section>
+    {% else %}
+        <section class="tc-khoi">
+            <h2>1. Thông tin kiểu tóc</h2>
+
+            <p class="tc-mo-ta">
+                Tên và mô tả hiển thị trong danh mục kiểu tóc.
+            </p>
+
+            <div class="tc-truong">
+                <label for="{{ bieu_mau.ten.id_for_label }}">
+                    Tên kiểu tóc *
+                </label>
+
+                {{ bieu_mau.ten }}
+                {{ bieu_mau.ten.errors }}
+            </div>
+
+            <div class="tc-truong">
+                <label for="{{ bieu_mau.mo_ta.id_for_label }}">
+                    Mô tả *
+                </label>
+
+                {{ bieu_mau.mo_ta }}
+                {{ bieu_mau.mo_ta.errors }}
+            </div>
+        </section>
+
+        <section class="tc-khoi">
+            <h2>2. Hình ảnh</h2>
+
+            <p class="tc-mo-ta">
+                Chọn ảnh mới để thay thế.
+                Không chọn ảnh mới thì giữ ảnh hiện tại.
+                Mỗi ảnh tối đa 8 MB và 20 triệu điểm ảnh.
+            </p>
+
+            <div class="tc-luoi">
+                <div class="tc-o-anh">
+                    <h3>Ảnh giới thiệu</h3>
+
+                    <p class="tc-mo-ta">
+                        Ảnh chân dung hoặc ảnh mẫu dùng trong danh mục.
+                    </p>
+
+                    <div class="tc-xem">
+                        <img id="tc_xem_gioi_thieu"
+                             {% if toc.anh_gioi_thieu %}
+                                 src="{{ toc.anh_gioi_thieu.url }}"
+                             {% else %}
+                                 hidden
+                             {% endif %}
+                             alt="Xem trước ảnh giới thiệu">
+
+                        <span id="tc_trong_gioi_thieu"
+                              {% if toc.anh_gioi_thieu %}hidden{% endif %}>
+                            Chưa có ảnh giới thiệu
+                        </span>
+                    </div>
+
+                    <div class="tc-truong">
+                        <label for="tc_tep_gioi_thieu">
+                            {% if toc.anh_gioi_thieu %}
+                                Thay ảnh giới thiệu
+                            {% else %}
+                                Chọn ảnh giới thiệu *
+                            {% endif %}
+                        </label>
+
+                        <input type="file"
+                               id="tc_tep_gioi_thieu"
+                               name="{{ bieu_mau.anh_gioi_thieu.html_name }}"
+                               accept="image/jpeg,image/png,image/webp"
+                               {% if not toc.anh_gioi_thieu %}required{% endif %}>
+
+                        {{ bieu_mau.anh_gioi_thieu.errors }}
+                    </div>
+                </div>
+
+                <div class="tc-o-anh">
+                    <h3>Ảnh tóc nền trong suốt</h3>
+
+                    <p class="tc-mo-ta">
+                        PNG chỉ chứa tóc, dùng để ghép lên camera.
+                    </p>
+
+                    <div class="tc-xem tc-trong-suot">
+                        <img id="tc_xem_png"
+                             {% if toc.anh_thu_toc %}
+                                 src="{{ toc.anh_thu_toc.url }}"
+                             {% else %}
+                                 hidden
+                             {% endif %}
+                             alt="Xem trước tóc nền trong suốt">
+
+                        <span id="tc_trong_png"
+                              {% if toc.anh_thu_toc %}hidden{% endif %}>
+                            Chưa có PNG để thử tóc
+                        </span>
+                    </div>
+
+                    <div class="tc-truong">
+                        <label for="tc_tep_png">
+                            {% if toc.anh_thu_toc %}
+                                Thay ảnh tóc PNG
+                            {% else %}
+                                Chọn ảnh tóc PNG
+                            {% endif %}
+                        </label>
+
+                        <input type="file"
+                               id="tc_tep_png"
+                               name="{{ bieu_mau.anh_thu_toc.html_name }}"
+                               accept="image/png">
+
+                        {{ bieu_mau.anh_thu_toc.errors }}
+                    </div>
+
+                    {% if toc.anh_thu_toc %}
+                        <label class="tc-xoa-anh">
+                            <input type="checkbox"
+                                   id="tc_xoa_png"
+                                   name="{{ bieu_mau.anh_thu_toc.html_name }}-clear">
+
+                            Xóa PNG hiện tại khi lưu
+                        </label>
+                    {% endif %}
+
+                    <p class="giup">
+                        Xóa PNG chỉ bỏ ảnh ghép tóc.
+                        Tên, ảnh giới thiệu và hồ sơ vẫn được giữ.
+                    </p>
+
+                    <p class="giup"
+                       id="tc_bao_xoa_png"
+                       role="status"
+                       hidden>
+                        PNG sẽ bị xóa sau khi bấm Lưu.
+                        Bỏ chọn ô xóa để giữ lại ảnh.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="tc-khoi">
+            <h2>3. Hiển thị</h2>
+
+            <div class="tc-truong">
+                <label for="{{ bieu_mau.hien_thi.id_for_label }}">
+                    {{ bieu_mau.hien_thi }}
+                    Hiển thị kiểu tóc trên website
+                </label>
+
+                {{ bieu_mau.hien_thi.errors }}
+
+                <p class="giup">
+                    Bỏ chọn để ẩn kiểu tóc mà không xóa dữ liệu.
+                    Tóc chỉ thử được khi có PNG.
+                </p>
+            </div>
+
+            <div class="tc-truong">
+                <label for="{{ bieu_mau.thu_tu.id_for_label }}">
+                    Thứ tự hiển thị
+                </label>
+
+                {{ bieu_mau.thu_tu }}
+                {{ bieu_mau.thu_tu.errors }}
+
+                <p class="giup">Số nhỏ hiển thị trước.</p>
+            </div>
+        </section>
+
+        <details class="tc-khoi tc-nang-cao"
+                 {% if bieu_mau.diem_neo_x.errors or bieu_mau.diem_neo_y.errors or bieu_mau.ti_le_chieu_rong.errors or bieu_mau.do_lech_x.errors or bieu_mau.do_lech_y.errors or bieu_mau.dang_mat_phu_hop.errors %}open{% endif %}>
+            <summary>Nâng cao · Điểm neo và dạng khuôn mặt</summary>
+
+            <p class="tc-mo-ta">
+                Giữ thông số hiện tại nếu tóc đang ghép vừa mặt.
+                Các thông số này điều chỉnh vị trí và kích thước tóc khi thử.
+            </p>
+
+            <div class="tc-luoi">
+                <div class="tc-truong">
+                    <label for="{{ bieu_mau.diem_neo_x.id_for_label }}">
+                        Điểm neo ngang
+                    </label>
+                    {{ bieu_mau.diem_neo_x }}
+                    {{ bieu_mau.diem_neo_x.errors }}
+                    <div class="giup">0 là mép trái, 1 là mép phải.</div>
+                </div>
+
+                <div class="tc-truong">
+                    <label for="{{ bieu_mau.diem_neo_y.id_for_label }}">
+                        Điểm neo dọc
+                    </label>
+                    {{ bieu_mau.diem_neo_y }}
+                    {{ bieu_mau.diem_neo_y.errors }}
+                    <div class="giup">0 là mép trên, 1 là mép dưới.</div>
+                </div>
+
+                <div class="tc-truong">
+                    <label for="{{ bieu_mau.ti_le_chieu_rong.id_for_label }}">
+                        Độ rộng tóc so với mặt
+                    </label>
+                    {{ bieu_mau.ti_le_chieu_rong }}
+                    {{ bieu_mau.ti_le_chieu_rong.errors }}
+                    <div class="giup">
+                        Ví dụ 1,3 tương ứng rộng bằng 1,3 lần mặt.
+                    </div>
+                </div>
+
+                <div class="tc-truong">
+                    <label for="{{ bieu_mau.do_lech_x.id_for_label }}">
+                        Dịch tóc trái / phải
+                    </label>
+                    {{ bieu_mau.do_lech_x }}
+                    {{ bieu_mau.do_lech_x.errors }}
+                    <div class="giup">Âm sang trái, dương sang phải.</div>
+                </div>
+
+                <div class="tc-truong">
+                    <label for="{{ bieu_mau.do_lech_y.id_for_label }}">
+                        Dịch tóc lên / xuống
+                    </label>
+                    {{ bieu_mau.do_lech_y }}
+                    {{ bieu_mau.do_lech_y.errors }}
+                    <div class="giup">Âm lên trên, dương xuống dưới.</div>
+                </div>
+            </div>
+
+            <div class="tc-truong">
+                <label>Dạng khuôn mặt phù hợp</label>
+                {{ bieu_mau.dang_mat_phu_hop }}
+                {{ bieu_mau.dang_mat_phu_hop.errors }}
+                <p class="giup">
+                    Có thể để trống với tóc người nổi tiếng.
+                </p>
+            </div>
+        </details>
+    {% endif %}
+
+     {% if toc and toc.anh_thu_toc %}
+         <a class="nut nut-phu"
+             href="{% url 'admin:can_chinh_toc' toc.pk %}">
+             Căn tóc trực quan
+         </a>
+     {% endif %}
+
+    <div class="tc-thao-tac">
+        <button class="nut" type="submit">
+            {{ nhan_luu|default:"Lưu thay đổi" }}
+        </button>
+
+        {% if nguoi %}
+            <a class="nut nut-phu"
+               href="{% url 'admin:chi_tiet_nguoi_noi_tieng' nguoi.pk %}">
+                Hủy
+            </a>
+        {% else %}
+            <a class="nut nut-phu"
+               href="{% url 'admin:nguoi_noi_tieng' %}">
+                Hủy
+            </a>
+        {% endif %}
+
+        {% if toc and perms.kieu_toc.delete_kieutoc %}
+            <a class="nut nut-do tc-xoa-toc"
+               href="{% url 'admin:xoa_toc_nguoi_noi_tieng' nguoi.pk toc.pk %}">
+                Xóa toàn bộ kiểu tóc
+            </a>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+(() => {
+    const cacDiaChi = new Map();
+
+    const tepPng = document.getElementById("tc_tep_png");
+    const xoaPng = document.getElementById("tc_xoa_png");
+    const baoXoaPng = document.getElementById("tc_bao_xoa_png");
+
+    function xemTruoc(idTep, idAnh, idTrong) {
+        const tep = document.getElementById(idTep);
+        const anh = document.getElementById(idAnh);
+        const trong = document.getElementById(idTrong);
+
+        if (!tep || !anh || !trong) return;
+
+        const anhCu = anh.getAttribute("src");
+
+        tep.addEventListener("change", () => {
+            const diaChiCu = cacDiaChi.get(idTep);
+
+            if (diaChiCu) {
+                URL.revokeObjectURL(diaChiCu);
+                cacDiaChi.delete(idTep);
+            }
+
+            const chon = tep.files?.[0];
+
+            if (!chon) {
+                if (anhCu) {
+                    anh.src = anhCu;
+                } else {
+                    anh.removeAttribute("src");
+                }
+
+                anh.hidden = !anhCu;
+                trong.hidden = Boolean(anhCu);
+                return;
+            }
+
+            if (idTep === "tc_tep_png" && xoaPng) {
+                xoaPng.checked = false;
+
+                if (baoXoaPng) {
+                    baoXoaPng.hidden = true;
+                }
+            }
+
+            const diaChi = URL.createObjectURL(chon);
+
+            cacDiaChi.set(idTep, diaChi);
+
+            anh.src = diaChi;
+            anh.hidden = false;
+            trong.hidden = true;
+        });
+    }
+
+    xemTruoc(
+        "tc_tep_gioi_thieu",
+        "tc_xem_gioi_thieu",
+        "tc_trong_gioi_thieu"
+    );
+
+    xemTruoc(
+        "tc_tep_png",
+        "tc_xem_png",
+        "tc_trong_png"
+    );
+
+    xoaPng?.addEventListener("change", () => {
+        if (baoXoaPng) {
+            baoXoaPng.hidden = !xoaPng.checked;
+        }
+
+        if (xoaPng.checked && tepPng) {
+            tepPng.value = "";
+            tepPng.dispatchEvent(new Event("change"));
+        }
+    });
+
+    window.addEventListener("pagehide", () => {
+        for (const diaChi of cacDiaChi.values()) {
+            URL.revokeObjectURL(diaChi);
+        }
+
+        cacDiaChi.clear();
+    });
+})();
+</script>
+{% endblock %}

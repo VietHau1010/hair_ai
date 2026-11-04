@@ -1,0 +1,1965 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phòng thử tóc — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            --nen: #f7f5ef;
+            --giay: #fffdf8;
+            --chu: #202720;
+            --phu: #64695f;
+            --xanh: #284d39;
+            --vien: #dedfd4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        body {
+            margin: 0;
+            background: var(--nen);
+            color: var(--chu);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #b8882c;
+            outline-offset: 4px;
+        }
+
+        header {
+            background: var(--giay);
+            border-bottom: 1px solid var(--vien);
+        }
+
+        .thanh {
+            max-width: 1320px;
+            margin: auto;
+            padding: 23px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .thuong-hieu {
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-size: 21px;
+            color: var(--xanh);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1320px;
+            margin: auto;
+            padding: 34px 24px 55px;
+        }
+
+        h1 {
+            font: 400 clamp(32px, 4vw, 46px) Georgia, serif;
+            margin: 0 0 13px;
+        }
+
+        p {
+            line-height: 1.7;
+        }
+
+        .mo-ta {
+            color: var(--phu);
+            max-width: 780px;
+            margin: 0 0 26px;
+        }
+
+        .bo-cuc {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 310px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .hai-khung {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .the {
+            border: 1px solid var(--vien);
+            background: var(--giay);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .dau-the {
+            padding: 15px 17px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dau-the h2 {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .nhan {
+            font-size: 11px;
+            color: var(--phu);
+            padding: 5px 8px;
+            background: #eeeee4;
+            border-radius: 5px;
+        }
+
+        .vung-camera {
+            aspect-ratio: 4 / 3;
+            position: relative;
+            background: #17251d;
+            overflow: hidden;
+        }
+
+        video,
+        .hinh-camera {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            transform: scaleX(-1);
+        }
+
+        .lop-huong-dan {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .cho {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: #dce6d8;
+            font-size: 14px;
+            text-align: center;
+            padding: 25px;
+            pointer-events: none;
+        }
+
+        .chan-camera {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--phu);
+            line-height: 1.6;
+        }
+
+        .nut {
+            padding: 12px 17px;
+            border: 1px solid var(--xanh);
+            border-radius: 8px;
+            background: var(--xanh);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nut-phu {
+            background: white;
+            color: var(--xanh);
+            border-color: #c6ccbf;
+        }
+
+        .cac-nut {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .thong-bao {
+            padding: 15px 18px;
+            border-radius: 10px;
+            background: #e8eee1;
+            color: var(--xanh);
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 54px;
+        }
+
+        .thong-bao.loi {
+            background: #f9e9e4;
+            color: #993b32;
+        }
+
+        .huong-dan {
+            padding: 22px;
+        }
+
+        .huong-dan h2 {
+            font: 400 24px Georgia, serif;
+            margin: 0 0 9px;
+        }
+
+        .huong-dan > p {
+            font-size: 13px;
+            color: var(--phu);
+            margin-top: 0;
+        }
+
+        .cac-buoc {
+            list-style: none;
+            padding: 0;
+            margin: 22px 0;
+        }
+
+        .buoc {
+            display: flex;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--vien);
+            align-items: center;
+        }
+
+        .so {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #c6ccbf;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .buoc strong {
+            font-size: 14px;
+            display: block;
+        }
+
+        .buoc small {
+            color: var(--phu);
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .buoc.dang-chay .so {
+            background: var(--xanh);
+            color: white;
+            border-color: var(--xanh);
+        }
+
+        .buoc.xong .so {
+            background: #dce9d3;
+            border-color: #b4c8a7;
+        }
+
+        .tien-do {
+            width: 100%;
+            accent-color: var(--xanh);
+            height: 9px;
+        }
+
+        .thong-so {
+            margin-top: 20px;
+            border-top: 1px solid var(--vien);
+            padding-top: 14px;
+            font-size: 12px;
+            color: var(--phu);
+        }
+
+        .thong-so p {
+            margin: 6px 0;
+        }
+
+        .ghi-chu {
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--phu);
+        }
+
+        .ket-qua {
+            margin-top: 28px;
+            padding: 25px;
+        }
+
+        .ket-qua h2 {
+            font: 400 28px Georgia, serif;
+            margin: 0 0 18px;
+        }
+
+        .ket-qua h3 {
+            font-size: 17px;
+        }
+
+        .nhan-ket-qua {
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--xanh);
+            margin: 0;
+        }
+
+        .xac-suat {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .xac-suat > div {
+            padding: 13px;
+            background: #eff1e7;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .xac-suat progress {
+            width: 100%;
+            accent-color: var(--xanh);
+        }
+
+        .goi-y {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+        }
+
+        .toc {
+            border: 1px solid var(--vien);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .toc img {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+            background: #eef0e6;
+        }
+
+        .toc p {
+            font-size: 13px;
+            color: var(--phu);
+            overflow-wrap: anywhere;
+        }
+
+        .toc h4 {
+            margin: 14px 0 8px;
+        }
+
+        .anh-da-quet {
+            max-width: 180px;
+            border-radius: 8px;
+            display: block;
+            margin: 15px 0;
+            transform: scaleX(-1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 23px;
+            border-top: 1px solid var(--vien);
+            font-size: 12px;
+            color: var(--phu);
+        }
+
+        @media (max-width: 1050px) {
+            .bo-cuc {
+                grid-template-columns: 1fr;
+            }
+
+            .cac-buoc {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+            }
+
+            .buoc {
+                border-bottom: 0;
+                align-items: start;
+            }
+
+            .huong-dan {
+                padding: 20px;
+            }
+
+            .thong-so {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px 25px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            main {
+                padding: 26px 16px;
+            }
+
+            .thanh {
+                padding: 20px 16px;
+            }
+
+            nav {
+                gap: 14px;
+                font-size: 12px;
+            }
+
+            .hai-khung {
+                grid-template-columns: 1fr;
+            }
+
+            .cac-buoc,
+            .xac-suat {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .dau-the {
+                padding: 13px;
+            }
+
+            .cac-nut .nut {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="thanh">
+        <a class="thuong-hieu"
+           href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav aria-label="Điều hướng">
+            <a href="{% url 'thu_toc:trang_chu' %}">Trang chủ</a>
+            <a href="{% url 'kieu_toc:danh_sach' %}">Khám phá kiểu tóc</a>
+            <a href="{% url 'tai_khoan:thong_tin' %}">Tài khoản của tôi</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1>Một góc nhìn mới cho bạn</h1>
+
+    <p class="mo-ta">
+        Đặt camera ngang tầm mắt. Quét qua bốn bước ngắn,
+        quay đầu nhẹ theo hướng dẫn. Ảnh chính diện rõ nhất
+        ở cuối lượt quét sẽ được gửi để phân tích.
+    </p>
+
+    <div class="bo-cuc">
+        <div>
+            <section class="hai-khung" aria-label="Camera so sánh">
+                <article class="the">
+                    <div class="dau-the">
+                        <h2>Hình ảnh thật</h2>
+                        <span class="nhan">Camera mặc định</span>
+                    </div>
+
+                    <div class="vung-camera" id="vung_goc">
+                        <video id="video_goc" autoplay muted playsinline></video>
+
+                        <canvas id="huong_dan"
+                                class="lop-huong-dan"></canvas>
+
+                        <div class="cho">
+                            Bấm “Bật camera” để bắt đầu
+                        </div>
+                    </div>
+
+                    <div class="chan-camera">
+                        Khung đỏ: cần điều chỉnh ·
+                        Khung xanh: đạt điều kiện của bước hiện tại.
+                    </div>
+                </article>
+
+                <article class="the">
+                    <div class="dau-the">
+                        <h2>Hình ảnh thử tóc</h2>
+                        <span class="nhan">Chưa ghép tóc</span>
+                    </div>
+
+                    <div class="vung-camera">
+                        <canvas id="khung_thu_toc"
+                                class="hinh-camera"></canvas>
+
+                        <div class="cho">
+                            Hình ảnh sẽ đồng bộ với camera bên trái
+                        </div>
+                    </div>
+
+                    <div class="chan-camera">
+                        Hiệu ứng tóc sẽ được bổ sung sau.
+                        Hiện tại đây là hình camera gốc.
+                    </div>
+                </article>
+            </section>
+
+            <div class="cac-nut">
+                <button class="nut" id="nut_bat" type="button">
+                    Bật camera
+                </button>
+
+                <button class="nut" id="nut_quet" type="button" disabled>
+                    Bắt đầu quét 4 bước
+                </button>
+
+                <button class="nut nut-phu" id="nut_huy" type="button" disabled>
+                    Hủy quét
+                </button>
+
+                <button class="nut nut-phu" id="nut_tat" type="button" disabled>
+                    Tắt camera
+                </button>
+            </div>
+
+            <div id="thong_bao"
+                 class="thong-bao"
+                 role="status"
+                 aria-live="polite">
+                Camera chưa bật. Bấm “Bật camera” để bắt đầu.
+            </div>
+
+            <p class="ghi-chu">
+                Ở bước cuối, dùng mũi vẽ một vòng nhỏ trên màn hình.
+                Giữ vai yên, chuyển động nhẹ và dừng nếu thấy khó chịu.
+                Khoảng cách được kiểm tra theo kích thước mặt,
+                không đo bằng centimet.
+            </p>
+        </div>
+
+        <aside class="the huong-dan">
+            <h2>Quét trong 4 bước</h2>
+
+            <p id="chi_dan">
+                Chọn nơi đủ sáng, chỉ một người trong khung hình.
+            </p>
+
+            <ol class="cac-buoc">
+                <li class="buoc">
+                    <span class="so">1</span>
+                    <div>
+                        <strong>Nhìn thẳng</strong>
+                        <small>Giữ yên để lấy tư thế chuẩn</small>
+                    </div>
+                </li>
+
+                <li class="buoc">
+                    <span class="so">2</span>
+                    <div>
+                        <strong>Quay sang một bên</strong>
+                        <small>Mũi sang phải trên màn hình →</small>
+                    </div>
+                </li>
+
+                <li class="buoc">
+                    <span class="so">3</span>
+                    <div>
+                        <strong>Quay sang bên còn lại</strong>
+                        <small>Mũi sang trái trên màn hình ←</small>
+                    </div>
+                </li>
+
+                <li class="buoc">
+                    <span class="so">4</span>
+                    <div>
+                        <strong>Vẽ một vòng nhỏ</strong>
+                        <small>Phải → xuống → trái → lên → phải</small>
+                    </div>
+                </li>
+            </ol>
+
+            <progress class="tien-do"
+                      id="tien_do"
+                      max="100"
+                      value="0"
+                      aria-label="Tiến độ quét"></progress>
+
+            <div class="thong-so">
+                <p id="khoang_cach">Kích thước mặt: —</p>
+                <p id="anh_sang">Ánh sáng: —</p>
+                <p id="do_net">Độ nét: —</p>
+                <p id="tu_the">Tư thế: —</p>
+            </div>
+        </aside>
+    </div>
+
+    <form id="bao_ve_quet" hidden>
+        {% csrf_token %}
+    </form>
+
+    <section class="the ket-qua" id="ket_qua" hidden>
+        <h2>Kết quả phân tích</h2>
+
+        <p id="nhan_ket_qua" class="nhan-ket-qua"></p>
+        <p id="tin_cay"></p>
+        <p id="ghi_chu_ket_qua" class="ghi-chu"></p>
+
+        <img id="anh_da_quet"
+             class="anh-da-quet"
+             alt="Ảnh chính diện đã gửi để phân tích">
+
+        <h3>Xác suất các dạng mặt</h3>
+        <div id="xac_suat" class="xac-suat"></div>
+
+        <h3>Kiểu tóc được gợi ý</h3>
+        <div id="goi_y" class="goi-y"></div>
+    </section>
+</main>
+
+<footer>
+    HAULONGHAIR — Tóc bạn xấu để tôi lo
+</footer>
+
+<script type="module">
+    const $ = id => document.getElementById(id);
+
+    const video = $("video_goc");
+    const hinh = $("khung_thu_toc");
+    const but = hinh.getContext("2d");
+
+    const lop = $("huong_dan");
+    const ve = lop.getContext("2d");
+
+    const doAnh = document.createElement("canvas");
+    doAnh.width = 160;
+    doAnh.height = 200;
+
+    const doBut = doAnh.getContext("2d", {
+        willReadFrequently: true
+    });
+
+    const CAU_HINH = {
+        caoMin: .42,
+        caoMax: .72,
+        tamX: .12,
+        tamY: .14,
+        rollMax: 12,
+        sangMin: 45,
+        sangMax: 220,
+        netMin: 25,
+        giu: 1200,
+        soMau: 8,
+        timeout: 150000,
+        nhanDienMoi: 100,
+        khoangMatToiDa: 250
+    };
+
+    const TEN = {
+        Heart: "Mặt trái tim",
+        Oblong: "Mặt dài",
+        Oval: "Mặt trái xoan",
+        Round: "Mặt tròn",
+        Square: "Mặt vuông"
+    };
+
+    const OVAL = [
+        10, 338, 297, 332, 284, 251, 389, 356, 454,
+        323, 361, 288, 397, 365, 379, 378, 400, 377,
+        152, 148, 176, 149, 150, 136, 172, 58, 132,
+        93, 234, 127, 162, 21, 54, 103, 67, 109
+    ];
+
+    let luong = null;
+    let worker = null;
+    let sanSang = false;
+    let choWorker = false;
+    let phien = 0;
+    let maVe = null;
+    let cuoiDo = 0;
+    let cuoiVideo = -1;
+    let ketQuaDo = null;
+    let luot = null;
+    let dangGui = false;
+    let yeuCau = null;
+    let urlAnh = null;
+
+    let giuTu = null;
+    let mauGiu = [];
+    let truocDo = null;
+    let mocCuoi = 0;
+    let dangMo = false;
+
+    function thongBao(chu, loi = false) {
+        $("thong_bao").textContent = chu;
+        $("thong_bao").classList.toggle("loi", loi);
+    }
+
+    function nut() {
+        $("nut_bat").disabled = !!luong || dangMo || dangGui;
+        $("nut_tat").disabled = !luong && !dangMo;
+        $("nut_quet").disabled =
+            !luong || !sanSang || !!luot || dangGui;
+        $("nut_huy").disabled = !luot && !dangGui;
+    }
+
+    function resetGiu() {
+        giuTu = null;
+        mauGiu = [];
+        truocDo = null;
+
+        if (luot?.buoc === 3 && luot.veGiua) {
+            luot.anh = null;
+            luot.diemAnh = -1;
+        }
+    }
+
+    function danhDau() {
+        document.querySelectorAll(".buoc").forEach((e, i) => {
+            e.classList.toggle(
+                "dang-chay",
+                !!luot && luot.buoc === i
+            );
+
+            e.classList.toggle(
+                "xong",
+                !!luot && luot.buoc > i
+            );
+        });
+    }
+
+    function huy(bao = true) {
+        luot = null;
+        resetGiu();
+
+        if (yeuCau) {
+            yeuCau.abort();
+        }
+
+        $("tien_do").value = 0;
+        danhDau();
+        nut();
+
+        if (bao) {
+            thongBao("Đã hủy lượt quét. Bấm bắt đầu để quét lại.");
+        }
+    }
+
+    function tat(bao = true) {
+        phien++;
+        dangMo = false;
+        huy(false);
+
+        if (maVe !== null) {
+            cancelAnimationFrame(maVe);
+        }
+
+        maVe = null;
+
+        if (luong) {
+            luong.getTracks().forEach(t => t.stop());
+        }
+
+        luong = null;
+        video.srcObject = null;
+
+        if (worker) {
+            worker.terminate();
+        }
+
+        worker = null;
+        sanSang = false;
+        choWorker = false;
+        ketQuaDo = null;
+
+        but.clearRect(0, 0, hinh.width, hinh.height);
+        ve.clearRect(0, 0, lop.width, lop.height);
+
+        document.querySelectorAll(".cho").forEach(e => {
+            e.hidden = false;
+        });
+
+        nut();
+
+        if (bao) {
+            thongBao("Camera đã tắt.");
+        }
+    }
+
+    // Theo dõi mặt chạy ở luồng riêng để giao diện camera dễ đáp ứng hơn.
+    const MA_WORKER = `
+        let detector = null;
+
+        self.onmessage = async e => {
+            const p = e.data;
+
+            if (p.loai === "khoi_tao") {
+                try {
+                    const {
+                        FaceLandmarker,
+                        FilesetResolver
+                    } = await import(p.thuVien);
+
+                    const fs = await FilesetResolver.forVisionTasks(p.wasm);
+
+                    const options = {
+                        baseOptions: {
+                            modelAssetPath: p.model,
+                            delegate: "GPU"
+                        },
+                        runningMode: "VIDEO",
+                        numFaces: 2,
+                        minFaceDetectionConfidence: .6,
+                        minFacePresenceConfidence: .6,
+                        minTrackingConfidence: .6,
+                        outputFaceBlendshapes: true
+                    };
+
+                    try {
+                        detector = await FaceLandmarker.createFromOptions(
+                            fs,
+                            options
+                        );
+                    } catch (_) {
+                        options.baseOptions.delegate = "CPU";
+
+                        detector = await FaceLandmarker.createFromOptions(
+                            fs,
+                            options
+                        );
+                    }
+
+                    self.postMessage({
+                        loai: "san_sang"
+                    });
+
+                } catch (loi) {
+                    console.error("Lỗi khởi tạo MediaPipe:", loi);
+
+                    self.postMessage({
+                        loai: "loi",
+                        chu: "Không tải được bộ theo dõi mặt. Kiểm tra tài nguyên MediaPipe rồi tải lại trang."
+                    });
+                }
+
+            } else if (p.loai === "anh") {
+                try {
+                    const r = detector.detectForVideo(
+                        p.anh,
+                        p.thoiGian
+                    );
+
+                    self.postMessage({
+                        loai: "ket_qua",
+                        thoiGian: p.thoiGian,
+                        mat: r.faceLandmarks,
+                        bieuCam: r.faceBlendshapes.map(x =>
+                            x.categories.map(c => ({
+                                ten: c.categoryName,
+                                diem: c.score
+                            }))
+                        )
+                    });
+
+                } catch (loi) {
+                    console.error("Lỗi theo dõi mặt:", loi);
+
+                    self.postMessage({
+                        loai: "loi",
+                        chu: "Bộ theo dõi mặt gặp lỗi. Tắt và bật lại camera."
+                    });
+
+                } finally {
+                    p.anh.close();
+                }
+            }
+        };
+    `;
+
+    function taoWorker() {
+        const blob = new Blob([MA_WORKER], {
+            type: "text/javascript"
+        });
+
+        const url = URL.createObjectURL(blob);
+        worker = new Worker(url);
+        URL.revokeObjectURL(url);
+
+        worker.onmessage = e => {
+            const p = e.data;
+
+            if (p.loai === "san_sang") {
+                sanSang = true;
+
+                thongBao(
+                    "Camera sẵn sàng. Bấm “Bắt đầu quét 4 bước”."
+                );
+
+                nut();
+
+            } else if (p.loai === "ket_qua") {
+                choWorker = false;
+                xuLy(p);
+
+            } else {
+                choWorker = false;
+                sanSang = false;
+                huy(false);
+                thongBao(p.chu, true);
+                nut();
+            }
+        };
+
+        worker.onerror = e => {
+            console.error("Lỗi luồng theo dõi:", e);
+            choWorker = false;
+            sanSang = false;
+            huy(false);
+
+            thongBao(
+                "Không khởi động được bộ theo dõi mặt. Kiểm tra tài nguyên rồi tải lại trang.",
+                true
+            );
+
+            nut();
+        };
+
+        worker.postMessage({
+            loai: "khoi_tao",
+
+            thuVien: new URL(
+                "{% static 'thu_toc/mediapipe/vision_bundle.js' %}",
+                location.href
+            ).href,
+
+            wasm: new URL(
+                "{% static 'thu_toc/mediapipe/wasm/' %}",
+                location.href
+            ).href,
+
+            model: new URL(
+                "{% static 'thu_toc/mediapipe/face_landmarker.task' %}",
+                location.href
+            ).href
+        });
+    }
+
+    async function bat() {
+        if (luong || dangMo || dangGui) {
+            return;
+        }
+
+        dangMo = true;
+        const id = ++phien;
+
+        nut();
+        thongBao("Cho phép trình duyệt sử dụng camera…");
+
+        try {
+            if (!navigator.mediaDevices?.getUserMedia) {
+                throw Error("khong_ho_tro");
+            }
+
+            // Dùng camera mặc định của trình duyệt.
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: false
+            });
+
+            if (id !== phien) {
+                stream.getTracks().forEach(t => t.stop());
+                return;
+            }
+
+            luong = stream;
+            video.srcObject = stream;
+
+            await video.play();
+
+            if (id !== phien) {
+                return;
+            }
+
+            dangMo = false;
+            cuoiVideo = -1;
+            cuoiDo = 0;
+            ketQuaDo = null;
+
+            document.querySelectorAll(".cho").forEach(e => {
+                e.hidden = true;
+            });
+
+            stream.getVideoTracks().forEach(t => {
+                t.addEventListener("ended", () => {
+                    if (id === phien) {
+                        tat(false);
+
+                        thongBao(
+                            "Camera mất kết nối. Hãy bật lại.",
+                            true
+                        );
+                    }
+                });
+            });
+
+            thongBao("Đang nạp bộ theo dõi khuôn mặt…");
+            taoWorker();
+            nut();
+            vongVe();
+
+        } catch (e) {
+            if (id !== phien) {
+                return;
+            }
+
+            tat(false);
+
+            const cacLoi = {
+                NotAllowedError:
+                    "Chưa được cấp quyền camera. Kiểm tra quyền trong trình duyệt.",
+
+                NotFoundError:
+                    "Không tìm thấy camera.",
+
+                NotReadableError:
+                    "Camera đang bận hoặc không mở được. Đóng ứng dụng khác rồi thử lại."
+            };
+
+            thongBao(
+                cacLoi[e.name] ||
+                (
+                    e.message === "khong_ho_tro"
+                    ? "Mở trang bằng localhost hoặc HTTPS để dùng camera."
+                    : "Không mở được camera."
+                ),
+                true
+            );
+        }
+    }
+
+    function vongVe() {
+        if (!luong) {
+            return;
+        }
+
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+        const t = performance.now();
+
+        if (w && h) {
+            if (hinh.width !== w || hinh.height !== h) {
+                hinh.width = w;
+                hinh.height = h;
+            }
+
+            but.drawImage(video, 0, 0, w, h);
+            veHuongDan();
+
+            if (
+                sanSang &&
+                !choWorker &&
+                t - cuoiDo >= CAU_HINH.nhanDienMoi &&
+                cuoiVideo !== video.currentTime
+            ) {
+                cuoiDo = t;
+                cuoiVideo = video.currentTime;
+                choWorker = true;
+
+                const id = phien;
+
+                createImageBitmap(video, {
+                    resizeWidth: 640,
+                    resizeHeight: Math.round(640 * h / w)
+                }).then(anh => {
+                    if (id !== phien || !worker) {
+                        anh.close();
+                        return;
+                    }
+
+                    worker.postMessage({
+                        loai: "anh",
+                        anh,
+                        thoiGian: t
+                    }, [anh]);
+
+                }).catch(() => {
+                    if (id === phien) {
+                        choWorker = false;
+                    }
+                });
+            }
+        }
+
+        if (luot && t - luot.batDau > CAU_HINH.timeout) {
+            huy(false);
+
+            thongBao(
+                "Lượt quét quá lâu. Nghỉ một chút rồi bắt đầu lại.",
+                true
+            );
+        }
+
+        maVe = requestAnimationFrame(vongVe);
+    }
+
+    function doChatLuong(box) {
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+
+        doBut.drawImage(
+            video,
+            box.x * w,
+            box.y * h,
+            box.w * w,
+            box.h * h,
+            0, 0, 160, 200
+        );
+
+        const d = doBut.getImageData(0, 0, 160, 200).data;
+        const g = new Float32Array(32000);
+
+        let sum = 0;
+        let dark = 0;
+        let light = 0;
+
+        for (let i = 0; i < g.length; i++) {
+            const v =
+                .299 * d[i * 4] +
+                .587 * d[i * 4 + 1] +
+                .114 * d[i * 4 + 2];
+
+            g[i] = v;
+            sum += v;
+
+            if (v < 20) {
+                dark++;
+            }
+
+            if (v > 245) {
+                light++;
+            }
+        }
+
+        let s = 0;
+        let s2 = 0;
+        let n = 0;
+
+        for (let y = 1; y < 199; y++) {
+            for (let x = 1; x < 159; x++) {
+                const i = y * 160 + x;
+
+                const v =
+                    g[i - 1] +
+                    g[i + 1] +
+                    g[i - 160] +
+                    g[i + 160] -
+                    4 * g[i];
+
+                s += v;
+                s2 += v * v;
+                n++;
+            }
+        }
+
+        return {
+            sang: sum / g.length,
+            net: s2 / n - (s / n) ** 2,
+            toiden: dark / g.length,
+            trang: light / g.length
+        };
+    }
+
+    function doMat(p) {
+        if (p.mat.length !== 1) {
+            return {
+                ok: false,
+                lyDo: p.mat.length
+                    ? "Chỉ để một người trong khung hình."
+                    : "Đưa khuôn mặt vào giữa khung hướng dẫn."
+            };
+        }
+
+        const pts = p.mat[0];
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+
+        const ov = OVAL.map(i => pts[i]);
+
+        const x = Math.min(...ov.map(a => a.x));
+        const y = Math.min(...ov.map(a => a.y));
+        const x1 = Math.max(...ov.map(a => a.x));
+        const y1 = Math.max(...ov.map(a => a.y));
+
+        const box = {
+            x,
+            y,
+            w: x1 - x,
+            h: y1 - y
+        };
+
+        let a = pts[33];
+        let b = pts[263];
+
+        if (a.x > b.x) {
+            [a, b] = [b, a];
+        }
+
+        const dx = (b.x - a.x) * w;
+        const dy = (b.y - a.y) * h;
+        const ed = Math.hypot(dx, dy);
+
+        if (ed < 1) {
+            return {
+                ok: false,
+                lyDo: "Chưa đọc được vị trí mắt."
+            };
+        }
+
+        const nx = (pts[1].x - (a.x + b.x) / 2) * w;
+        const ny = (pts[1].y - (a.y + b.y) / 2) * h;
+
+        // Chỉ số tư thế tương đối, không phải số độ quay đầu thật.
+        const yaw = (nx * dx + ny * dy) / (ed * ed);
+        const pitch = (-nx * dy + ny * dx) / (ed * ed);
+        const roll = Math.atan2(dy, dx) * 180 / Math.PI;
+
+        const q = doChatLuong(box);
+        const cats = p.bieuCam[0] || [];
+
+        const score = name =>
+            cats.find(c => c.ten === name)?.diem || 0;
+
+        const m = {
+            box,
+            cx: x + box.w / 2,
+            cy: y + box.h / 2,
+            yaw,
+            pitch,
+            roll,
+            ...q,
+
+            nhamMat:
+                Math.max(
+                    score("eyeBlinkLeft"),
+                    score("eyeBlinkRight")
+                ) > .65,
+
+            haMieng: score("jawOpen") > .3,
+
+            ok: true,
+            lyDo: ""
+        };
+
+        if (x < .025 || y < .025 || x1 > .975 || y1 > .975) {
+            m.ok = false;
+            m.lyDo = "Giữ toàn bộ khuôn mặt trong khung hình.";
+
+        } else if (box.h < CAU_HINH.caoMin) {
+            m.ok = false;
+            m.lyDo = "Tiến gần camera một chút.";
+
+        } else if (box.h > CAU_HINH.caoMax) {
+            m.ok = false;
+            m.lyDo = "Lùi xa camera một chút.";
+
+        } else if (
+            Math.abs(m.cx - .5) > CAU_HINH.tamX ||
+            Math.abs(m.cy - .5) > CAU_HINH.tamY
+        ) {
+            m.ok = false;
+            m.lyDo = "Đưa mặt về giữa khung, camera ngang tầm mắt.";
+
+        } else if (Math.abs(roll) > CAU_HINH.rollMax) {
+            m.ok = false;
+            m.lyDo = "Giữ đầu bớt nghiêng sang vai.";
+
+        } else if (
+            q.sang < CAU_HINH.sangMin ||
+            q.toiden > .35
+        ) {
+            m.ok = false;
+            m.lyDo = "Mặt đang tối. Thêm ánh sáng phía trước.";
+
+        } else if (
+            q.sang > CAU_HINH.sangMax ||
+            q.trang > .25
+        ) {
+            m.ok = false;
+            m.lyDo = "Ánh sáng quá gắt. Tránh đèn chiếu trực tiếp hoặc ngược sáng.";
+
+        } else if (q.net < CAU_HINH.netMin) {
+            m.ok = false;
+            m.lyDo = "Ảnh chưa đủ nét. Lau camera và chuyển động chậm hơn.";
+
+        } else if (m.nhamMat) {
+            m.ok = false;
+            m.lyDo = "Mở mắt tự nhiên.";
+
+        } else if (m.haMieng) {
+            m.ok = false;
+            m.lyDo = "Khép miệng tự nhiên, không nói khi quét.";
+        }
+
+        return m;
+    }
+
+    function anhHienTai() {
+        const c = document.createElement("canvas");
+
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+        const k = Math.min(1, 1280 / Math.max(w, h));
+
+        c.width = Math.round(w * k);
+        c.height = Math.round(h * k);
+
+        // Ảnh gửi AI giữ chiều gốc, không lật như màn hình gương.
+        c.getContext("2d").drawImage(
+            video,
+            0, 0,
+            c.width,
+            c.height
+        );
+
+        return c;
+    }
+
+    function datMau(m, t) {
+        if (
+            mocCuoi &&
+            t - mocCuoi > CAU_HINH.khoangMatToiDa
+        ) {
+            resetGiu();
+        }
+
+        mocCuoi = t;
+
+        const on = !truocDo || (
+            Math.abs(m.yaw - truocDo.yaw) < .045 &&
+            Math.abs(m.pitch - truocDo.pitch) < .045 &&
+            Math.abs(m.cx - truocDo.cx) < .025 &&
+            Math.abs(m.cy - truocDo.cy) < .025 &&
+            Math.abs(m.box.h - truocDo.box.h) < .035
+        );
+
+        if (!on) {
+            resetGiu();
+        }
+
+        truocDo = m;
+
+        if (giuTu === null) {
+            giuTu = t;
+        }
+
+        mauGiu.push(m);
+
+        return (
+            t - giuTu >= CAU_HINH.giu &&
+            mauGiu.length >= CAU_HINH.soMau
+        );
+    }
+
+    function trungVi(a) {
+        const b = [...a].sort((x, y) => x - y);
+        return b[Math.floor(b.length / 2)];
+    }
+
+    function dungChinhDien(m, b) {
+        return (
+            Math.abs(m.yaw - b.yaw) <= .07 &&
+            Math.abs(m.pitch - b.pitch) <= .09
+        );
+    }
+
+    function batDau() {
+        if (!luong || !sanSang || dangGui) {
+            return;
+        }
+
+        luot = {
+            buoc: 0,
+            batDau: performance.now(),
+            baseline: null,
+            ben: -1,
+            cung: 0,
+            giuCung: null,
+            veGiua: false,
+            anh: null,
+            diemAnh: -1
+        };
+
+        resetGiu();
+        mocCuoi = 0;
+
+        $("ket_qua").hidden = true;
+        $("tien_do").value = 0;
+
+        danhDau();
+        nut();
+
+        thongBao("Bước 1: nhìn thẳng, mở mắt và giữ yên.");
+    }
+
+    function xuLy(p) {
+        if (!luong) {
+            return;
+        }
+
+        const t = p.thoiGian;
+
+        if (performance.now() - t > 600) {
+            ketQuaDo = null;
+            resetGiu();
+            return;
+        }
+
+        const m = doMat(p);
+        m.thoiGian = t;
+        ketQuaDo = m;
+
+        $("khoang_cach").textContent = m.box
+            ? "Kích thước mặt: " + Math.round(m.box.h * 100) + "% chiều cao ảnh"
+            : "Kích thước mặt: —";
+
+        $("anh_sang").textContent = m.box
+            ? "Ánh sáng: " + Math.round(m.sang) + "/255"
+            : "Ánh sáng: —";
+
+        $("do_net").textContent = m.box
+            ? "Độ nét: " + Math.round(m.net) + " (chỉ số tương đối)"
+            : "Độ nét: —";
+
+        $("tu_the").textContent = m.box
+            ? "Nghiêng vai: " + Math.round(Math.abs(m.roll)) + "°"
+            : "Tư thế: —";
+
+        if (!luot) {
+            m.xanh = m.ok;
+            return;
+        }
+
+        if (!m.ok) {
+            resetGiu();
+
+            luot.giuCung = null;
+            luot.anh = null;
+            luot.diemAnh = -1;
+
+            m.xanh = false;
+
+            $("chi_dan").textContent = m.lyDo;
+            thongBao(m.lyDo);
+            return;
+        }
+
+        const b = luot.baseline;
+        let hop = false;
+        let chi = "";
+
+        if (luot.buoc === 0) {
+            hop = (
+                Math.abs(m.yaw) <= .12 &&
+                m.pitch >= .08 &&
+                m.pitch <= .85
+            );
+
+            chi = hop
+                ? "Giữ yên chính diện khoảng 1,2 giây."
+                : "Nhìn thẳng vào ống kính, không quay sang bên.";
+
+        } else if (luot.buoc === 1) {
+            const dy = m.yaw - b.yaw;
+
+            hop = (
+                dy * luot.ben >= .16 &&
+                dy * luot.ben <= .38 &&
+                Math.abs(m.pitch - b.pitch) < .14
+            );
+
+            chi = "Quay nhẹ để mũi sang PHẢI trên màn hình →";
+
+        } else if (luot.buoc === 2) {
+            const dy = m.yaw - b.yaw;
+
+            hop = (
+                dy * (-luot.ben) >= .16 &&
+                dy * (-luot.ben) <= .38 &&
+                Math.abs(m.pitch - b.pitch) < .14
+            );
+
+            chi = "Quay sang bên còn lại: mũi sang TRÁI trên màn hình ←";
+
+        } else {
+            if (!luot.veGiua) {
+                const px = (m.yaw - b.yaw) / (luot.ben * .22);
+                const py = (m.pitch - b.pitch) / .13;
+
+                const ang = luot.cung * Math.PI / 4;
+                const tx = Math.cos(ang);
+                const ty = Math.sin(ang);
+
+                hop = (
+                    Math.hypot(px - tx, py - ty) < .62 &&
+                    Math.abs(m.yaw - b.yaw) < .43 &&
+                    Math.abs(m.pitch - b.pitch) < .24
+                );
+
+                const ten = [
+                    "phải",
+                    "chéo xuống bên phải",
+                    "xuống",
+                    "chéo xuống bên trái",
+                    "trái",
+                    "chéo lên bên trái",
+                    "lên",
+                    "chéo lên bên phải",
+                    "phải"
+                ];
+
+                chi = (
+                    "Vẽ vòng nhỏ: đưa mũi " +
+                    ten[luot.cung] +
+                    " theo chấm vàng."
+                );
+
+                if (hop) {
+                    if (luot.giuCung === null) {
+                        luot.giuCung = t;
+                    }
+
+                    if (t - luot.giuCung >= 220) {
+                        luot.cung++;
+                        luot.giuCung = null;
+
+                        if (luot.cung >= 9) {
+                            luot.veGiua = true;
+                            resetGiu();
+                        }
+                    }
+
+                } else {
+                    luot.giuCung = null;
+                }
+
+                $("tien_do").value =
+                    75 + Math.min(luot.cung, 9) / 9 * 15;
+
+            } else {
+                hop = dungChinhDien(m, b);
+
+                chi = "Vòng đã xong. Trở về chính diện và giữ yên để chụp ảnh cuối.";
+
+                if (!hop) {
+                    luot.anh = null;
+                    luot.diemAnh = -1;
+                }
+            }
+        }
+
+        m.xanh = hop;
+        $("chi_dan").textContent = chi;
+        thongBao(chi);
+
+        if (luot.buoc === 3 && !luot.veGiua) {
+            return;
+        }
+
+        if (!hop) {
+            resetGiu();
+            return;
+        }
+
+        const xong = datMau(m, t);
+
+        if (luot.buoc === 3 && luot.veGiua) {
+            const diem = m.net * (
+                1 - Math.min(
+                    .8,
+                    Math.abs(m.yaw - b.yaw) * 4 +
+                    Math.abs(m.pitch - b.pitch) * 3
+                )
+            );
+
+            if (diem > luot.diemAnh) {
+                luot.diemAnh = diem;
+                luot.anh = anhHienTai();
+            }
+        }
+
+        const tien = Math.min(
+            1,
+            (t - giuTu) / CAU_HINH.giu
+        );
+
+        $("tien_do").value = luot.buoc === 3
+            ? 90 + tien * 10
+            : luot.buoc * 25 + tien * 25;
+
+        if (!xong) {
+            return;
+        }
+
+        if (luot.buoc === 0) {
+            luot.baseline = {
+                yaw: trungVi(mauGiu.map(x => x.yaw)),
+                pitch: trungVi(mauGiu.map(x => x.pitch))
+            };
+        }
+
+        if (luot.buoc === 3) {
+            const anh = luot.anh;
+
+            if (!anh) {
+                resetGiu();
+                return;
+            }
+
+            luot.buoc = 4;
+            danhDau();
+
+            $("tien_do").value = 100;
+
+            luot = null;
+            resetGiu();
+            guiAnh(anh);
+            return;
+        }
+
+        luot.buoc++;
+        resetGiu();
+        danhDau();
+        nut();
+    }
+
+    function veHuongDan() {
+        const rect = $("vung_goc").getBoundingClientRect();
+        const W = Math.round(rect.width);
+        const H = Math.round(rect.height);
+
+        if (!W || !H) {
+            return;
+        }
+
+        if (lop.width !== W || lop.height !== H) {
+            lop.width = W;
+            lop.height = H;
+        }
+
+        ve.clearRect(0, 0, W, H);
+
+        const s = Math.min(
+            W / video.videoWidth,
+            H / video.videoHeight
+        );
+
+        const dw = video.videoWidth * s;
+        const dh = video.videoHeight * s;
+
+        const m = ketQuaDo;
+        const fresh = m && performance.now() - m.thoiGian < 600;
+
+        const color = fresh && m.xanh
+            ? "#7bc67a"
+            : "#ed7d70";
+
+        ve.strokeStyle = color;
+        ve.lineWidth = 3;
+        ve.setLineDash([10, 7]);
+
+        ve.beginPath();
+
+        ve.ellipse(
+            W / 2,
+            H / 2,
+            Math.min(dw * .28, dh * .26),
+            dh * .37,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ve.stroke();
+        ve.setLineDash([]);
+
+        if (luot?.buoc === 3 && !luot.veGiua) {
+            const r = Math.min(dw, dh) * .16;
+            const cx = W / 2;
+            const cy = H / 2;
+
+            ve.lineWidth = 2;
+            ve.strokeStyle = "#ffffff70";
+
+            ve.beginPath();
+            ve.arc(cx, cy, r, 0, 2 * Math.PI);
+            ve.stroke();
+
+            const a = luot.cung * Math.PI / 4;
+
+            ve.fillStyle = "#ebce85";
+            ve.beginPath();
+
+            ve.arc(
+                cx + Math.cos(a) * r,
+                cy + Math.sin(a) * r,
+                8,
+                0,
+                2 * Math.PI
+            );
+
+            ve.fill();
+
+            if (fresh && m.box && luot.baseline && luot.ben) {
+                const px = (
+                    m.yaw - luot.baseline.yaw
+                ) / (luot.ben * .22);
+
+                const py = (
+                    m.pitch - luot.baseline.pitch
+                ) / .13;
+
+                ve.fillStyle = color;
+                ve.beginPath();
+
+                ve.arc(
+                    cx + Math.max(-1.8, Math.min(1.8, px)) * r,
+                    cy + Math.max(-1.8, Math.min(1.8, py)) * r,
+                    5,
+                    0,
+                    2 * Math.PI
+                );
+
+                ve.fill();
+            }
+        }
+    }
+
+    function hienKetQua(k) {
+        $("ket_qua").hidden = false;
+
+        $("nhan_ket_qua").textContent =
+            k.nhan_hien_thi || "Không chắc chắn";
+
+        $("tin_cay").textContent =
+            typeof k.do_tin_cay === "number"
+                ? "Độ tin cậy dự đoán: " +
+                  (k.do_tin_cay * 100).toFixed(2) + "%"
+                : "";
+
+        $("ghi_chu_ket_qua").textContent = k.chap_nhan
+            ? "Ảnh chính diện đạt điều kiện quét và dự đoán đạt ngưỡng model."
+            : k.thong_bao ||
+              "Dự đoán chưa đạt ngưỡng. Bạn có thể điều chỉnh ánh sáng và quét lại.";
+
+        const xs = $("xac_suat");
+        xs.replaceChildren();
+
+        Object.entries(k.xac_suat || {})
+            .filter(([n, v]) => TEN[n] && Number.isFinite(v))
+            .sort((a, b) => b[1] - a[1])
+            .forEach(([n, v]) => {
+                const d = document.createElement("div");
+                const p = document.createElement("p");
+                const bar = document.createElement("progress");
+
+                p.textContent =
+                    TEN[n] + " — " + (v * 100).toFixed(2) + "%";
+
+                bar.max = 1;
+                bar.value = v;
+                bar.setAttribute("aria-label", TEN[n]);
+
+                d.append(p, bar);
+                xs.append(d);
+            });
+
+        const gy = $("goi_y");
+        gy.replaceChildren();
+
+        const list = k.cac_toc_goi_y || [];
+
+        if (!list.length) {
+            const p = document.createElement("p");
+
+            p.textContent = k.chap_nhan
+                ? "Kho chưa có kiểu tóc phù hợp với dạng mặt này."
+                : "Chưa gợi ý vì kết quả chưa được chấp nhận.";
+
+            gy.append(p);
+        }
+
+        for (const toc of list) {
+            const d = document.createElement("article");
+            d.className = "toc";
+
+            if (toc.anh_gioi_thieu) {
+                const im = document.createElement("img");
+
+                im.src = toc.anh_gioi_thieu;
+                im.alt = toc.ten;
+                im.loading = "lazy";
+
+                d.append(im);
+            }
+
+            const title = document.createElement("h4");
+            const p = document.createElement("p");
+
+            title.textContent = toc.ten;
+            p.textContent = toc.mo_ta;
+
+            d.append(title, p);
+            gy.append(d);
+        }
+    }
+
+    async function guiAnh(c) {
+        dangGui = true;
+        nut();
+
+        thongBao(
+            "Đã hoàn tất bốn bước. Đang phân tích ảnh chính diện trên Colab…"
+        );
+
+        yeuCau = new AbortController();
+
+        const controller = yeuCau;
+        const timer = setTimeout(
+            () => controller.abort(),
+            75000
+        );
+
+        try {
+            const blob = await new Promise(resolve => {
+                c.toBlob(resolve, "image/jpeg", .95);
+            });
+
+            if (!blob) {
+                throw Error("Không tạo được ảnh quét.");
+            }
+
+            if (controller.signal.aborted) {
+                throw new DOMException("Đã hủy", "AbortError");
+            }
+
+            if (urlAnh) {
+                URL.revokeObjectURL(urlAnh);
+            }
+
+            urlAnh = URL.createObjectURL(blob);
+            $("anh_da_quet").src = urlAnh;
+
+            const data = new FormData();
+            data.append("anh", blob, "khuon_mat.jpg");
+
+            const csrf = document.querySelector(
+                "#bao_ve_quet input"
+            ).value;
+
+            const r = await fetch(
+                "{% url 'thu_toc:quet_khuon_mat' %}",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "X-CSRFToken": csrf
+                    },
+
+                    body: data,
+                    credentials: "same-origin",
+                    signal: controller.signal
+                }
+            );
+
+            if (
+                !(r.headers.get("content-type") || "")
+                    .includes("application/json")
+            ) {
+                throw Error(
+                    "Không nhận được dữ liệu hợp lệ. Tải lại trang và kiểm tra đăng nhập."
+                );
+            }
+
+            const k = await r.json();
+
+            if (!r.ok || !k.thanh_cong) {
+                throw Error(
+                    k.thong_bao || "Không thể phân tích ảnh."
+                );
+            }
+
+            hienKetQua(k);
+
+            thongBao(
+                "Đã phân tích xong. Bạn có thể xem gợi ý hoặc quét lại."
+            );
+
+            $("chi_dan").textContent =
+                "Đã hoàn tất lượt quét. Bấm bắt đầu nếu muốn quét lại.";
+
+        } catch (e) {
+            thongBao(
+                e.name === "AbortError"
+                    ? "Yêu cầu đã hủy hoặc hết thời gian chờ."
+                    : e.message || "Không kết nối được máy chủ.",
+                true
+            );
+
+        } finally {
+            clearTimeout(timer);
+            yeuCau = null;
+            dangGui = false;
+            nut();
+        }
+    }
+
+    $("nut_bat").addEventListener("click", bat);
+    $("nut_tat").addEventListener("click", () => tat());
+    $("nut_quet").addEventListener("click", batDau);
+    $("nut_huy").addEventListener("click", () => huy());
+
+    window.addEventListener("pagehide", () => {
+        tat(false);
+
+        if (urlAnh) {
+            URL.revokeObjectURL(urlAnh);
+        }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden && (luot || dangGui)) {
+            huy();
+        }
+    });
+</script>
+</body>
+</html>

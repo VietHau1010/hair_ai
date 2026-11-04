@@ -1,0 +1,8 @@
+
+.venv/
+.venv_xoa_toc/
+bo_cai/
+python311/
+pip_tam/
+__pycache__/
+*.pyc

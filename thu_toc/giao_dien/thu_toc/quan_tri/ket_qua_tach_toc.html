@@ -1,0 +1,132 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+{% load static %}
+
+{% block noi_dung %}
+<link rel="stylesheet"
+      href="{% static 'thu_toc/quan_tri_nguoi_noi_tieng.css' %}">
+
+<div class="dau-muc">
+    <div>
+        <span class="nhan">
+            TÁC VỤ #{{ tac_vu.pk }}
+        </span>
+
+        <h1>{{ tac_vu.ten_kieu_toc }}</h1>
+
+        <p class="phu">
+            {{ tac_vu.nguoi_noi_tieng.ten }} ·
+            {{ tac_vu.ngay_tao|date:'d/m/Y H:i' }}
+        </p>
+    </div>
+
+    <a class="nut nut-phu"
+       href="{% url 'admin:chi_tiet_nguoi_noi_tieng' tac_vu.nguoi_noi_tieng_id %}">
+        ← Hồ sơ người nổi tiếng
+    </a>
+</div>
+
+<section class="the nt-cach">
+    <h2 id="nt_trang_thai">
+        {{ tac_vu.get_trang_thai_display }}
+    </h2>
+
+    <p class="phu" id="nt_buoc">
+        {{ tac_vu.buoc_hien_tai|default:'Đang chờ tiến trình xử lý nhận ảnh.' }}
+    </p>
+
+    {% if dang_cho %}
+        <p class="phu"
+           id="nt_theo_doi"
+           data-url="{% url 'admin:trang_thai_tach_toc' tac_vu.pk %}">
+            Trang tự cập nhật khi xử lý xong.
+            Nếu chờ lâu, kiểm tra terminal hàng đợi.
+        </p>
+    {% endif %}
+
+    {% if tac_vu.thong_bao_loi %}
+        <div class="thong-bao error" role="alert">
+            {{ tac_vu.thong_bao_loi }}
+        </div>
+    {% endif %}
+
+    {% if tac_vu.trang_thai == 'that_bai' %}
+        <div class="hang-nut">
+            {% if duoc_thu_lai %}
+                <form method="post"
+                      action="{% url 'admin:thu_lai_tach_toc' tac_vu.pk %}">
+                    {% csrf_token %}
+
+                    <button class="nut nut-phu" type="submit">
+                        Thử lại ảnh này
+                    </button>
+                </form>
+            {% endif %}
+
+            {% if duoc_them %}
+                <a class="nut"
+                   href="{% url 'admin:them_toc_cho_nguoi' tac_vu.nguoi_noi_tieng_id %}">
+                    Thêm bằng ảnh khác
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</section>
+
+<div class="nt-so-sanh">
+    <section class="the">
+        <h2>Ảnh gốc</h2>
+
+        {% if tac_vu.anh_goc %}
+            <div class="nt-khung-anh">
+                <img src="{{ tac_vu.anh_goc.url }}"
+                     alt="Ảnh gốc của {{ tac_vu.nguoi_noi_tieng.ten }}">
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="the">
+        <h2>Tóc đã tách</h2>
+
+        {% if tac_vu.kieu_toc and tac_vu.kieu_toc.anh_thu_toc %}
+            <div class="nt-khung-anh nt-trong-suot">
+                <img src="{{ tac_vu.kieu_toc.anh_thu_toc.url }}"
+                     alt="Tóc {{ tac_vu.ten_kieu_toc }} nền trong suốt">
+            </div>
+
+            <p class="phu nt-cach-tren">
+                Đã lưu kiểu tóc mã {{ tac_vu.kieu_toc_id }}.
+            </p>
+
+            {% if duoc_sua_toc %}
+                <a class="nut nut-phu"
+                   href="{% url 'admin:sua' 'toc' tac_vu.kieu_toc_id %}">
+                    Sửa thông tin và điểm neo
+                </a>
+            {% endif %}
+        {% else %}
+            <div class="nt-khung-anh">
+                <p class="phu">
+                    {% if tac_vu.trang_thai == 'hoan_tat' %}
+                        Không còn ảnh kết quả.
+                        Kiểu tóc có thể đã bị xóa hoặc sửa.
+                    {% else %}
+                        Kết quả xuất hiện sau khi xử lý thành công.
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+    </section>
+</div>
+
+{% if duoc_them %}
+    <div class="hang-nut nt-cach-tren">
+        <a class="nut"
+           href="{% url 'admin:them_toc_cho_nguoi' tac_vu.nguoi_noi_tieng_id %}">
+            + Thêm kiểu tóc khác cho người này
+        </a>
+    </div>
+{% endif %}
+
+<script src="{% static 'thu_toc/quan_tri_nguoi_noi_tieng.js' %}"
+        defer></script>
+{% endblock %}

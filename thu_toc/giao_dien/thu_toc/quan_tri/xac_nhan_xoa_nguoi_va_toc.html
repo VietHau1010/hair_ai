@@ -1,0 +1,81 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+
+{% block noi_dung %}
+<div class="dau-muc">
+    <div>
+        <span class="nhan">XÁC NHẬN XÓA</span>
+        <h1>{{ tieu_de }}</h1>
+        <p class="phu">{{ nguoi.ten }}</p>
+    </div>
+
+    <a class="nut nut-phu"
+       href="{% url 'admin:chi_tiet_nguoi_noi_tieng' nguoi.pk %}">
+        ← Về hồ sơ
+    </a>
+</div>
+
+<section class="the" style="max-width:800px">
+    {% if xoa_ca_ho_so %}
+        <h2>Xóa toàn bộ hồ sơ {{ nguoi.ten }}?</h2>
+
+        <p>Những dữ liệu sau sẽ bị xóa:</p>
+
+        <ul>
+            <li>Hồ sơ người nổi tiếng {{ nguoi.ten }}.</li>
+            <li>{{ so_toc }} kiểu tóc thuộc hồ sơ.</li>
+            <li>{{ so_tac_vu }} tác vụ tách tóc thuộc hồ sơ.</li>
+            <li>Lượt yêu thích liên quan đến các kiểu tóc bị xóa.</li>
+        </ul>
+
+        <p class="phu">
+            Các tác vụ đang xử lý của hồ sơ này
+            sẽ không thể lưu kết quả nữa.
+        </p>
+    {% else %}
+        <h2>Xóa kiểu tóc “{{ toc.ten }}”?</h2>
+
+        <p class="phu">
+            Chỉ xóa kiểu tóc này và các lượt yêu thích liên quan.
+            Hồ sơ {{ nguoi.ten }} cùng các kiểu tóc khác vẫn được giữ.
+        </p>
+
+        {% if toc.anh_thu_toc %}
+            <img src="{{ toc.anh_thu_toc.url }}"
+                 alt="{{ toc.ten }}"
+                 style="display:block;max-width:100%;height:220px;object-fit:contain;margin:20px 0">
+        {% endif %}
+    {% endif %}
+
+    <div class="thong-bao error" role="alert">
+        <strong>Dữ liệu đã xóa không thể hoàn tác trên giao diện.</strong>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label style="display:flex;align-items:center;gap:10px;margin:20px 0;cursor:pointer">
+            <input type="checkbox"
+                   name="xac_nhan"
+                   value="dong_y"
+                   required
+                   style="width:20px;height:20px">
+            Tôi xác nhận xóa các dữ liệu được liệt kê bên trên.
+        </label>
+
+        <div class="hang-nut">
+            <button class="nut nut-do" type="submit">
+                {% if xoa_ca_ho_so %}
+                    Xác nhận xóa toàn bộ hồ sơ
+                {% else %}
+                    Xác nhận xóa kiểu tóc
+                {% endif %}
+            </button>
+
+            <a class="nut nut-phu"
+               href="{% url 'admin:chi_tiet_nguoi_noi_tieng' nguoi.pk %}">
+                Hủy, giữ dữ liệu
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

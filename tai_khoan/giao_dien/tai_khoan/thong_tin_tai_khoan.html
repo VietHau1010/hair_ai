@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tài khoản của tôi — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            color-scheme: light;
+            --nen: #f5f7f5;
+            --be-mat: #ffffff;
+            --chu: #1c2922;
+            --chu-phu: #68756d;
+            --chu-dao: #24583d;
+            --chu-dao-hover: #1b4630;
+            --vien: #e2e9e3;
+            --loi: #b42318;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            margin: 0;
+            background:
+                radial-gradient(
+                    ellipse at 50% 0,
+                    rgba(204, 225, 208, 0.28),
+                    transparent 55%
+                ),
+                var(--nen);
+            color: var(--chu);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-wrap: break-word;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: var(--chu-dao);
+            text-decoration: none;
+            text-underline-offset: 4px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px 28px;
+            min-height: 84px;
+            padding: 18px max(24px, calc((100% - 1160px) / 2));
+            border-bottom: 1px solid var(--vien);
+            background: var(--be-mat);
+        }
+
+        .thuong-hieu {
+            display: inline-block;
+            max-width: 100%;
+            padding: 4px 0;
+            border-radius: 6px;
+            color: var(--chu-dao);
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.4;
+            transition: color 160ms ease;
+        }
+
+        .thuong-hieu:hover {
+            color: var(--chu-dao-hover);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 9px 14px;
+            border-radius: 8px;
+            color: #526258;
+            font-weight: 500;
+            transition:
+                color 160ms ease,
+                background-color 160ms ease;
+        }
+
+        nav a:hover {
+            background: #f0f5f1;
+            color: var(--chu-dao);
+        }
+
+        main {
+            width: 100%;
+            max-width: 720px;
+            margin: 48px auto;
+            padding: 0 24px;
+        }
+
+        .khung {
+            padding: 36px;
+            border: 1px solid var(--vien);
+            border-radius: 20px;
+            background: var(--be-mat);
+            box-shadow:
+                0 20px 60px rgba(28, 55, 37, 0.045),
+                0 3px 10px rgba(28, 55, 37, 0.02);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            color: var(--chu);
+            font-size: clamp(25px, 4.5vw, 30px);
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .mo-ta {
+            margin: 0;
+            color: var(--chu-phu);
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .thong-tin {
+            display: grid;
+            gap: 0;
+            margin: 26px 0 28px;
+            padding: 6px 20px;
+            border: 1px solid #e3ebe5;
+            border-radius: 12px;
+            background: #f7faf7;
+            color: #42564a;
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .thong-tin > div {
+            display: grid;
+            grid-template-columns: 150px minmax(0, 1fr);
+            gap: 8px 16px;
+            padding: 13px 0;
+        }
+
+        .thong-tin > div + div {
+            border-top: 1px solid #e6ede7;
+        }
+
+        .thong-tin strong {
+            color: #64756a;
+            font-weight: 500;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .truong {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34463b;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        input,
+        select,
+        textarea {
+            max-width: 100%;
+            font: inherit;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+        select,
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            margin: 0;
+            padding: 12px 14px;
+            border: 1px solid #d5dfd7;
+            border-radius: 10px;
+            outline: none;
+            background: #fcfdfc;
+            color: var(--chu);
+            font-size: 16px;
+            line-height: 1.5;
+            transition:
+                border-color 160ms ease,
+                background-color 160ms ease,
+                box-shadow 160ms ease;
+        }
+
+        textarea {
+            min-height: 112px;
+            resize: vertical;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #939e96;
+            opacity: 1;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):hover,
+        select:hover,
+        textarea:hover {
+            border-color: #aebfb2;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--chu-dao);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(36, 88, 61, 0.1);
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            margin: 0 6px 0 0;
+            vertical-align: middle;
+            accent-color: var(--chu-dao);
+        }
+
+        input[aria-invalid="true"],
+        select[aria-invalid="true"],
+        textarea[aria-invalid="true"] {
+            border-color: #d99088;
+        }
+
+        input:disabled,
+        select:disabled,
+        textarea:disabled {
+            background: #f0f3f0;
+            color: #7c887f;
+            cursor: not-allowed;
+        }
+
+        .loi {
+            margin-top: 8px;
+            color: var(--loi);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .thong-bao {
+            margin-bottom: 20px;
+            padding: 14px 16px;
+            border: 1px solid #d7e7da;
+            border-radius: 12px;
+            background: #f0f7f1;
+            color: var(--chu-dao);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .cac-nut {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 6px;
+        }
+
+        button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 11px 20px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: var(--chu-dao);
+            box-shadow: 0 3px 7px rgba(36, 88, 61, 0.1);
+            color: #ffffff;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition:
+                background-color 160ms ease,
+                border-color 160ms ease,
+                box-shadow 160ms ease,
+                transform 160ms ease;
+        }
+
+        button:hover {
+            background: var(--chu-dao-hover);
+            box-shadow: 0 5px 12px rgba(36, 88, 61, 0.15);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(36, 88, 61, 0.1);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .cac-nut > a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 11px 14px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            color: var(--chu-dao);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            transition:
+                color 160ms ease,
+                background-color 160ms ease,
+                border-color 160ms ease;
+        }
+
+        .cac-nut > a:first-of-type {
+            border-color: #dce5de;
+            background: #ffffff;
+        }
+
+        .cac-nut > a:hover {
+            border-color: #d5e1d8;
+            background: #f1f6f2;
+            color: var(--chu-dao-hover);
+        }
+
+        .cac-nut > a:last-of-type {
+            color: var(--chu-phu);
+            font-weight: 500;
+        }
+
+        .cac-nut > a:last-of-type:hover {
+            color: var(--chu-dao);
+        }
+
+        .phan-dang-xuat {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #e8eee9;
+        }
+
+        .nut-dang-xuat {
+            border: 1px solid #dce5de;
+            background: #ffffff;
+            box-shadow: none;
+            color: var(--chu-dao);
+        }
+
+        .nut-dang-xuat:hover {
+            border-color: #b8cbbd;
+            background: #f1f6f2;
+            box-shadow: none;
+            color: var(--chu-dao-hover);
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input[type="checkbox"]:focus-visible,
+        input[type="radio"]:focus-visible {
+            outline: 3px solid rgba(36, 88, 61, 0.65);
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 640px) {
+            header {
+                gap: 10px;
+                min-height: auto;
+                padding: 18px 20px 14px;
+            }
+
+            .thuong-hieu {
+                font-size: 22px;
+            }
+
+            nav {
+                width: 100%;
+                gap: 4px;
+            }
+
+            nav a {
+                min-height: 40px;
+                padding: 8px 12px;
+            }
+
+            main {
+                margin: 28px auto;
+                padding: 0 16px;
+            }
+
+            .khung {
+                padding: 26px 22px;
+                border-radius: 16px;
+            }
+
+            .thong-tin {
+                margin: 22px 0 24px;
+                padding: 4px 16px;
+            }
+
+            .thong-tin > div {
+                grid-template-columns: 125px minmax(0, 1fr);
+                gap: 8px 12px;
+            }
+
+            .cac-nut {
+                gap: 10px;
+            }
+
+            .cac-nut > button {
+                width: 100%;
+            }
+
+            .cac-nut > a {
+                flex: 1 1 auto;
+            }
+
+            .phan-dang-xuat {
+                margin-top: 24px;
+                padding-top: 20px;
+            }
+
+            .nut-dang-xuat {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            header {
+                padding-right: 16px;
+                padding-left: 16px;
+            }
+
+            main {
+                padding: 0 12px;
+            }
+
+            .khung {
+                padding: 24px 18px;
+            }
+
+            .thong-tin > div {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 3px;
+            }
+
+            .cac-nut > a {
+                width: 100%;
+                flex-basis: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <style id="sua-chu-tieng-viet">
+        body, h1, h2, h3, h4, h5, h6,
+        p, a, label, button, input, select, textarea,
+        strong, small, em, li, th, td {
+            font-family: "Segoe UI", Arial, sans-serif !important;
+            letter-spacing: normal !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.35 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav aria-label="Điều hướng">
+            <a href="{% url 'thu_toc:trang_chu' %}">Trang chủ</a>
+            <a href="{% url 'kieu_toc:danh_sach' %}">
+                Khám phá kiểu tóc
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        {% for thong_bao in messages %}
+            <div class="thong-bao" role="status">
+                {{ thong_bao }}
+            </div>
+        {% endfor %}
+
+        <section class="khung">
+            <h1>Tài khoản của tôi</h1>
+
+            <p class="mo-ta">
+                Xem và cập nhật thông tin cá nhân của bạn.
+            </p>
+
+            <div class="thong-tin">
+                <div>
+                    <strong>Tên đăng nhập:</strong>
+                    {{ user.username }}
+                </div>
+
+                <div>
+                    <strong>Vai trò:</strong>
+                    {% if user.is_superuser %}
+                        Quản trị viên
+                    {% elif user.is_staff %}
+                        Nhân viên quản trị
+                    {% else %}
+                        Người dùng
+                    {% endif %}
+                </div>
+
+                <div>
+                    <strong>Ngày tham gia:</strong>
+                    {{ user.date_joined|date:"d/m/Y" }}
+                </div>
+            </div>
+
+            {% for loi in bieu_mau.non_field_errors %}
+                <p class="loi" role="alert">{{ loi }}</p>
+            {% endfor %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for truong in bieu_mau %}
+                    <div class="truong">
+                        <label for="{{ truong.id_for_label }}">
+                            {{ truong.label }}
+                        </label>
+
+                        {{ truong }}
+
+                        {% for loi in truong.errors %}
+                            <div class="loi" role="alert">{{ loi }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <div class="cac-nut">
+                    <button type="submit">Lưu thông tin</button>
+
+                    <a href="{% url 'tai_khoan:doi_mat_khau' %}">
+                        Đổi mật khẩu
+                    </a>
+
+                    <a href="{% url 'thu_toc:trang_chu' %}">
+                        Về trang chủ
+                    </a>
+                </div>
+            </form>
+
+            <form class="phan-dang-xuat"
+                  method="post"
+                  action="{% url 'tai_khoan:dang_xuat' %}">
+                {% csrf_token %}
+
+                <button class="nut-dang-xuat" type="submit">
+                    Đăng xuất
+                </button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

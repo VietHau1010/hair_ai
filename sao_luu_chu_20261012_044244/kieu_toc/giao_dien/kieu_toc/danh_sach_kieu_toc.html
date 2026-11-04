@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Khám phá kiểu tóc — HAULONGHAIR</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #19251f;
+            background: #f8faf7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        header {
+            background: white;
+            border-bottom: 1px solid #e1e8df;
+            padding: 22px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .thuong-hieu {
+            font-size: 23px;
+            font-weight: 800;
+            color: #24583d;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1160px;
+            margin: auto;
+            padding: 45px 24px 70px;
+        }
+
+        h1 {
+            font-size: clamp(30px, 5vw, 44px);
+            margin-bottom: 12px;
+        }
+
+        .mo-ta {
+            color: #59665e;
+            line-height: 1.7;
+        }
+
+        .bo-loc {
+            display: flex;
+            gap: 12px;
+            align-items: end;
+            flex-wrap: wrap;
+            padding: 22px;
+            background: white;
+            border: 1px solid #e1e8df;
+            border-radius: 16px;
+            margin: 30px 0 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        select {
+            padding: 12px;
+            border: 1px solid #ccd8c8;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+            min-width: 220px;
+            max-width: 100%;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 9px;
+            background: #24583d;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .bo-loc a {
+            padding: 12px;
+            font-size: 14px;
+            color: #59665e;
+        }
+
+        .so-luong {
+            color: #59665e;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .danh-sach {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .the-toc {
+            background: white;
+            border: 1px solid #e1e8df;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .anh-toc {
+            width: 100%;
+            height: 270px;
+            object-fit: contain;
+            display: block;
+            background: #eef2eb;
+        }
+
+        .noi-dung { padding: 22px; }
+
+        .noi-dung h2 {
+            margin: 0 0 12px;
+            font-size: 21px;
+        }
+
+        .noi-dung p {
+            color: #59665e;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .cac-nhan {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .nhan {
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: #e7f0e5;
+            color: #24583d;
+            font-size: 12px;
+        }
+
+        .trong {
+            padding: 45px 25px;
+            text-align: center;
+            background: white;
+            border: 1px dashed #ccd8c8;
+            border-radius: 16px;
+            color: #59665e;
+            line-height: 1.8;
+        }
+
+        .ghi-chu {
+            margin-top: 30px;
+            color: #59665e;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 24px;
+            text-align: center;
+            border-top: 1px solid #e1e8df;
+            color: #59665e;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .danh-sach {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 580px) {
+            .danh-sach { grid-template-columns: 1fr; }
+            select { min-width: 0; width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav aria-label="Điều hướng">
+            <a href="{% url 'thu_toc:trang_chu' %}">Trang chủ</a>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'kieu_toc:yeu_thich' %}">
+    Kiểu tóc yêu thích
+</a>
+                <a href="{% url 'tai_khoan:thong_tin' %}">
+                    Tài khoản của tôi
+                </a>
+                <span>Xin chào, {{ user.username }}</span>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'admin:index' %}">
+                        Quản trị hệ thống
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'tai_khoan:dang_nhap' %}">
+                    Đăng nhập
+                </a>
+                <a href="{% url 'tai_khoan:dang_ky' %}">
+                    Đăng ký
+                </a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <h1>
+            {% if la_trang_yeu_thich %}
+                Kiểu tóc yêu thích
+            {% else %}
+                Khám phá kiểu tóc
+            {% endif %}
+        </h1>
+
+        {% for thong_bao in messages %}
+            <p role="status" style="color:#24583d; line-height:1.7;">
+                {{ thong_bao }}
+            </p>
+        {% endfor %}
+
+        <p class="mo-ta">
+            Tìm hiểu các kiểu tóc và lọc theo dáng khuôn mặt của bạn.
+        </p>
+
+        {% if not la_trang_yeu_thich %}
+            <form class="bo-loc" method="get">
+                <div>
+                    <label for="dang_mat">Dạng khuôn mặt</label>
+
+                    <select id="dang_mat" name="dang_mat">
+                        <option value="">Tất cả dạng khuôn mặt</option>
+
+                        {% for ma, ten in cac_dang_mat %}
+                            <option value="{{ ma }}"
+                                {% if ma == dang_mat_da_chon %}selected{% endif %}>
+                                {{ ten }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit">Lọc kiểu tóc</button>
+                <a href="{% url 'kieu_toc:danh_sach' %}">Bỏ lọc</a>
+            </form>
+        {% endif %}
+
+        <p class="so-luong">
+            Tìm thấy {{ cac_kieu_toc|length }} kiểu tóc
+        </p>
+
+        {% if cac_kieu_toc %}
+            <section class="danh-sach" aria-label="Danh sách kiểu tóc">
+                {% for toc in cac_kieu_toc %}
+                    <article class="the-toc">
+                        {% if toc.anh_gioi_thieu %}
+                            <img class="anh-toc"
+                                 src="{{ toc.anh_gioi_thieu.url }}"
+                                 alt="{{ toc.ten }}"
+                                 loading="lazy">
+                        {% endif %}
+
+                        <div class="noi-dung">
+                            <h2>{{ toc.ten }}</h2>
+
+                            {% if user.is_authenticated %}
+                            
+                                {% if toc.pk in cac_ma_yeu_thich %}
+                                    <form method="post"
+                                          action="{% url 'kieu_toc:bo_yeu_thich' toc.pk %}">
+                                        {% csrf_token %}
+
+                                        {% if la_trang_yeu_thich %}
+                                            <input type="hidden"
+                                                   name="ve_trang"
+                                                   value="yeu_thich">
+                                        {% endif %}
+
+                                        <button type="submit">Bỏ yêu thích</button>
+                                    </form>
+                                {% else %}
+                                    <form method="post"
+                                          action="{% url 'kieu_toc:luu_yeu_thich' toc.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit">Lưu yêu thích</button>
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'tai_khoan:dang_nhap' %}">
+                                    Đăng nhập để lưu yêu thích
+                                </a>
+                            {% endif %}
+
+                            <div>{{ toc.mo_ta|linebreaks }}</div>
+
+                            <div class="cac-nhan">
+                                {% for dang_mat in toc.dang_mat_phu_hop.all %}
+                                    <span class="nhan">{{ dang_mat }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <div class="trong">
+                {% if la_trang_yeu_thich %}
+                    Bạn chưa có kiểu tóc yêu thích đang được hiển thị.
+                    <a href="{% url 'kieu_toc:danh_sach' %}">
+                        Khám phá kiểu tóc
+                    </a>
+                {% elif dang_mat_da_chon %}
+                    Chưa có kiểu tóc cho dạng mặt đã chọn.
+                    Bạn có thể chọn dạng mặt khác hoặc bỏ lọc.
+                {% else %}
+                    Kho kiểu tóc chưa có dữ liệu.
+                    Các kiểu tóc sẽ xuất hiện khi quản trị viên bổ sung.
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <p class="ghi-chu">
+            Danh sách phù hợp được thiết lập bởi quản trị viên.
+            Chức năng quét mặt và thử tóc trực tiếp sẽ được bổ sung sau.
+        </p>
+    </main>
+
+    <footer>HAULONGHAIR — Tóc bạn xấu để tôi lo</footer>
+</body>
+</html>

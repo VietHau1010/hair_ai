@@ -1,0 +1,2942 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phòng thử tóc — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            --nen: #f7f5ef;
+            --giay: #fffdf8;
+            --chu: #202720;
+            --phu: #64695f;
+            --xanh: #284d39;
+            --vien: #dedfd4;
+        }
+
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+
+        body {
+            margin: 0;
+            background: var(--nen);
+            color: var(--chu);
+            font-family: Arial, "Segoe UI", sans-serif;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button, input { font: inherit; }
+        button { cursor: pointer; }
+        button:disabled { opacity: .5; cursor: not-allowed; }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #b8882c;
+            outline-offset: 4px;
+        }
+
+        header {
+            background: var(--giay);
+            border-bottom: 1px solid var(--vien);
+        }
+
+        .thanh {
+            max-width: 1320px;
+            margin: auto;
+            padding: 23px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .thuong-hieu {
+            font-weight: 800;
+            font-size: 21px;
+            color: var(--xanh);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1320px;
+            margin: auto;
+            padding: 34px 24px 55px;
+        }
+
+        h1 {
+            font-size: clamp(32px, 4vw, 46px);
+            font-weight: 400;
+            margin: 0 0 13px;
+        }
+
+        h1, h2, h3, h4 { line-height: 1.35; }
+        p { line-height: 1.7; }
+
+        .mo-ta {
+            color: var(--phu);
+            max-width: 900px;
+            margin: 0 0 26px;
+        }
+
+        .bo-cuc {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 310px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .hai-khung {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .the {
+            border: 1px solid var(--vien);
+            background: var(--giay);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .dau-the {
+            padding: 15px 17px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dau-the h2 { font-size: 15px; margin: 0; }
+
+        .nhan {
+            font-size: 11px;
+            color: var(--phu);
+            padding: 5px 8px;
+            background: #eeeee4;
+            border-radius: 5px;
+        }
+
+        .vung-camera {
+            aspect-ratio: 4 / 3;
+            position: relative;
+            background: #17251d;
+            overflow: hidden;
+        }
+
+        video, .hinh-camera {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            transform: scaleX(-1);
+        }
+
+        .lop-huong-dan {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .cho {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: #dce6d8;
+            font-size: 14px;
+            text-align: center;
+            padding: 25px;
+            pointer-events: none;
+        }
+
+        .chan-camera {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--phu);
+            line-height: 1.6;
+        }
+
+        .trang-thai-xoa {
+            margin: 0;
+            padding: 12px 16px;
+            border-top: 1px solid var(--vien);
+            line-height: 1.6;
+            font-size: 14px;
+            color: #334155;
+            overflow-wrap: anywhere;
+        }
+
+        .trang-thai-xoa.loi {
+            color: #b42318;
+            background: #f9e9e4;
+        }
+
+        .nut {
+            padding: 12px 17px;
+            border: 1px solid var(--xanh);
+            border-radius: 8px;
+            background: var(--xanh);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nut-phu {
+            background: white;
+            color: var(--xanh);
+            border-color: #c6ccbf;
+        }
+
+        .cac-nut {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .thong-bao {
+            padding: 15px 18px;
+            border-radius: 10px;
+            background: #e8eee1;
+            color: var(--xanh);
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 54px;
+        }
+
+        .thong-bao.loi {
+            background: #f9e9e4;
+            color: #993b32;
+        }
+
+        .huong-dan { padding: 22px; }
+
+        .huong-dan h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 9px;
+        }
+
+        .huong-dan > p {
+            font-size: 13px;
+            color: var(--phu);
+            margin-top: 0;
+        }
+
+        .cac-buoc {
+            list-style: none;
+            padding: 0;
+            margin: 22px 0;
+        }
+
+        .buoc {
+            display: flex;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--vien);
+            align-items: center;
+        }
+
+        .so {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #c6ccbf;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .buoc strong { font-size: 14px; display: block; }
+
+        .buoc small {
+            color: var(--phu);
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .buoc.dang-chay .so {
+            background: var(--xanh);
+            color: white;
+            border-color: var(--xanh);
+        }
+
+        .buoc.xong .so {
+            background: #dce9d3;
+            border-color: #b4c8a7;
+        }
+
+        .tien-do {
+            width: 100%;
+            accent-color: var(--xanh);
+            height: 9px;
+        }
+
+        .thong-so {
+            margin-top: 20px;
+            border-top: 1px solid var(--vien);
+            padding-top: 14px;
+            font-size: 12px;
+            color: var(--phu);
+        }
+
+        .thong-so p { margin: 6px 0; }
+
+        .ghi-chu {
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--phu);
+        }
+
+        .bang-chinh { padding: 18px; margin-bottom: 18px; }
+        .bang-chinh h3 { margin: 0 0 8px; }
+        .bang-chinh > p { color: var(--phu); font-size: 13px; }
+
+        .thanh-chinh {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+
+        .thanh-chinh label span {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .thanh-chinh input {
+            width: 100%;
+            accent-color: var(--xanh);
+        }
+
+        .ket-qua { margin-top: 28px; padding: 25px; }
+
+        .ket-qua h2 {
+            font-size: 28px;
+            font-weight: 400;
+            margin: 0 0 18px;
+        }
+
+        .nhan-ket-qua {
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--xanh);
+            margin: 0;
+        }
+
+        .xac-suat {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .xac-suat > div {
+            padding: 13px;
+            background: #eff1e7;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .xac-suat progress {
+            width: 100%;
+            accent-color: var(--xanh);
+        }
+
+        .goi-y {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+        }
+
+        .toc {
+            border: 1px solid var(--vien);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .toc img {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+            background: #eef0e6;
+        }
+
+        .toc p {
+            font-size: 13px;
+            color: var(--phu);
+            overflow-wrap: anywhere;
+        }
+
+        .toc h4 { margin: 14px 0 8px; }
+        .toc button { margin-top: 12px; }
+
+        .anh-da-quet {
+            max-width: 180px;
+            border-radius: 8px;
+            display: block;
+            margin: 15px 0;
+            transform: scaleX(-1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 23px;
+            border-top: 1px solid var(--vien);
+            font-size: 12px;
+            color: var(--phu);
+        }
+
+        @media (max-width: 1050px) {
+            .bo-cuc { grid-template-columns: 1fr; }
+
+            .cac-buoc {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 15px;
+            }
+
+            .buoc { border-bottom: 0; align-items: start; }
+            .huong-dan { padding: 20px; }
+        }
+
+        @media (max-width: 650px) {
+            main { padding: 26px 16px; }
+            .thanh { padding: 20px 16px; }
+            nav { gap: 14px; font-size: 12px; }
+            .hai-khung { grid-template-columns: 1fr; }
+            .cac-buoc, .xac-suat { grid-template-columns: 1fr 1fr; }
+            .dau-the { padding: 13px; }
+            .cac-nut .nut { flex: 1; }
+        }
+
+        /* Chỉ bố cục: dùng chung một cột cho hướng dẫn và chọn tóc. */
+        main, .thanh { max-width: 1440px; }
+        .bo-cuc { grid-template-columns: minmax(0, 1fr) 360px; }
+        .cot-tu-van { position: sticky; top: 18px; padding: 22px; }
+        .bang-huong-dan-quet > p { color: var(--phu); font-size: 13px; }
+
+        .cot-tu-van .ket-qua {
+            margin: 0; padding: 0; border: 0; border-radius: 0;
+            background: transparent; overflow: visible;
+        }
+
+        .nhan-muc {
+            display: inline-block; color: var(--xanh); font-size: 11px;
+            font-weight: 700; letter-spacing: 1.8px; margin-bottom: 8px;
+        }
+
+        .cot-tu-van .tieu-de-chon h2 { margin: 0; font-size: 28px; }
+        .tieu-de-chon > p { color: var(--phu); font-size: 14px; margin: 8px 0 18px; }
+
+        .cot-tu-van .nhan-ket-qua {
+            font-size: 21px; padding: 12px 14px; border-radius: 10px;
+            background: #e8eee1; margin: 0;
+        }
+
+        .cot-tu-van #tin_cay { font-size: 13px; color: var(--phu); margin: 8px 0; }
+        .cot-tu-van #ghi_chu_ket_qua:empty { display: none; }
+
+        .phan-tich-chi-tiet, .mo-dieu-chinh {
+            border-top: 1px solid var(--vien); margin-top: 14px; padding-top: 12px;
+        }
+
+        .phan-tich-chi-tiet summary, .mo-dieu-chinh summary {
+            cursor: pointer; font-weight: 600; color: var(--xanh);
+            padding: 5px 0; font-size: 14px; line-height: 1.5;
+        }
+
+        .phan-tich-chi-tiet summary:focus-visible,
+        .mo-dieu-chinh summary:focus-visible { outline: 3px solid #b8882c; outline-offset: 3px; }
+
+        .cot-tu-van .anh-da-quet { max-width: 100px; margin: 12px 0; }
+        .cot-tu-van .xac-suat { grid-template-columns: 1fr; gap: 6px; margin: 12px 0; }
+        .cot-tu-van .xac-suat > div { padding: 7px 10px; }
+        .cot-tu-van .xac-suat p { margin: 0 0 4px; }
+        .tieu-de-danh-sach { font-size: 16px; margin: 20px 0 12px; }
+
+        .cot-tu-van .goi-y {
+            grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+            max-height: min(52vh, 540px); overflow-y: auto;
+            overscroll-behavior: contain; scrollbar-width: thin;
+            scrollbar-color: #a9b7a2 transparent; padding: 2px 4px 4px 2px;
+        }
+
+        .cot-tu-van .goi-y > p { grid-column: 1 / -1; font-size: 14px; }
+
+        .cot-tu-van .toc {
+            padding: 10px; border-radius: 12px; background: white;
+            display: flex; flex-direction: column;
+        }
+
+        .cot-tu-van .toc img { height: 115px; border-radius: 7px; background: #f1f2eb; }
+        .cot-tu-van .toc h4 { font-size: 14px; line-height: 1.4; margin: 10px 0 5px; }
+
+        .cot-tu-van .toc p {
+            font-size: 12px; line-height: 1.5; margin: 0 0 10px;
+            display: -webkit-box; -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .cot-tu-van .toc .nut { padding: 10px 6px; font-size: 13px; width: 100%; margin-top: auto; }
+
+        .cot-tu-van .toc:has(button[aria-pressed="true"]) {
+            border-color: var(--xanh); box-shadow: 0 0 0 1px var(--xanh);
+            background: #f0f5ec;
+        }
+
+        .cot-tu-van .bang-chinh { border: 0; padding: 12px 0 0; margin: 0; background: transparent; }
+        .cot-tu-van .bang-chinh > h3,
+        .cot-tu-van .bang-chinh > p { display: none; }
+        .cot-tu-van .thanh-chinh { grid-template-columns: 1fr; gap: 12px; font-size: 13px; }
+
+        @media (max-width: 1050px) {
+            .bo-cuc { grid-template-columns: 1fr; }
+            .cot-tu-van { position: static; }
+            .cot-tu-van .goi-y { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); max-height: 450px; }
+            .cot-tu-van .thanh-chinh { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 650px) {
+            .cot-tu-van { padding: 18px; }
+            .cot-tu-van .goi-y { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .cot-tu-van .thanh-chinh { grid-template-columns: 1fr; }
+        }
+
+        #bang_chinh_toc { margin: 0; }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="thanh">
+        <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav aria-label="Điều hướng">
+            <a href="{% url 'thu_toc:trang_chu' %}">Trang chủ</a>
+            <a href="{% url 'kieu_toc:danh_sach' %}">Khám phá kiểu tóc</a>
+            <a href="{% url 'tai_khoan:thong_tin' %}">Tài khoản của tôi</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1>Một góc nhìn mới cho bạn</h1>
+
+    <p class="mo-ta">
+        Bật camera để quét khuôn mặt và thử kiểu tóc mới.
+        Tóc người nổi tiếng dùng ngay khi camera nhận mặt.
+        Quét 5 tư thế để mở Hợp khuôn mặt và Phá cách.
+        Vòng hướng dẫn chỉ dành cho lượt quét phân loại.
+    </p>
+
+    <div class="bo-cuc">
+        <div>
+            <section class="hai-khung" aria-label="Camera so sánh">
+                <article class="the">
+                    <div class="dau-the">
+                        <h2>Hình ảnh thật</h2>
+                        <span class="nhan">Camera mặc định</span>
+                    </div>
+
+                    <div class="vung-camera" id="vung_goc">
+                        <video id="video_goc" autoplay muted playsinline></video>
+                        <canvas id="huong_dan" class="lop-huong-dan"></canvas>
+                        <div class="cho">Bấm “Bật camera” để bắt đầu</div>
+                    </div>
+
+                    <div class="chan-camera">
+                        Vòng đỏ chỉ kiểm tra điều kiện quét mặt.
+                    </div>
+                </article>
+
+                <article class="the">
+                    <div class="dau-the">
+                        <h2>Hình ảnh thử tóc</h2>
+                        <span class="nhan" id="ten_toc_dang_thu">
+                            Chưa chọn tóc
+                        </span>
+                    </div>
+
+                    <div class="vung-camera">
+                        <canvas id="khung_thu_toc" class="hinh-camera"></canvas>
+
+                        <button id="nut_mo_chup_anh"
+                                class="ca-nut-chup"
+                                type="button"
+                                disabled>
+                            📷 Chụp ảnh
+                        </button>
+
+                        <div class="cho">
+                            Hình ảnh sẽ đồng bộ với camera bên trái
+                        </div>
+                    </div>
+
+                    <p id="trang_thai_xoa_toc"
+                       class="trang-thai-xoa"
+                       role="status"
+                       aria-live="polite">
+                    </p>
+
+                    <div class="chan-camera">
+                        Tóc mới chỉ ghép cho người đang được chọn trong khung.
+                    </div>
+                </article>
+            </section>
+
+            <div class="cac-nut">
+                <button class="nut" id="nut_bat" type="button">
+                    Bật camera
+                </button>
+
+                <button class="nut" id="nut_quet" type="button" disabled>
+                    Bắt đầu quét 5 tư thế
+                </button>
+
+                <button class="nut nut-phu" id="nut_huy" type="button" disabled>
+                    Hủy quét
+                </button>
+
+                <button class="nut nut-phu" id="nut_tat" type="button" disabled>
+                    Tắt camera
+                </button>
+
+                <button class="nut nut-phu" id="nut_bo_toc" type="button" disabled>
+                    Bỏ kiểu tóc
+                </button>
+            </div>
+
+            <div id="thong_bao"
+                 class="thong-bao"
+                 role="status"
+                 aria-live="polite">
+                Camera chưa bật.
+            </div>
+
+            <section class="the bang-chinh" id="bang_chinh_toc" hidden>
+                <h3>Điều chỉnh tóc cho vừa bạn</h3>
+                <p>Chọn kiểu tóc rồi kéo thanh điều chỉnh cho vừa bạn.</p>
+
+                <div class="thanh-chinh">
+                    <label>
+                        <span>Kích thước tóc</span>
+                        <input id="chinh_co_toc" type="range"
+                               min="0.75" max="1.65" step="0.01" value="1.15">
+                    </label>
+
+                    <label>
+                        <span>Vị trí lên / xuống</span>
+                        <input id="chinh_doc_toc" type="range"
+                               min="-0.3" max="0.3" step="0.005" value="0">
+                    </label>
+
+                    <label>
+                        <span>Vị trí trái / phải</span>
+                        <input id="chinh_ngang_toc" type="range"
+                               min="-0.3" max="0.3" step="0.005" value="0">
+                    </label>
+                                        <label>
+                        <span>Xoay trái / phải</span>
+
+                        <input id="chinh_xoay_toc"
+                               type="range"
+                               min="-45"
+                               max="45"
+                               step="0.5"
+                               value="0">
+                    </label>
+
+                    <label>
+                        <span>Độ sáng tóc</span>
+                        <input id="chinh_sang_toc" type="range"
+                               min="0.4" max="1" step="0.01" value="0.75">
+                    </label>
+                </div>
+            </section>
+
+            <p class="ghi-chu">
+                Khi quét dạng mặt, chỉ một người trong khung hình.
+                Giữ vai yên và quay đầu nhẹ theo hướng dẫn.
+            </p>
+        </div>
+
+        <aside class="the huong-dan cot-tu-van" aria-label="Hướng dẫn quét và chọn kiểu tóc">
+            <div id="bang_huong_dan_quet" class="bang-huong-dan-quet">
+                <h2>Quét trong 5 tư thế</h2>
+
+                <p id="chi_dan">
+                    Quét để mở Hợp khuôn mặt và Phá cách.
+                    Tóc người nổi tiếng không cần quét.
+                </p>
+
+                <ol class="cac-buoc">
+                    <li class="buoc">
+                        <span class="so">1</span>
+                        <div>
+                            <strong>Nhìn thẳng</strong>
+                            <small>Giữ yên để lấy tư thế chuẩn</small>
+                        </div>
+                    </li>
+
+                    <li class="buoc">
+                        <span class="so">2</span>
+                        <div>
+                            <strong>Quay sang một bên</strong>
+                            <small>Mũi sang phải trên màn hình →</small>
+                        </div>
+                    </li>
+
+                    <li class="buoc">
+                        <span class="so">3</span>
+                        <div>
+                            <strong>Quay sang bên còn lại</strong>
+                            <small>Mũi sang trái trên màn hình ←</small>
+                        </div>
+                    </li>
+
+                    <li class="buoc">
+                        <span class="so">4</span>
+                        <div>
+                            <strong>Cúi xuống nhẹ</strong>
+                            <small>Hạ cằm nhẹ, không xoay vòng đầu</small>
+                        </div>
+                    </li>
+
+                    <li class="buoc">
+                        <span class="so">5</span>
+                        <div>
+                            <strong>Nhìn thẳng lần cuối</strong>
+                            <small>Giữ yên để tự chụp và gửi AI</small>
+                        </div>
+                    </li>
+                </ol>
+
+                <progress class="tien-do" id="tien_do"
+                          max="100" value="0"
+                          aria-label="Tiến độ quét"></progress>
+
+                <div class="thong-so">
+                    <p id="khoang_cach">Kích thước mặt: —</p>
+                    <p id="anh_sang">Ánh sáng: —</p>
+                    <p id="do_net">Độ nét: —</p>
+                    <p id="tu_the">Tư thế: —</p>
+                </div>
+            </div>
+
+            {% include "thu_toc/lua_chon_kieu_toc.html" %}
+
+            <section class="the ket-qua" id="ket_qua" hidden>
+                <div class="tieu-de-chon">
+                    <span class="nhan-muc">DÀNH CHO BẠN</span>
+                    <h2>Chọn kiểu tóc</h2>
+                    <p>Chạm vào kiểu bạn thích để thử ngay trên camera.</p>
+                </div>
+
+                <p id="nhan_ket_qua" class="nhan-ket-qua"></p>
+                <p id="tin_cay"></p>
+                <p id="ghi_chu_ket_qua" class="ghi-chu"></p>
+
+                <details class="phan-tich-chi-tiet">
+                    <summary>Xem chi tiết phân tích</summary>
+
+                    <img id="anh_da_quet" class="anh-da-quet"
+                         alt="Ảnh chính diện đã gửi để phân tích">
+
+                    <h3>Xác suất các dạng mặt</h3>
+                    <div id="xac_suat" class="xac-suat"></div>
+                </details>
+            </section>
+        </aside>
+    </div>
+
+    <form id="bao_ve_quet" hidden>
+        {% csrf_token %}
+    </form>
+
+    {% include "thu_toc/chup_anh.html" %}
+</main>
+
+<footer>HAULONGHAIR — Tóc bạn xấu để tôi lo</footer>
+
+<script type="module">
+    import { khoiTaoChupAnh } from "{% static 'thu_toc/chup_anh.js' %}";
+
+    const $ = id => document.getElementById(id);
+
+    const video = $("video_goc");
+    const canvas = $("khung_thu_toc");
+    const ctx = canvas.getContext("2d");
+    const guide = $("huong_dan");
+    const gc = guide.getContext("2d");
+
+    const BAT_XOA_TOC = false; // Tạm tắt, giữ nguyên cấu trúc để bật lại sau.
+
+    const API_HAIR = "{% url 'thu_toc:xoa_toc_camera' %}";
+    const API_FACE = "{% url 'thu_toc:quet_khuon_mat' %}";
+
+    const OVAL = [
+        10,338,297,332,284,251,389,356,454,
+        323,361,288,397,365,379,378,400,377,
+        152,148,176,149,150,136,172,58,132,
+        93,234,127,162,21,54,103,67,109
+    ];
+
+    const TEN = {
+        Heart: "Mặt trái tim",
+        Oblong: "Mặt dài",
+        Oval: "Mặt trái xoan",
+        Round: "Mặt tròn",
+        Square: "Mặt vuông"
+    };
+
+    let stream = null;
+    let worker = null;
+    let ready = false;
+    let workerBusy = false;
+    let epoch = 0;
+    let raf = 0;
+    let lastFrame = -1;
+    let lastDetect = 0;
+    let opening = false;
+
+    // Theo dõi người độc lập với lượt quét phân loại.
+    let tracks = [];
+    let nextId = 1;
+    let hairBusy = false;
+    let hairController = null;
+
+    // Chỉ người có ID approved mới được ghép tóc mới.
+    let scan = null;
+    let scanController = null;
+    let scanBusy = false;
+    let approved = null;
+
+    let hair = null;
+    let hairImage = null;
+    let hairLoad = 0;
+    let hairPose = null;
+    let resultURL = null;
+
+    {% include "thu_toc/dieu_khien_kieu_toc.html" %}
+
+    const qc = document.createElement("canvas");
+    qc.width = 160;
+    qc.height = 200;
+
+    const qctx = qc.getContext("2d", {
+        willReadFrequently: true
+    });
+
+    function syncHairControls() {
+        const hienChinhToc =
+            !!approved &&
+            !!hairImage;
+
+        $("bang_chinh_toc").hidden = !hienChinhToc;
+        $("thong_bao").hidden = hienChinhToc;
+    }
+
+    function msg(s, error = false) {
+        $("thong_bao").textContent = s;
+        $("thong_bao").classList.toggle("loi", error);
+    }
+
+    function hairMsg(s, error = false) {
+        $("trang_thai_xoa_toc").textContent = s;
+        $("trang_thai_xoa_toc").classList.toggle("loi", error);
+    }
+
+    function buttons() {
+        $("nut_bat").disabled = !!stream || opening;
+        $("nut_tat").disabled = !stream && !opening;
+
+        $("nut_quet").disabled =
+            !stream || !ready || !!scan || scanBusy;
+
+        $("nut_huy").disabled = !scan && !scanBusy;
+        $("nut_bo_toc").disabled = !hairImage;
+
+        $("nut_mo_chup_anh").disabled =
+            !stream || !hairImage || !approved;
+    }
+
+    function clearHair() {
+        tocDangCho = null;
+
+        hairLoad++;
+        hair = null;
+        hairImage = null;
+        hairPose = null;
+
+        $("ten_toc_dang_thu").textContent =
+            "Chưa chọn tóc";
+
+        document.querySelectorAll(".nut-thu-toc").forEach(b => {
+            b.textContent = "Thử kiểu tóc này";
+            b.setAttribute("aria-pressed", "false");
+        });
+
+        syncHairControls();
+        buttons();
+    }
+
+    function revokePerson() {
+        dongLuaChonSauQuet();
+
+        approved = null;
+
+        clearHair();
+
+        $("ket_qua").hidden = true;
+
+        syncHairControls();
+    }
+
+    function markSteps() {
+        document.querySelectorAll(".buoc").forEach((e, i) => {
+            e.classList.toggle("dang-chay", scan?.step === i);
+            e.classList.toggle("xong", !!scan && scan.step > i);
+        });
+    }
+
+    function cancelScan(show = true) {
+        if (scan) clearTimeout(scan.watchdog);
+        scan = null;
+        scanController?.abort();
+
+        $("tien_do").value = 0;
+        markSteps();
+        buttons();
+
+        if (show) {
+            msg("Đã hủy quét. Có thể bắt đầu quét lại.");
+        }
+    }
+
+    function stop(show = true) {
+        epoch++;
+        opening = false;
+
+        cancelScan(false);
+        scanController?.abort();
+        scanController = null;
+        scanBusy = false;
+
+        hairController?.abort();
+        hairController = null;
+        hairBusy = false;
+
+        cancelAnimationFrame(raf);
+        raf = 0;
+
+        stream?.getTracks().forEach(t => t.stop());
+        stream = null;
+        video.srcObject = null;
+
+        worker?.terminate();
+        worker = null;
+        ready = false;
+        workerBusy = false;
+
+        tracks = [];
+        revokePerson();
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        gc.clearRect(0, 0, guide.width, guide.height);
+
+        document.querySelectorAll(".cho").forEach(e => {
+            e.hidden = false;
+        });
+
+        buttons();
+        hairMsg("");
+
+        if (show) msg("Camera đã tắt.");
+    }
+
+    function anchor(p, w, h) {
+        if (!p?.[454]) return null;
+
+        let a = p[33];
+        let b = p[263];
+
+        if (a.x > b.x) [a, b] = [b, a];
+
+        const dx = (b.x - a.x) * w;
+        const dy = (b.y - a.y) * h;
+        const d = Math.hypot(dx, dy);
+
+        if (d < 1) return null;
+
+        const cx = (a.x + b.x) * w / 2;
+        const cy = (a.y + b.y) * h / 2;
+        const nx = p[1].x * w - cx;
+        const ny = p[1].y * h - cy;
+
+        const xs = OVAL.map(i => p[i].x);
+        const ys = OVAL.map(i => p[i].y);
+
+        const x = Math.min(...xs);
+        const y = Math.min(...ys);
+        const x1 = Math.max(...xs);
+        const y1 = Math.max(...ys);
+
+        return {
+            cx, cy, d,
+            g: Math.atan2(dy, dx),
+            yaw: (nx * dx + ny * dy) / (d * d),
+            pitch: (-nx * dy + ny * dx) / (d * d),
+            box: {
+                x, y,
+                w: x1 - x,
+                h: y1 - y
+            }
+        };
+    }
+
+    // Giữ lựa chọn tóc khi mất dấu ngắn; không vẽ lên vị trí không chắc chắn.
+    const GIU_DAU_NGUOI_DA_QUET = 2500;
+
+    function updateTracks(faces, t, blends = []) {
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+        const seen = faces.map((p, i) => ({
+            pts: p,
+            a: anchor(p, w, h),
+            blend: blends[i]?.categories || []
+        })).filter(x => x.a);
+
+        const previous = tracks.filter(x =>
+            t - x.last < (x.id === approved ? GIU_DAU_NGUOI_DA_QUET : 600)
+        );
+        const pairs = [];
+
+        for (const tr of previous) {
+            const age = t - tr.last;
+
+            // Không tự nhận lại người đã mất dấu quá lâu chỉ dựa vào vị trí.
+            if (age > 1200) continue;
+
+            const dt = Math.min(age, 250);
+            const px = tr.a.cx / w + (tr.vx || 0) * dt;
+            const py = tr.a.cy / h + (tr.vy || 0) * dt;
+            const motion = Math.min(.09, Math.hypot(tr.vx || 0, tr.vy || 0) * dt);
+            const gate = age > 600 ? .10 : .16 + motion;
+
+            seen.forEach((f, i) => {
+                const dist = Math.hypot(px - f.a.cx / w, py - f.a.cy / h);
+                const scale = Math.abs(Math.log(f.a.d / tr.a.d));
+
+                if (dist >= gate || scale >= .65) return;
+
+                const cost = dist + scale * .06;
+                pairs.push({ tr, i, cost });
+            });
+        }
+
+        // So sánh hai chiều: mỗi người chỉ khớp một mặt và ngược lại.
+        const byTrack = new Map();
+        const byFace = seen.map(() => []);
+
+        for (const pair of pairs) {
+            if (!byTrack.has(pair.tr.id)) byTrack.set(pair.tr.id, []);
+            byTrack.get(pair.tr.id).push(pair);
+            byFace[pair.i].push(pair);
+        }
+
+        for (const list of byTrack.values()) list.sort((a, b) => a.cost - b.cost);
+        for (const list of byFace) list.sort((a, b) => a.cost - b.cost);
+
+        const used = new Set();
+        const out = [];
+
+        seen.forEach((f, i) => {
+            const ranked = byFace[i];
+            const best = ranked[0];
+            let tr = null;
+
+            if (best) {
+                const alternatives = byTrack.get(best.tr.id);
+
+                const ambiguous =
+                    alternatives[0].i !== i ||
+                    (ranked.length > 1 && ranked[1].cost - best.cost < .035) ||
+                    (alternatives.length > 1 && alternatives[1].cost - alternatives[0].cost < .035);
+
+                if (ambiguous || used.has(best.tr.id)) {
+                    // Giữ quyền thử tóc, tạm ẩn tóc cho tới khi phân biệt lại được.
+                    for (const candidate of ranked) candidate.tr.suspended = true;
+                    return;
+                }
+
+                tr = best.tr;
+            }
+
+            if (!tr) {
+                tr = {
+                    id: nextId++, first: t, last: t,
+                    patch: null, state: "waiting", retryAt: 0,
+                    error: "", errorYaw: null, attempts: 0,
+                    vx: 0, vy: 0
+                };
+
+            } else {
+                const elapsed = t - tr.last;
+
+                if (elapsed > 0 && elapsed <= 350) {
+                    const vx = (f.a.cx - tr.a.cx) / w / elapsed;
+                    const vy = (f.a.cy - tr.a.cy) / h / elapsed;
+
+                    tr.vx = Math.max(-.001, Math.min(.001, (tr.vx || 0) * .4 + vx * .6));
+                    tr.vy = Math.max(-.001, Math.min(.001, (tr.vy || 0) * .4 + vy * .6));
+
+                } else {
+                    tr.vx = 0;
+                    tr.vy = 0;
+                }
+            }
+
+            used.add(tr.id);
+            tr.pts = f.pts;
+            tr.a = f.a;
+            tr.blend = f.blend;
+            tr.last = t;
+            tr.suspended = false;
+
+            out.push(tr);
+        });
+
+        for (const tr of previous) {
+            if (!used.has(tr.id)) out.push(tr);
+        }
+
+        tracks = out;
+
+        if (approved && !tracks.some(x => x.id === approved)) {
+            revokePerson();
+
+            msg(
+                "Người đã quét rời khung hoặc mất dấu quá lâu. Quét lại để thử tóc.",
+                true
+            );
+        }
+
+        if (scan && !tracks.some(x => x.id === scan.id)) {
+            cancelScan(false);
+
+            msg(
+                "Mất dấu người đang quét. Bắt đầu lại lượt quét.",
+                true
+            );
+        }
+
+        processScan(t);
+    }
+
+    function current(t = performance.now()) {
+        return tracks.filter(x => !x.suspended && t - x.last < 350);
+    }
+
+    function cropHead(tr) {
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+        const b = tr.a.box;
+
+        // Mở rộng vùng mặt để bao gồm đỉnh đầu và tóc.
+        const x = Math.max(
+            0,
+            Math.floor((b.x - b.w * .65) * w)
+        );
+
+        const y = Math.max(
+            0,
+            Math.floor((b.y - b.h * 1.05) * h)
+        );
+
+        const x1 = Math.min(
+            w,
+            Math.ceil((b.x + b.w * 1.65) * w)
+        );
+
+        const y1 = Math.min(
+            h,
+            Math.ceil((b.y + b.h * 1.18) * h)
+        );
+
+        const c = document.createElement("canvas");
+        c.width = x1 - x;
+        c.height = y1 - y;
+
+        c.getContext("2d").drawImage(
+            video,
+            x, y, c.width, c.height,
+            0, 0, c.width, c.height
+        );
+
+        return c;
+    }
+
+    async function requestJSON(url, options, signal) {
+        const r = await fetch(url, {
+            credentials: "same-origin",
+            ...options,
+            signal
+        });
+
+        const type = r.headers.get("content-type") || "";
+
+        if (!type.includes("application/json")) {
+            throw Error(
+                "API trả HTTP " + r.status +
+                " thay vì JSON. Kiểm tra terminal Django."
+            );
+        }
+
+        const k = await r.json();
+
+        if (!r.ok || !k.thanh_cong) {
+            const e = Error(
+                k.thong_bao || "HTTP " + r.status
+            );
+
+            e.status = r.status;
+            throw e;
+        }
+
+        return k;
+    }
+
+    function pause(ms, signal) {
+        return new Promise((resolve, reject) => {
+            if (signal.aborted) {
+                reject(
+                    new DOMException("Đã hủy", "AbortError")
+                );
+                return;
+            }
+
+            const abort = () => {
+                clearTimeout(timer);
+
+                reject(
+                    new DOMException("Đã hủy", "AbortError")
+                );
+            };
+
+            const timer = setTimeout(() => {
+                signal.removeEventListener("abort", abort);
+                resolve();
+            }, ms);
+
+            signal.addEventListener("abort", abort, {
+                once: true
+            });
+        });
+    }
+
+    async function removeTrack(tr) {
+        if (!BAT_XOA_TOC || hairBusy || !stream) return;
+
+        hairBusy = true;
+        tr.state = "running";
+        tr.attempts++;
+
+        const myEpoch = epoch;
+        const controller = new AbortController();
+        hairController = controller;
+
+        const yaw = tr.a.yaw;
+        const started = performance.now();
+
+        const timer = setInterval(() => {
+            if (myEpoch === epoch) {
+                const seconds = Math.floor(
+                    (performance.now() - started) / 1000
+                );
+
+                hairMsg(
+                    "Đang xóa tóc người " +
+                    " Camera vẫn hoạt động."
+                );
+            }
+        }, 1000);
+
+        try {
+            const c = cropHead(tr);
+
+            if (c.width < 128 || c.height < 128) {
+                throw Error(
+                    "Vùng đầu quá nhỏ để AI xử lý."
+                );
+            }
+
+            const blob = await new Promise(resolve => {
+                c.toBlob(resolve, "image/jpeg", .95);
+            });
+
+            if (!blob) {
+                throw Error("Không tạo được ảnh camera.");
+            }
+
+            if (
+                myEpoch !== epoch ||
+                controller.signal.aborted
+            ) {
+                return;
+            }
+
+            const csrf = document.querySelector(
+                "[name=csrfmiddlewaretoken]"
+            )?.value;
+
+            if (!csrf) {
+                throw Error("Thiếu CSRF token.");
+            }
+
+            const form = new FormData();
+            form.append("anh", blob, "camera.jpg");
+
+            const job = await requestJSON(
+                API_HAIR,
+                {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrf
+                    },
+                    body: form
+                },
+                controller.signal
+            );
+
+            let k;
+
+            while (true) {
+                await pause(2000, controller.signal);
+
+                k = await requestJSON(
+                    API_HAIR + "?id=" +
+                    encodeURIComponent(job.id),
+                    {},
+                    controller.signal
+                );
+
+                if (k.trang_thai === "xong") break;
+
+                if (k.trang_thai === "loi") {
+                    throw Error(
+                        k.thong_bao ||
+                        "AI không xử lý được ảnh."
+                    );
+                }
+
+                if (
+                    performance.now() - started > 930000
+                ) {
+                    throw Error(
+                        "Tác vụ quá thời gian chờ."
+                    );
+                }
+            }
+
+            const img = new Image();
+            img.src = k.anh;
+
+            await img.decode();
+
+            // Người đã rời khung thì bỏ kết quả cũ.
+            if (
+                myEpoch !== epoch ||
+                controller.signal.aborted ||
+                !tracks.includes(tr)
+            ) {
+                return;
+            }
+
+            const a = anchor(
+                k.landmarks,
+                img.width,
+                img.height
+            );
+
+            if (!a) {
+                throw Error(
+                    "Ảnh kết quả thiếu điểm neo."
+                );
+            }
+
+            tr.patch = { img, a };
+            tr.state = "done";
+            tr.error = "";
+
+        } catch (e) {
+            if (
+                myEpoch === epoch &&
+                !controller.signal.aborted &&
+                tracks.includes(tr)
+            ) {
+                console.error("[Xóa tóc]", e);
+
+                tr.error = e.name === "TypeError"
+                    ? "Mất kết nối tới Django. " +
+                      "Kiểm tra terminal chạy web."
+                    : e.message;
+
+                tr.errorYaw = yaw;
+                tr.retryAt = performance.now() + 10000;
+
+                if (e.status === 429) {
+                    tr.state = "waiting";
+                    tr.attempts--;
+                    tr.retryAt = performance.now() + 3000;
+
+                } else {
+                    tr.state = "error";
+                }
+
+                hairMsg(
+                    "Người #" + tr.id + ": " + tr.error,
+                    true
+                );
+            }
+
+        } finally {
+            clearInterval(timer);
+
+            if (hairController === controller) {
+                hairController = null;
+                hairBusy = false;
+            }
+        }
+    }
+
+    function autoHair(t) {
+        if (!BAT_XOA_TOC || hairBusy) return;
+
+        const people = current(t);
+
+        if (!people.length) {
+            hairMsg(
+            );
+            return;
+        }
+
+        // Thử lại có giới hạn khi người đó đổi tư thế.
+        for (const tr of people) {
+            if (
+                tr.state === "error" &&
+                tr.attempts < 3 &&
+                t > tr.retryAt &&
+                Math.abs(tr.a.yaw - tr.errorYaw) > .06
+            ) {
+                tr.state = "waiting";
+            }
+        }
+
+        // Không kiểm tra vòng đỏ, khoảng cách quét,
+        // kết quả phân loại hay quyền ghép tóc ở đây.
+        const next = people
+            .filter(x =>
+                x.state === "waiting" &&
+                t >= x.retryAt &&
+                t - x.first >= 300
+            )
+            .sort((a, b) => a.first - b.first)[0];
+
+        if (next) {
+            void removeTrack(next);
+            return;
+        }
+
+        const done = people.filter(x => x.patch).length;
+        const errors = people.filter(x => x.state === "error");
+
+        hairMsg(
+            "Phát hiện " + people.length +
+            " người · Đã xử lý " + done + "." +
+            (
+                errors.length
+                    ? " Người #" + errors[0].id +
+                      ": " + errors[0].error
+                    : ""
+            ),
+            !!errors.length
+        );
+    }
+
+    function drawPatch(tr, w, h) {
+        if (!BAT_XOA_TOC || !tr.patch) return;
+
+        const n = anchor(tr.pts, w, h);
+        const a = tr.patch.a;
+        const s = n.d / a.d;
+        const dg = n.g - a.g;
+
+        // Không kéo mẫu chính diện sang một góc đầu
+        // mà nó không còn phù hợp.
+        if (
+            Math.abs(n.yaw - a.yaw) > .10 ||
+            Math.abs(n.pitch - a.pitch) > .15 ||
+            Math.abs(dg) > .25 ||
+            s < .35 ||
+            s > 4
+        ) {
+            return;
+        }
+
+        ctx.save();
+        ctx.translate(n.cx, n.cy);
+        ctx.rotate(dg);
+        ctx.scale(s, s);
+        ctx.drawImage(tr.patch.img, -a.cx, -a.cy);
+        ctx.restore();
+    }
+
+    async function chooseHair(toc, b) {
+        tocDangCho = null;
+
+        if (
+            !approved ||
+            !current().some(x => x.id === approved)
+        ) {
+            msg(
+                "Giữ người đang thử tóc trong khung " +
+                "trước khi chọn tóc.",
+                true
+            );
+            return;
+        }
+
+        const id = approved;
+        const myEpoch = epoch;
+        const token = ++hairLoad;
+
+        b.disabled = true;
+        b.textContent = "Đang tải…";
+
+        try {
+            const img = new Image();
+            img.src = toc.anh_thu_toc;
+
+            await img.decode();
+
+            if (
+                token !== hairLoad ||
+                approved !== id ||
+                myEpoch !== epoch
+            ) {
+                return;
+            }
+
+            hair = toc;
+            hairImage = img;
+            hairPose = null;
+
+            $("ten_toc_dang_thu").textContent = toc.ten;
+
+            document.querySelectorAll(".nut-thu-toc").forEach(x => {
+                x.textContent = "Thử kiểu tóc này";
+                x.setAttribute("aria-pressed", "false");
+            });
+
+            b.textContent = "Đang thử";
+            b.setAttribute("aria-pressed", "true");
+
+            msg(
+                "Tóc mới đang ghép cho người được chọn."
+            );
+
+        } catch (e) {
+            msg("Không tải được ảnh tóc.", true);
+
+        } finally {
+            b.disabled = false;
+
+            if (hair?.ma !== toc.ma) {
+                b.textContent = "Thử kiểu tóc này";
+            }
+
+            syncHairControls();
+            buttons();
+        }
+    }
+
+    function num(v, d, min, max) {
+        v = Number(v);
+
+        return Number.isFinite(v)
+            ? Math.max(min, Math.min(max, v))
+            : d;
+    }
+
+    function drawHair(w, h, t) {
+        if (!hairImage || !hair || !approved) return;
+
+        const tr = current(t).find(x => x.id === approved);
+
+        if (!tr) {
+            hairPose = null;
+            return;
+        }
+
+        const p = tr.pts;
+        const g = tr.a.g;
+
+        const fw = Math.hypot(
+            (p[454].x - p[234].x) * w,
+            (p[454].y - p[234].y) * h
+        );
+
+        const fh = Math.hypot(
+            (p[152].x - p[10].x) * w,
+            (p[152].y - p[10].y) * h
+        );
+
+        const dx = (
+            num(hair.do_lech_x, 0, -2, 2) -
+            Number($("chinh_ngang_toc").value)
+        ) * fw;
+
+        const dy = (
+            num(hair.do_lech_y, 0, -2, 2) +
+            Number($("chinh_doc_toc").value)
+        ) * fh;
+
+        const target = {
+            x: p[10].x * w +
+                dx * Math.cos(g) -
+                dy * Math.sin(g),
+
+            y: p[10].y * h +
+                dx * Math.sin(g) +
+                dy * Math.cos(g),
+
+            width: fw *
+                num(hair.ti_le_chieu_rong, 1.3, .1, 5) *
+                Number($("chinh_co_toc").value),
+
+            g,
+            t
+        };
+
+        if (!hairPose) {
+            hairPose = target;
+
+        } else {
+            const a = 1 - Math.exp(
+                -Math.max(
+                    1,
+                    Math.min(100, t - hairPose.t)
+                ) / 65
+            );
+
+            hairPose.x += (target.x - hairPose.x) * a;
+            hairPose.y += (target.y - hairPose.y) * a;
+            hairPose.width +=
+                (target.width - hairPose.width) * a;
+
+            hairPose.g += Math.atan2(
+                Math.sin(g - hairPose.g),
+                Math.cos(g - hairPose.g)
+            ) * a;
+
+            hairPose.t = t;
+        }
+
+        const brightness = Number(
+            $("chinh_sang_toc").value
+        );
+
+        if (
+            !drawHair.cache ||
+            drawHair.cache.source !== hairImage ||
+            drawHair.cache.brightness !== brightness
+        ) {
+            const c = document.createElement("canvas");
+            c.width = hairImage.naturalWidth;
+            c.height = hairImage.naturalHeight;
+
+            const cc = c.getContext("2d");
+            cc.drawImage(hairImage, 0, 0);
+            cc.globalCompositeOperation = "source-atop";
+            cc.fillStyle =
+                `rgba(0,0,0,${1 - brightness})`;
+
+            cc.fillRect(0, 0, c.width, c.height);
+
+            drawHair.cache = {
+                source: hairImage,
+                brightness,
+                c
+            };
+        }
+
+        const rw = hairPose.width;
+        const rh = rw *
+            hairImage.naturalHeight /
+            hairImage.naturalWidth;
+        
+                    const gocXoayThem =
+            num(
+                $("chinh_xoay_toc")?.value,
+                0,
+                -45,
+                45
+            ) * Math.PI / 180;
+
+        ctx.save();
+        ctx.translate(hairPose.x, hairPose.y);
+
+        // Camera hiển thị dạng gương nên đảo chiều chỉnh tay.
+        ctx.rotate(hairPose.g - gocXoayThem);
+
+        ctx.scale(-1, 1);
+        ctx.drawImage(
+            drawHair.cache.c,
+           -(1 - num(hair.diem_neo_x, .5, 0, 1)) * rw,
+            -num(hair.diem_neo_y, .65, 0, 1) * rh,
+            rw,
+            rh
+        );
+
+        ctx.restore();
+    }
+
+    function quality(tr) {
+        const b = tr.a.box;
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+
+        qctx.drawImage(
+            video,
+            b.x * w, b.y * h,
+            b.w * w, b.h * h,
+            0, 0, 160, 200
+        );
+
+        const d = qctx.getImageData(0, 0, 160, 200).data;
+        const g = new Float32Array(32000);
+
+        let sum = 0;
+        let dark = 0;
+        let light = 0;
+
+        for (let i = 0; i < g.length; i++) {
+            const v =
+                .299 * d[i * 4] +
+                .587 * d[i * 4 + 1] +
+                .114 * d[i * 4 + 2];
+
+            g[i] = v;
+            sum += v;
+
+            if (v < 20) dark++;
+            if (v > 245) light++;
+        }
+
+        let s = 0;
+        let s2 = 0;
+        let n = 0;
+
+        for (let y = 1; y < 199; y++) {
+            for (let x = 1; x < 159; x++) {
+                const i = y * 160 + x;
+
+                const v =
+                    g[i - 1] + g[i + 1] +
+                    g[i - 160] + g[i + 160] -
+                    4 * g[i];
+
+                s += v;
+                s2 += v * v;
+                n++;
+            }
+        }
+
+        return {
+            light: sum / g.length,
+            sharp: s2 / n - (s / n) ** 2,
+            dark: dark / g.length,
+            white: light / g.length
+        };
+    }
+
+    function scanQuality(tr) {
+        const a = tr.a;
+        const b = a.box;
+        const q = quality(tr);
+        let reason = "";
+
+        const blend = tr.blend || [];
+
+        const eyeBlink = Math.max(
+            ...blend
+                .filter(x => [
+                    "eyeBlinkLeft",
+                    "eyeBlinkRight"
+                ].includes(x.categoryName))
+                .map(x => x.score),
+            0
+        );
+
+        const jawOpen = blend.find(
+            x => x.categoryName === "jawOpen"
+        )?.score || 0;
+
+        if (
+            b.x < .025 || b.y < .025 ||
+            b.x + b.w > .975 ||
+            b.y + b.h > .975
+        ) {
+            reason = "Giữ toàn bộ mặt trong khung.";
+
+        } else if (b.h < .42) {
+            reason = "Tiến gần camera một chút.";
+
+        } else if (b.h > .72) {
+            reason = "Lùi xa camera một chút.";
+
+        } else if (
+            Math.abs(b.x + b.w / 2 - .5) > .12 ||
+            Math.abs(b.y + b.h / 2 - .5) > .14
+        ) {
+            reason = "Đưa mặt về giữa vòng hướng dẫn.";
+
+        } else if (Math.abs(a.g) > 12 * Math.PI / 180) {
+            reason = "Giữ đầu bớt nghiêng.";
+
+        } else if (q.light < 45 || q.dark > .35) {
+            reason = "Thêm ánh sáng phía trước.";
+
+        } else if (q.light > 220 || q.white > .25) {
+            reason = "Ánh sáng quá gắt.";
+
+        } else if (q.sharp < 25) {
+            reason = "Giữ yên để camera lấy nét.";
+
+        } else if (eyeBlink > .65) {
+            reason = "Mở mắt tự nhiên.";
+
+        } else if (jawOpen > .3) {
+            reason = "Khép miệng tự nhiên khi quét.";
+        }
+
+        $("khoang_cach").textContent =
+            "Kích thước mặt: " +
+            Math.round(b.h * 100) + "% chiều cao ảnh";
+
+        $("anh_sang").textContent =
+            "Ánh sáng: " + Math.round(q.light) + "/255";
+
+        $("do_net").textContent =
+            "Độ nét: " + Math.round(q.sharp);
+
+        $("tu_the").textContent =
+            "Nghiêng vai: " +
+            Math.round(Math.abs(a.g) * 180 / Math.PI) + "°";
+
+        return {
+            ok: !reason,
+            reason,
+            q
+        };
+    }
+
+    function startScan() {
+        const people = current();
+
+        if (people.length !== 1) {
+            msg(
+                "Để quét phân loại, chỉ một người trong khung.",
+                true
+            );
+            return;
+        }
+
+        if (scanBusy || !ready || scan) return;
+
+        revokePerson();
+
+        const task = {
+            id: people[0].id,
+            step: 0,
+            baseline: null,
+            start: performance.now(),
+            held: 0,
+            tick: 0,
+            samples: [],
+            prev: null,
+            badSince: 0,
+            best: null,
+            score: -1,
+            watchdog: null
+        };
+
+        scan = task;
+
+        task.watchdog = setTimeout(() => {
+            if (scan !== task) return;
+
+            cancelScan(false);
+
+            const text =
+                "Lượt quét quá 90 giây. " +
+                "Bấm Bắt đầu quét để thực hiện lại.";
+
+            msg(text, true);
+            $("chi_dan").textContent = text;
+        }, 90000);
+
+        $("tien_do").value = 0;
+        markSteps();
+        buttons();
+
+        msg(
+            "Bước 1/5: nhìn thẳng và giữ yên một chút."
+        );
+    }
+
+    function median(a) {
+        const b = [...a].sort((x, y) => x - y);
+        return b[Math.floor(b.length / 2)];
+    }
+
+    function processScan(t) {
+        const people = current(t);
+
+        if (people.length !== 1) {
+            if (scan) {
+                scan.tick = 0;
+                scan.prev = null;
+                scan.held = 0;
+                scan.samples = [];
+
+                msg(
+                    "Giữ đúng một người trong khung " +
+                    "để tiếp tục quét."
+                );
+            }
+
+            return;
+        }
+
+        const tr = people[0];
+        const check = scanQuality(tr);
+        tr.scanOK = check.ok;
+
+        if (!scan) return;
+
+        const task = scan;
+
+        if (tr.id !== task.id) {
+            cancelScan(false);
+
+            msg(
+                "Mất dấu người đang quét. " +
+                "Bấm Bắt đầu quét để thực hiện lại.",
+                true
+            );
+            return;
+        }
+
+        const a = tr.a;
+        const baseline = task.baseline;
+
+        const yaw = baseline
+            ? a.yaw - baseline.yaw
+            : a.yaw;
+
+        const pitch = baseline
+            ? a.pitch - baseline.pitch
+            : 0;
+
+        let poseOK = false;
+
+        const instructions = [
+            "Bước 1/5: nhìn thẳng, giữ yên khoảng 0,9 giây.",
+            "Bước 2/5: quay nhẹ sang phải — mũi sang PHẢI trên màn hình →.",
+            "Bước 3/5: quay nhẹ sang trái — mũi sang TRÁI trên màn hình ←.",
+            "Bước 4/5: cúi nhẹ cằm xuống, không xoay vòng đầu.",
+            "Bước 5/5: trở lại nhìn thẳng và giữ yên để tự chụp."
+        ];
+
+        if (task.step === 0) {
+            poseOK =
+                Math.abs(a.yaw) <= .16 &&
+                a.pitch >= .05 &&
+                a.pitch <= .9;
+
+        } else if (task.step === 1) {
+            poseOK =
+                yaw <= -.09 &&
+                yaw >= -.38 &&
+                Math.abs(pitch) <= .20;
+
+        } else if (task.step === 2) {
+            poseOK =
+                yaw >= .09 &&
+                yaw <= .38 &&
+                Math.abs(pitch) <= .20;
+
+        } else if (task.step === 3) {
+            poseOK =
+                pitch >= .05 &&
+                pitch <= .30 &&
+                Math.abs(yaw) <= .13;
+
+        } else {
+            poseOK =
+                Math.abs(yaw) <= .09 &&
+                Math.abs(pitch) <= .11;
+        }
+
+        const ok = check.ok && poseOK;
+        tr.scanOK = ok;
+
+        const instruction = check.ok
+            ? instructions[task.step]
+            : check.reason;
+
+        $("chi_dan").textContent = instruction;
+        msg(instruction);
+
+        if (!ok) {
+            if (!task.badSince) task.badSince = t;
+
+            task.tick = 0;
+
+            // Rung hoặc chớp mắt rất ngắn chỉ tạm dừng.
+            if (t - task.badSince > 250) {
+                task.held = 0;
+                task.samples = [];
+                task.prev = null;
+                task.best = null;
+                task.score = -1;
+            }
+
+            return;
+        }
+
+        task.badSince = 0;
+
+        const jumped = task.prev && (
+            Math.abs(a.yaw - task.prev.yaw) > .085 ||
+            Math.abs(a.pitch - task.prev.pitch) > .085 ||
+            Math.hypot(
+                a.cx - task.prev.cx,
+                a.cy - task.prev.cy
+            ) > a.d * .13
+        );
+
+        if (jumped) {
+            task.held = 0;
+            task.samples = [];
+            task.best = null;
+            task.score = -1;
+        }
+
+        // Chỉ cộng thời gian có tư thế đúng và có nhận diện.
+        const delta = task.tick
+            ? Math.max(0, Math.min(180, t - task.tick))
+            : 0;
+
+        task.tick = t;
+        task.prev = { ...a };
+        task.held += delta;
+
+        task.samples.push({
+            yaw: a.yaw,
+            pitch: a.pitch
+        });
+
+        if (task.samples.length > 30) {
+            task.samples.shift();
+        }
+
+        const duration =
+            task.step === 0 || task.step === 4
+                ? 900
+                : 550;
+
+        if (task.step === 4) {
+            const score = check.q.sharp / (
+                1 +
+                Math.abs(yaw) * 4 +
+                Math.abs(pitch) * 3
+            );
+
+            if (score > task.score) {
+                const capture = document.createElement("canvas");
+                capture.width = video.videoWidth;
+                capture.height = video.videoHeight;
+
+                if (
+                    capture.width > 0 &&
+                    capture.height > 0
+                ) {
+                    capture.getContext("2d").drawImage(
+                        video,
+                        0,
+                        0
+                    );
+
+                    task.best = capture;
+                    task.score = score;
+                }
+            }
+        }
+
+        const ratio = Math.min(
+            1,
+            task.held / duration
+        );
+
+        $("tien_do").value =
+            task.step * 20 + ratio * 20;
+
+        if (
+            ratio < 1 ||
+            task.samples.length < 4
+        ) {
+            return;
+        }
+
+        if (task.step === 0) {
+            task.baseline = {
+                yaw: median(
+                    task.samples.map(p => p.yaw)
+                ),
+                pitch: median(
+                    task.samples.map(p => p.pitch)
+                )
+            };
+        }
+
+        if (task.step === 4) {
+            clearTimeout(task.watchdog);
+            scan = null;
+            markSteps();
+
+            if (!task.best) {
+                $("tien_do").value = 0;
+
+                msg(
+                    "Chưa chụp được ảnh chính diện. " +
+                    "Bấm Bắt đầu quét để thực hiện lại.",
+                    true
+                );
+
+                buttons();
+                return;
+            }
+
+            $("tien_do").value = 100;
+
+            void classify(
+                task.best,
+                task.id
+            );
+
+            return;
+        }
+
+        task.step++;
+        task.held = 0;
+        task.tick = 0;
+        task.samples = [];
+        task.prev = null;
+        task.best = null;
+        task.score = -1;
+
+        markSteps();
+        buttons();
+
+        $("chi_dan").textContent =
+            instructions[task.step];
+
+        msg(instructions[task.step]);
+    }
+
+    function scanBounded(operation, signal) {
+        // Abort kết thúc cả Promise chụp ảnh lẫn gửi API.
+        return new Promise((resolve, reject) => {
+            let settled = false;
+
+            const finish = (callback, value) => {
+                if (settled) return;
+
+                settled = true;
+
+                signal.removeEventListener(
+                    "abort",
+                    abort
+                );
+
+                callback(value);
+            };
+
+            const abort = () => finish(
+                reject,
+                new DOMException(
+                    "Đã hủy",
+                    "AbortError"
+                )
+            );
+
+            signal.addEventListener(
+                "abort",
+                abort,
+                { once: true }
+            );
+
+            if (signal.aborted) {
+                abort();
+                return;
+            }
+
+            Promise.resolve()
+                .then(operation)
+                .then(
+                    value => finish(resolve, value),
+                    error => finish(reject, error)
+                );
+        });
+    }
+
+    async function classify(c, id) {
+        if (scanBusy) return;
+
+        if (!c || !c.width || !c.height) {
+            msg(
+                "Ảnh quét không hợp lệ. " +
+                "Bấm Bắt đầu quét để thực hiện lại.",
+                true
+            );
+
+            buttons();
+            return;
+        }
+
+        scanBusy = true;
+
+        const myEpoch = epoch;
+        const controller = new AbortController();
+        scanController = controller;
+
+        let expired = false;
+        const started = performance.now();
+
+        const timeout = setTimeout(() => {
+            expired = true;
+            controller.abort();
+        }, 60000);
+
+        let stage = "Đang tạo ảnh chính diện";
+
+        const report = () => {
+            if (
+                myEpoch !== epoch ||
+                scanController !== controller
+            ) {
+                return;
+            }
+
+            const seconds = Math.floor(
+                (performance.now() - started) / 1000
+            );
+
+            msg(
+                stage + "… " +
+                seconds +
+                " giây (tối đa 60 giây)."
+            );
+        };
+
+        const ticker = setInterval(
+            report,
+            1000
+        );
+
+        buttons();
+        report();
+
+        try {
+            const blob = await scanBounded(
+                () => new Promise((resolve, reject) => {
+                    try {
+                        c.toBlob(
+                            resolve,
+                            "image/jpeg",
+                            .95
+                        );
+
+                    } catch (error) {
+                        reject(error);
+                    }
+                }),
+                controller.signal
+            );
+
+            if (!blob) {
+                throw Error(
+                    "Không tạo được ảnh chính diện từ camera."
+                );
+            }
+
+            if (myEpoch !== epoch) return;
+
+            const csrf = document.querySelector(
+                "[name=csrfmiddlewaretoken]"
+            )?.value;
+
+            if (!csrf) {
+                throw Error(
+                    "Thiếu CSRF token. " +
+                    "Tải lại trang rồi quét lại."
+                );
+            }
+
+            const form = new FormData();
+            form.append(
+                "anh",
+                blob,
+                "face.jpg"
+            );
+
+            stage =
+                "Đang gửi ảnh và chờ AI phân tích";
+
+            report();
+
+            const k = await scanBounded(
+                () => requestJSON(
+                    API_FACE,
+                    {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": csrf
+                        },
+                        body: form
+                    },
+                    controller.signal
+                ),
+                controller.signal
+            );
+
+            if (myEpoch !== epoch) return;
+
+            // Không coi thông báo hàng chờ là kết quả AI.
+            if (
+                typeof k.chap_nhan !== "boolean" ||
+                !(
+                    k.dang_mat_du_doan ||
+                    k.nhan_hien_thi
+                )
+            ) {
+                throw Error(
+                    "API chưa trả kết quả phân loại hoàn chỉnh. " +
+                    "Kiểm tra terminal Django; lượt quét đã " +
+                    "kết thúc, không tiếp tục chờ vô hạn."
+                );
+            }
+
+            if (
+                !current().some(p => p.id === id)
+            ) {
+                throw Error(
+                    "Đã nhận kết quả nhưng người vừa quét " +
+                    "đã mất dấu. Giữ người trong khung và quét lại."
+                );
+            }
+
+            if (resultURL) {
+                URL.revokeObjectURL(resultURL);
+            }
+
+            resultURL = URL.createObjectURL(blob);
+            $("anh_da_quet").src = resultURL;
+
+            approved =
+                k.chap_nhan === true ? id : null;
+
+            showResult(k);
+
+            $("chi_dan").textContent =
+                "Đã hoàn tất 5 tư thế và nhận kết quả AI.";
+
+            msg(
+                approved
+                    ? "Quét thành công. Chọn kiểu tóc " +
+                      "để thử cho người #" + id + "."
+                    : "Đã nhận kết quả AI nhưng chưa xác định được kiểu tóc" +
+                      "vui lòng quét lại"
+            );
+
+        } catch (error) {
+            if (myEpoch === epoch) {
+                const text =
+                    error.name === "AbortError"
+                        ? (
+                            expired
+                                ? "AI chưa trả kết quả sau 60 giây. " +
+                                  "Đã kết thúc chờ; bấm Bắt đầu " +
+                                  "quét để thực hiện lại."
+                                : "Đã hủy lượt phân tích. " +
+                                  "Có thể bắt đầu quét lại."
+                        )
+                        : (
+                            error.name === "TypeError"
+                                ? "Không kết nối được API phân loại. " +
+                                  "Kiểm tra terminal Django rồi quét lại."
+                                : error.message
+                        );
+
+                msg(text, true);
+                $("chi_dan").textContent = text;
+            }
+
+        } finally {
+            clearTimeout(timeout);
+            clearInterval(ticker);
+
+            if (scanController === controller) {
+                scanController = null;
+                scanBusy = false;
+            }
+
+            buttons();
+        }
+    }
+
+    function showResult(k) {
+        $("ket_qua").hidden = false;
+        syncHairControls();
+
+        // Bổ sung mở hai nhóm sau lượt quét được AI chấp nhận.
+        moLuaChonSauQuet(k);
+
+        $("nhan_ket_qua").textContent =
+            k.nhan_hien_thi ||
+            TEN[k.dang_mat_du_doan] ||
+            "Chưa có kết quả";
+
+        $("tin_cay").textContent =
+            typeof k.do_tin_cay === "number"
+                ? "Độ tin cậy: " +
+                  (k.do_tin_cay * 100).toFixed(2) + "%"
+                : "";
+
+        $("ghi_chu_ket_qua").textContent =
+            k.thong_bao || "";
+
+        const xs = $("xac_suat");
+        xs.replaceChildren();
+
+        Object.entries(k.xac_suat || {})
+            .filter(([n, v]) =>
+                TEN[n] && Number.isFinite(v)
+            )
+            .sort((a, b) => b[1] - a[1])
+            .forEach(([n, v]) => {
+                const d = document.createElement("div");
+                const p = document.createElement("p");
+                const bar = document.createElement("progress");
+
+                p.textContent =
+                    TEN[n] + " — " +
+                    (v * 100).toFixed(2) + "%";
+
+                bar.max = 1;
+                bar.value = v;
+
+                d.append(p, bar);
+                xs.append(d);
+            });
+
+        const gy = $("goi_y");
+        gy.replaceChildren();
+
+        const list = approved
+            ? (k.cac_toc_goi_y || [])
+            : [];
+
+        if (!list.length) {
+            const p = document.createElement("p");
+
+            p.textContent = approved
+                ? "Kho chưa có kiểu tóc phù hợp."
+                : "Chưa mở thử tóc vì lượt quét chưa được chấp nhận.";
+
+            gy.append(p);
+        }
+
+        for (const toc of list) {
+            const d = document.createElement("article");
+            d.className = "toc";
+
+            if (toc.anh_gioi_thieu) {
+                const img = document.createElement("img");
+                img.src = toc.anh_gioi_thieu;
+                img.alt = toc.ten;
+                img.loading = "lazy";
+                d.append(img);
+            }
+
+            const title = document.createElement("h4");
+            const desc = document.createElement("p");
+
+            title.textContent = toc.ten;
+            desc.textContent = toc.mo_ta;
+
+            d.append(title, desc);
+
+            if (toc.anh_thu_toc) {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.className = "nut nut-thu-toc";
+                b.textContent = "Thử kiểu tóc này";
+                b.setAttribute("aria-pressed", "false");
+
+                b.addEventListener("click", () => {
+                    chooseHair(toc, b);
+                });
+
+                d.append(b);
+            }
+
+            gy.append(d);
+        }
+    }
+
+    function drawGuide() {
+        const rect = $("vung_goc").getBoundingClientRect();
+        const W = Math.round(rect.width);
+        const H = Math.round(rect.height);
+
+        if (!W || !H || !video.videoWidth) return;
+
+        if (guide.width !== W || guide.height !== H) {
+            guide.width = W;
+            guide.height = H;
+        }
+
+        gc.clearRect(0, 0, W, H);
+
+        const s = Math.min(
+            W / video.videoWidth,
+            H / video.videoHeight
+        );
+
+        const dw = video.videoWidth * s;
+        const dh = video.videoHeight * s;
+        const people = current();
+
+        const good =
+            people.length === 1 &&
+            people[0].scanOK;
+
+        gc.strokeStyle = good ? "#7bc67a" : "#ed7d70";
+        gc.lineWidth = 3;
+        gc.setLineDash([10, 7]);
+        gc.beginPath();
+
+        gc.ellipse(
+            W / 2, H / 2,
+            Math.min(dw * .28, dh * .26),
+            dh * .37,
+            0, 0, Math.PI * 2
+        );
+
+        gc.stroke();
+        gc.setLineDash([]);
+    }
+
+    const WORKER = `
+        let detector = null;
+
+        self.onmessage = async e => {
+            const p = e.data;
+
+            if (p.type === "init") {
+                try {
+                    const {
+                        FaceLandmarker,
+                        FilesetResolver
+                    } = await import(p.lib);
+
+                    const fs = await FilesetResolver.forVisionTasks(
+                        p.wasm
+                    );
+
+                    const opts = {
+                        baseOptions: {
+                            modelAssetPath: p.model,
+                            delegate: "GPU"
+                        },
+                        runningMode: "VIDEO",
+                        numFaces: 5,
+                        minFaceDetectionConfidence: .6,
+                        minFacePresenceConfidence: .6,
+                        minTrackingConfidence: .6,
+                        outputFaceBlendshapes: true
+                    };
+
+                    try {
+                        detector = await FaceLandmarker.createFromOptions(
+                            fs,
+                            opts
+                        );
+
+                    } catch (e) {
+                        opts.baseOptions.delegate = "CPU";
+
+                        detector = await FaceLandmarker.createFromOptions(
+                            fs,
+                            opts
+                        );
+                    }
+
+                    self.postMessage({
+                        type: "ready"
+                    });
+
+                } catch (e) {
+                    self.postMessage({
+                        type: "error",
+                        message: "Không nạp được MediaPipe: " + e.message
+                    });
+                }
+
+            } else if (p.type === "frame") {
+                try {
+                    const r = detector.detectForVideo(
+                        p.image,
+                        p.time
+                    );
+
+                    self.postMessage({
+                        type: "faces",
+                        faces: r.faceLandmarks,
+                        blends: r.faceBlendshapes,
+                        time: p.time
+                    });
+
+                } catch (e) {
+                    self.postMessage({
+                        type: "error",
+                        message: "Theo dõi mặt lỗi: " + e.message
+                    });
+
+                } finally {
+                    p.image.close();
+                }
+            }
+        };
+    `;
+
+    async function openCamera() {
+        if (stream || opening) return;
+
+        opening = true;
+        const id = ++epoch;
+        buttons();
+
+        try {
+            const s = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: false
+            });
+
+            if (id !== epoch) {
+                s.getTracks().forEach(t => t.stop());
+                return;
+            }
+
+            stream = s;
+            video.srcObject = s;
+            await video.play();
+
+            if (id !== epoch) return;
+
+            opening = false;
+
+            document.querySelectorAll(".cho").forEach(e => {
+                e.hidden = true;
+            });
+
+            const u = URL.createObjectURL(
+                new Blob([WORKER], {
+                    type: "text/javascript"
+                })
+            );
+
+            worker = new Worker(u);
+            URL.revokeObjectURL(u);
+
+            worker.onmessage = e => {
+                if (id !== epoch) return;
+
+                const p = e.data;
+
+                if (p.type === "ready") {
+                    ready = true;
+
+                    msg(
+                        "Camera sẵn sàng. Chọn tóc người nổi tiếng " 
+                    );
+
+                    buttons();
+
+                } else if (p.type === "faces") {
+                    workerBusy = false;
+
+                    if (
+                        performance.now() - p.time < 1000
+                    ) {
+                        updateTracks(
+                            p.faces,
+                            p.time,
+                            p.blends
+                        );
+                    }
+
+                } else {
+                    workerBusy = false;
+                    ready = false;
+                    msg(p.message, true);
+                    hairMsg(p.message, true);
+                    buttons();
+                }
+            };
+
+            worker.onerror = e => {
+                if (id !== epoch) return;
+
+                console.error("MediaPipe worker:", e);
+
+                ready = false;
+                workerBusy = false;
+
+                msg(
+                    "Bộ theo dõi mặt gặp lỗi. " +
+                    "Tắt rồi bật camera.",
+                    true
+                );
+
+                buttons();
+            };
+
+            worker.postMessage({
+                type: "init",
+
+                lib: new URL(
+                    "{% static 'thu_toc/mediapipe/vision_bundle.js' %}",
+                    location.href
+                ).href,
+
+                wasm: new URL(
+                    "{% static 'thu_toc/mediapipe/wasm/' %}",
+                    location.href
+                ).href,
+
+                model: new URL(
+                    "{% static 'thu_toc/mediapipe/face_landmarker.task' %}",
+                    location.href
+                ).href
+            });
+
+            s.getVideoTracks().forEach(t => {
+                t.addEventListener("ended", () => {
+                    if (id === epoch) stop();
+                });
+            });
+
+            lastFrame = -1;
+            lastDetect = 0;
+
+            buttons();
+            render();
+
+        } catch (e) {
+            if (id !== epoch) return;
+
+            stop(false);
+
+            msg(
+                "Không mở được camera: " + e.message,
+                true
+            );
+        }
+    }
+
+    function render() {
+        if (!stream) return;
+
+        const t = performance.now();
+        const w = video.videoWidth;
+        const h = video.videoHeight;
+
+        if (w && h) {
+            if (
+                canvas.width !== w ||
+                canvas.height !== h
+            ) {
+                canvas.width = w;
+                canvas.height = h;
+            }
+
+            ctx.drawImage(video, 0, 0, w, h);
+
+            const people = current(t);
+
+            // Mỗi người dùng vùng xóa tóc của chính họ.
+            for (const tr of people) {
+                drawPatch(tr, w, h);
+            }
+
+            // Bổ sung thử tóc người nổi tiếng khi nhận mặt.
+            thuTocNguoiKhiCoMat(t);
+
+            // Chỉ ID approved được ghép tóc mới.
+            drawHair(w, h, t);
+            drawGuide();
+
+            // Hoàn toàn độc lập với điều kiện vòng đỏ/xanh.
+            if (BAT_XOA_TOC && ready) autoHair(t);
+
+            if (
+                ready &&
+                !workerBusy &&
+                t - lastDetect >= 100 &&
+                lastFrame !== video.currentTime
+            ) {
+                lastDetect = t;
+                lastFrame = video.currentTime;
+                workerBusy = true;
+
+                const id = epoch;
+
+                createImageBitmap(video, {
+                    resizeWidth: 640,
+                    resizeHeight: Math.round(640 * h / w)
+                }).then(img => {
+                    if (id !== epoch || !worker) {
+                        img.close();
+                        return;
+                    }
+
+                    worker.postMessage({
+                        type: "frame",
+                        image: img,
+                        time: t
+                    }, [img]);
+
+                }).catch(() => {
+                    if (id === epoch) workerBusy = false;
+                });
+            }
+        }
+
+        if (
+            scan &&
+            t - scan.start > 90000
+        ) {
+            cancelScan(false);
+            msg("Lượt quét quá lâu. Bắt đầu lại.", true);
+        }
+
+        if (
+            approved &&
+            !current(t).some(x => x.id === approved) &&
+            !tracks.some(x =>
+                x.id === approved &&
+                t - x.last < GIU_DAU_NGUOI_DA_QUET
+            )
+        ) {
+            revokePerson();
+        }
+
+        raf = requestAnimationFrame(render);
+    }
+
+    $("nut_bat").addEventListener("click", openCamera);
+    $("nut_tat").addEventListener("click", () => stop());
+    $("nut_quet").addEventListener("click", startScan);
+    $("nut_huy").addEventListener("click", () => cancelScan());
+    $("nut_bo_toc").addEventListener("click", clearHair);
+
+    window.addEventListener("pagehide", () => {
+        stop(false);
+
+        if (resultURL) {
+            URL.revokeObjectURL(resultURL);
+        }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) stop(false);
+    });
+
+    khoiTaoChupAnh({
+        nguon: () => canvas,
+
+        // Mất tóc hoặc mất quyền thử tóc thì khóa phòng chụp.
+        conKieuToc: () =>
+            !!stream &&
+            !!hairImage &&
+            !!approved,
+
+        // Mất dấu thoáng qua chỉ tạm dừng đếm ngược.
+        sanSang: () =>
+            !!stream &&
+            ready &&
+            !!hairImage &&
+            !!approved &&
+            video.readyState >= 2 &&
+            current().some(x => x.id === approved)
+    });
+
+    buttons();
+</script>
+
+<script>
+    // Chỉ ẩn hướng dẫn khi lượt quét đã được AI chấp nhận.
+    (() => {
+        const huongDan = document.getElementById("bang_huong_dan_quet");
+        const boChon = document.getElementById("kc_chon");
+
+        if (!huongDan || !boChon) return;
+
+        const capNhatBoCuc = () => {
+            huongDan.hidden =
+                boChon.dataset.quetThanhCong === "true";
+        };
+
+        new MutationObserver(capNhatBoCuc).observe(boChon, {
+            attributes: true,
+            attributeFilter: ["data-quet-thanh-cong"]
+        });
+
+        capNhatBoCuc();
+    })();
+</script>
+</body>
+</html>

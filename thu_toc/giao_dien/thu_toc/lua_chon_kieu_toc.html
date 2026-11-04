@@ -1,0 +1,264 @@
+<style>
+    .kc-chon {
+        margin: 20px 0 0;
+        padding: 20px 0 0;
+        border-top: 1px solid var(--vien);
+    }
+
+    .kc-chon[data-quet-thanh-cong="true"] {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .kc-chon h2 {
+        margin: 0 0 12px;
+        font-size: 21px;
+    }
+
+    .kc-nhom {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+    }
+
+    .kc-nhom button {
+        border: 1px solid var(--vien);
+        border-radius: 999px;
+        background: #fffdf8;
+        color: var(--chu);
+        padding: 9px 12px;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+    }
+
+    .kc-nhom button[aria-pressed="true"] {
+        background: var(--xanh);
+        color: white;
+        border-color: var(--xanh);
+    }
+
+    .kc-tim {
+        display: flex;
+        gap: 8px;
+        margin: 12px 0;
+    }
+
+    .kc-tim input {
+        min-width: 0;
+        flex: 1;
+        border: 1px solid var(--vien);
+        border-radius: 10px;
+        padding: 10px;
+        font: inherit;
+        background: white;
+    }
+
+    .kc-tim button {
+        padding: 10px 13px;
+        min-width: auto;
+    }
+
+    .kc-chon .goi-y {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        max-height: 500px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .kc-chon .toc {
+        min-width: 0;
+        padding: 10px;
+        border: 1px solid var(--vien);
+        border-radius: 12px;
+        background: #fffdf8;
+    }
+
+    .kc-chon .toc img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+    }
+
+    .kc-chon .toc h4 {
+        font-size: 14px;
+        margin: 10px 0 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .kc-chon .toc p {
+        font-size: 12px;
+        color: var(--phu);
+        margin: 5px 0 10px;
+    }
+
+    .kc-chon .toc .nut {
+        padding: 9px;
+        width: 100%;
+        font-size: 12px;
+        min-width: 0;
+    }
+
+    .kc-phan-trang {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .kc-phan-trang button {
+        border: 1px solid var(--vien);
+        border-radius: 8px;
+        padding: 8px 12px;
+        background: white;
+        cursor: pointer;
+    }
+
+    .kc-phan-trang button:disabled {
+        opacity: .4;
+        cursor: default;
+    }
+
+    .kc-chon [hidden] {
+        display: none !important;
+    }
+
+    #kc_trang_thai,
+    #kc_thong_bao_tim {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--phu);
+    }
+
+    /* Hướng dẫn luôn nằm đầu cột bên cạnh camera trên máy tính. */
+    .bo-cuc .cot-tu-van .cac-buoc {
+        display: block;
+    }
+
+    .bo-cuc .cot-tu-van .buoc {
+        align-items: center;
+        border-bottom: 1px solid var(--vien);
+    }
+
+    @media (min-width: 761px) and (max-width: 1050px) {
+        .bo-cuc {
+            grid-template-columns: minmax(0, 1fr) 320px;
+        }
+
+        .cot-tu-van {
+            position: sticky;
+            top: 18px;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .bo-cuc {
+            grid-template-columns: 1fr;
+        }
+
+        .cot-tu-van {
+            position: static;
+        }
+    }
+</style>
+
+<section class="kc-chon"
+         id="kc_chon"
+         data-quet-thanh-cong="false"
+         aria-labelledby="kc_tieu_de">
+
+    <h2 id="kc_tieu_de">Thử tóc người nổi tiếng</h2>
+
+    <div class="kc-nhom"
+         id="kc_nhom"
+         role="group"
+         aria-label="Nhóm kiểu tóc"
+         hidden>
+
+        <button id="kc_nut_hop"
+                type="button"
+                aria-pressed="false"
+                hidden>
+            Hợp khuôn mặt
+        </button>
+
+        <button id="kc_nut_pha"
+                type="button"
+                aria-pressed="false"
+                hidden>
+            Phá cách
+        </button>
+
+        <button id="kc_nut_nguoi"
+                type="button"
+                aria-pressed="true">
+            Người nổi tiếng
+        </button>
+    </div>
+
+    <p id="kc_trang_thai" role="status">
+        Nhập tên rồi bấm Tìm.
+        Tóc người nổi tiếng không cần quét 5 tư thế.
+    </p>
+
+    <div id="kc_bang_hop" hidden>
+        <div id="goi_y" class="goi-y"></div>
+    </div>
+
+    <div id="kc_bang_pha" hidden>
+        <p class="ghi-chu">
+            Các mẫu tóc thông thường khác dạng mặt của bạn;
+            không gồm tóc người nổi tiếng.
+        </p>
+
+        <div id="kc_pha" class="goi-y"></div>
+    </div>
+
+    <div id="kc_bang_nguoi">
+        <form id="kc_tim" class="kc-tim" role="search">
+            <input id="kc_tu_khoa"
+                   type="search"
+                   maxlength="100"
+                   aria-label="Tên người nổi tiếng hoặc kiểu tóc"
+                   placeholder="Ví dụ: Sơn Tùng, son tung…"
+                   enterkeyhint="search">
+
+            <button class="nut" type="submit">Tìm</button>
+        </form>
+
+        <p id="kc_thong_bao_tim" role="status">
+            Nhập tên người bạn muốn tìm rồi bấm Tìm.
+        </p>
+
+        <div id="kc_nguoi" class="goi-y" hidden></div>
+
+        <nav class="kc-phan-trang"
+             id="kc_phan_trang"
+             aria-label="Trang tóc người nổi tiếng"
+             hidden>
+
+            <button id="kc_truoc"
+                    type="button"
+                    aria-label="Trang trước"
+                    disabled>
+                ←
+            </button>
+
+            <span id="kc_so_trang"></span>
+
+            <button id="kc_sau"
+                    type="button"
+                    aria-label="Trang sau"
+                    disabled>
+                →
+            </button>
+        </nav>
+    </div>
+</section>

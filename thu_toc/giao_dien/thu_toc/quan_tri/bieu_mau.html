@@ -1,0 +1,215 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+
+{% block noi_dung %}
+<div class="dau-muc">
+    <div>
+        <span class="nhan">CẬP NHẬT THÔNG TIN</span>
+        <h1>{{ tieu_de }}</h1>
+
+        <p class="phu">
+            Kiểm tra thông tin rồi bấm Lưu thay đổi.
+            Các mục có dấu * là bắt buộc.
+        </p>
+    </div>
+
+    <a class="nut nut-phu"
+       href="{% url 'admin:danh_sach' muc_hien_tai %}">
+        ← Về danh sách
+    </a>
+</div>
+
+<div class="bo-form">
+    <form method="post"
+          enctype="multipart/form-data"
+          class="the">
+        {% csrf_token %}
+
+        {% for truong_an in bieu_mau.hidden_fields %}
+            {{ truong_an }}
+        {% endfor %}
+
+        <div style="margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--vien)">
+            <h2>Thông tin chi tiết</h2>
+            <p class="phu" style="margin:0">
+                Điền thông tin vào các mục bên dưới.
+            </p>
+        </div>
+
+        {% if bieu_mau.errors %}
+            <div class="thong-bao error" role="alert">
+                <strong>Chưa lưu được thông tin.</strong>
+                <br>
+                Kiểm tra các trường được báo lỗi bên dưới.
+
+                {{ bieu_mau.non_field_errors }}
+
+                {% for truong_an in bieu_mau.hidden_fields %}
+                    {% if truong_an.errors %}
+                        <div>
+                            {{ truong_an.label }}:
+                            {{ truong_an.errors }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="cac-truong">
+            {% for truong in bieu_mau.visible_fields %}
+                <div class="truong {% if truong.name == 'mo_ta' or truong.name == 'dang_mat_phu_hop' or truong.name == 'permissions' or truong.name == 'groups' or truong.name == 'user_permissions' %}rong{% endif %} {% if truong.errors %}truong-loi{% endif %}">
+                    <label{% if truong.id_for_label %} for="{{ truong.id_for_label }}"{% endif %}>
+                        {{ truong.label }}
+
+                        {% if truong.field.required %}
+                            <span style="color:var(--do)">*</span>
+                        {% endif %}
+                    </label>
+
+                    {{ truong }}
+
+                    {% if truong.help_text %}
+                        <div class="giup">
+                            {{ truong.help_text }}
+                        </div>
+                    {% endif %}
+
+                    {{ truong.errors }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="luu-form">
+            <button class="nut" type="submit">
+                Lưu thay đổi
+            </button>
+
+            <a class="nut nut-phu"
+               href="{% url 'admin:danh_sach' muc_hien_tai %}">
+                Hủy, về danh sách
+            </a>
+        </div>
+    </form>
+
+    <aside class="the goi-y">
+        <h2>Hướng dẫn nhanh</h2>
+
+        {% if muc_hien_tai == 'toc' %}
+            <p>
+                <strong>Ảnh giới thiệu</strong><br>
+                Dùng để hiển thị kiểu tóc trong danh mục.
+            </p>
+
+            <p>
+                <strong>Ảnh thử tóc</strong><br>
+                Dùng PNG chỉ chứa tóc với nền trong suốt.
+            </p>
+
+            <p>
+                <strong>Dạng mặt phù hợp</strong><br>
+                Chọn các dạng mặt để dùng trong
+                gợi ý sau khi quét.
+            </p>
+
+            <p>
+                Mỗi ảnh tối đa 8 MB,
+                không quá 20 triệu điểm ảnh.
+            </p>
+
+            <p>
+                Giữ thông số neo và tỷ lệ mặc định
+                nếu chưa cần chỉnh.
+                Thứ tự nhỏ hiển thị trước.
+            </p>
+
+            <p>
+                Bỏ chọn “Hiển thị trên website”
+                để ẩn tóc mà không xóa dữ liệu.
+            </p>
+
+            {% if doi_tuong.anh_gioi_thieu %}
+                <p><strong>Ảnh giới thiệu hiện tại</strong></p>
+
+                <img class="anh-xem"
+                     src="{{ doi_tuong.anh_gioi_thieu.url }}"
+                     alt="Ảnh giới thiệu hiện tại">
+            {% endif %}
+
+            {% if doi_tuong.anh_thu_toc %}
+                <p><strong>Ảnh thử tóc hiện tại</strong></p>
+
+                <img class="anh-xem"
+                     src="{{ doi_tuong.anh_thu_toc.url }}"
+                     alt="Ảnh thử tóc hiện tại">
+            {% endif %}
+
+        {% elif muc_hien_tai == 'tai-khoan' %}
+            <p>
+                <strong>Tài khoản thường</strong><br>
+                Không chọn “Cho phép vào quản trị”.
+            </p>
+
+            <p>
+                <strong>Nhân sự</strong><br>
+                Chọn quyền vào quản trị và nhóm
+                có quyền quản lý tóc hoặc dạng mặt.
+            </p>
+
+            <p>
+                <strong>Quản trị viên cấp cao</strong><br>
+                Có toàn quyền. Chỉ cấp cho người
+                được phép quản lý toàn hệ thống.
+            </p>
+
+            <p>
+                Khi sửa, để trống cả hai ô mật khẩu
+                để giữ mật khẩu cũ.
+            </p>
+
+            <p>
+                Không thể tự xóa, khóa hoặc hạ quyền
+                tài khoản đang đăng nhập.
+            </p>
+
+        {% elif muc_hien_tai == 'nhom-quyen' %}
+            <p>
+                Đặt tên rõ vai trò,
+                ví dụ “Biên tập kiểu tóc”.
+            </p>
+
+            <p>
+                Xem: đọc danh sách.<br>
+                Thêm: tạo dữ liệu.<br>
+                Sửa: cập nhật.<br>
+                Xóa: xóa vĩnh viễn.
+            </p>
+
+            <p>
+                Nhân sự phải có quyền xem hoặc sửa
+                của mục mới thấy mục đó trong menu.
+            </p>
+
+            <p>
+                Quản lý tài khoản và nhóm quyền
+                chỉ dành cho quản trị viên cấp cao.
+            </p>
+
+        {% else %}
+            <p>
+                Chọn đúng một trong năm dạng mặt
+                mà mô hình hiện hỗ trợ.
+            </p>
+
+            <p>
+                Mỗi dạng chỉ được tạo một lần.
+                Chỉnh dữ liệu này không huấn luyện lại
+                hoặc thay đổi mô hình AI.
+            </p>
+
+            <p>
+                Đổi hoặc xóa dạng mặt sẽ ảnh hưởng
+                liên kết tư vấn tóc đang có.
+            </p>
+        {% endif %}
+    </aside>
+</div>
+{% endblock %}

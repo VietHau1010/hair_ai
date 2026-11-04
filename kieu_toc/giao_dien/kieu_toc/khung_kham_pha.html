@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block tieu_de %}Khám phá kiểu tóc{% endblock %} — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            color-scheme: light;
+            --nen: #f5f7f5;
+            --chu: #203329;
+            --phu: #68766d;
+            --xanh: #24583d;
+            --vien: #e0e8e2;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font: 15px/1.6 system-ui, sans-serif;
+            background: var(--nen);
+            color: var(--chu);
+        }
+
+        a { color: var(--xanh); }
+
+        button, input, select { font: inherit; }
+
+        button, a, input, select { touch-action: manipulation; }
+
+        :focus-visible {
+            outline: 3px solid #bc8e36;
+            outline-offset: 3px;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid var(--vien);
+        }
+
+        .thanh {
+            max-width: 1180px;
+            margin: auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .thuong-hieu {
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .dieu-huong {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .dieu-huong a {
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1180px;
+            margin: auto;
+            padding: 30px 24px 60px;
+        }
+
+        h1 {
+            font-size: clamp(25px, 4vw, 36px);
+            margin: 0 0 8px;
+            line-height: 1.25;
+        }
+
+        h2 { line-height: 1.4; }
+
+        .phu { color: var(--phu); }
+
+        .dau-trang { margin-bottom: 24px; }
+
+        .nhan-muc {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--xanh);
+            font-weight: 700;
+        }
+
+        .cac-nhom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        .cac-nhom a {
+            border: 1px solid var(--vien);
+            padding: 9px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            background: white;
+        }
+
+        .cac-nhom .chon {
+            background: var(--xanh);
+            color: white;
+        }
+
+        .bo-loc {
+            display: flex;
+            gap: 12px;
+            align-items: end;
+            flex-wrap: wrap;
+            background: white;
+            border: 1px solid var(--vien);
+            padding: 18px;
+            border-radius: 16px;
+            margin: 20px 0;
+        }
+
+        .bo-loc label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .bo-loc input,
+        .bo-loc select {
+            padding: 10px 12px;
+            border: 1px solid var(--vien);
+            border-radius: 9px;
+            background: white;
+            max-width: 100%;
+        }
+
+        .bo-loc .o-tim {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .o-tim input { width: 100%; }
+
+        .nut,
+        button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--xanh);
+            border-radius: 9px;
+            padding: 10px 14px;
+            background: var(--xanh);
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nut-phu {
+            background: white;
+            color: var(--xanh);
+            border-color: var(--vien);
+        }
+
+        .danh-sach {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .the-toc {
+            background: white;
+            border: 1px solid var(--vien);
+            border-radius: 16px;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .khung-anh {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            background: #e8eee9;
+        }
+
+        .khung-anh img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .khung-anh .nut-thu {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 999px;
+            padding: 8px 13px;
+            font-size: 12px;
+            box-shadow: 0 2px 8px #0002;
+        }
+
+        .noi-dung { padding: 16px; }
+
+        .noi-dung h2 {
+            font-size: 17px;
+            margin: 0 0 6px;
+            overflow-wrap: anywhere;
+        }
+
+        .nguoi {
+            color: var(--xanh);
+            font-weight: 600;
+            margin: 0 0 8px;
+            font-size: 13px;
+        }
+
+        .mo-ta {
+            font-size: 13px;
+            color: var(--phu);
+            margin: 8px 0 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .cac-nhan {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        .nhan {
+            background: #f0f6f1;
+            color: var(--xanh);
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 999px;
+        }
+
+        .trong {
+            padding: 36px 20px;
+            text-align: center;
+            background: white;
+            border: 1px dashed var(--vien);
+            border-radius: 16px;
+        }
+
+        .phan-trang {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .thong-bao {
+            padding: 12px 16px;
+            background: #eaf4eb;
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--phu);
+            font-size: 13px;
+        }
+
+        @media (max-width: 950px) {
+            .danh-sach {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .danh-sach {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            main { padding: 24px 16px; }
+            .thanh { padding: 16px; }
+            .dieu-huong { gap: 12px; }
+            .noi-dung { padding: 12px; }
+            .noi-dung h2 { font-size: 15px; }
+        }
+
+        @media (max-width: 360px) {
+            .danh-sach { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="thanh">
+        <a class="thuong-hieu"
+           href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav class="dieu-huong" aria-label="Điều hướng">
+            <a href="{% url 'thu_toc:trang_chu' %}">Trang chủ</a>
+            <a href="{% url 'thu_toc:phong_thu_toc' %}">Phòng thử tóc</a>
+            <a href="{% url 'kieu_toc:danh_sach' %}">Khám phá</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'kieu_toc:yeu_thich' %}">Yêu thích</a>
+                <a href="{% url 'tai_khoan:thong_tin' %}">Tài khoản</a>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'admin:index' %}">Quản trị</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'tai_khoan:dang_nhap' %}">Đăng nhập</a>
+                <a href="{% url 'tai_khoan:dang_ky' %}">Đăng ký</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% for thong_bao in messages %}
+        <p class="thong-bao" role="status">{{ thong_bao }}</p>
+    {% endfor %}
+
+    {% block noi_dung %}{% endblock %}
+</main>
+
+<footer>HAULONGHAIR — Tóc bạn xấu để tôi lo</footer>
+</body>
+</html>

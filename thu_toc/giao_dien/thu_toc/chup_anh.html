@@ -1,0 +1,1218 @@
+{% load static %}
+
+<link rel="stylesheet"
+      href="{% static 'thu_toc/chup_anh.css' %}">
+
+<style>
+    #phong_chup_anh {
+        --ca-nen-moi: #f5f6f2;
+        --ca-giay-moi: #ffffff;
+        --ca-chu-moi: #23352a;
+        --ca-phu-moi: #69766c;
+        --ca-xanh: #2c6049;
+        --ca-vien: #dfe6dd;
+
+        width: min(1480px, 97vw);
+        max-width: 1480px;
+        max-height: 95dvh;
+        padding: 0;
+        border: 1px solid #d4ddd2;
+        border-radius: 20px;
+        background: var(--ca-nen-moi);
+        color: var(--ca-chu-moi);
+        box-shadow: 0 24px 90px rgb(13 32 21 / 22%);
+        font-family: Arial, "Segoe UI", sans-serif;
+    }
+
+    #phong_chup_anh::backdrop {
+        background: rgb(14 28 21 / 72%);
+    }
+
+    #phong_chup_anh *,
+    #phong_chup_anh *::before,
+    #phong_chup_anh *::after {
+        box-sizing: border-box;
+    }
+
+    #phong_chup_anh [hidden] {
+        display: none !important;
+    }
+
+    #phong_chup_anh h2,
+    #phong_chup_anh h3,
+    #phong_chup_anh p {
+        overflow-wrap: anywhere;
+    }
+
+    #phong_chup_anh button,
+    #phong_chup_anh input,
+    #phong_chup_anh select {
+        font-family: inherit;
+    }
+
+    #phong_chup_anh .ca-dau {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 18px;
+        padding: 22px 28px;
+        border-bottom: 1px solid var(--ca-vien);
+        background: #fff;
+    }
+
+    #phong_chup_anh .ca-thuong-hieu {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+    }
+
+    #phong_chup_anh .ca-bieu-tuong {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #d9e7da;
+        border-radius: 14px;
+        background: #edf4ec;
+        color: var(--ca-xanh);
+    }
+
+    #phong_chup_anh .ca-nhan {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--ca-phu-moi);
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    #phong_chup_anh #ca_tieu_de {
+        margin: 0;
+        color: var(--ca-chu-moi);
+        font-size: clamp(22px, 2.5vw, 28px);
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    #phong_chup_anh .ca-mo-ta-dau {
+        margin: 5px 0 0;
+        color: var(--ca-phu-moi);
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    #phong_chup_anh .ca-noi-dung {
+        display: grid;
+        grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+        align-items: start;
+        gap: 24px;
+        padding: 24px;
+    }
+
+    #phong_chup_anh .ca-cot {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 0;
+    }
+
+    #phong_chup_anh .ca-khoi {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--ca-vien);
+        border-radius: 15px;
+        background: var(--ca-giay-moi);
+    }
+
+    #phong_chup_anh .ca-dau-khoi {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 19px 20px;
+        border-bottom: 1px solid var(--ca-vien);
+    }
+
+    #phong_chup_anh .ca-ten-khoi {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        min-width: 0;
+    }
+
+    #phong_chup_anh .ca-so-buoc {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #dce7da;
+        border-radius: 9px;
+        background: #eff5ed;
+        color: var(--ca-xanh);
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    #phong_chup_anh .ca-ten-khoi h3 {
+        margin: 0;
+        color: var(--ca-chu-moi);
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    #phong_chup_anh .ca-ten-khoi p {
+        max-width: 430px;
+        margin: 4px 0 0;
+        color: var(--ca-phu-moi);
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    #phong_chup_anh .ca-than-khoi {
+        padding: 20px;
+    }
+
+    #phong_chup_anh .ca-hang {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0;
+    }
+
+    #phong_chup_anh .ca-nut {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        max-width: 100%;
+        padding: 10px 15px;
+        border: 1px solid var(--ca-xanh);
+        border-radius: 9px;
+        background: var(--ca-xanh);
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    #phong_chup_anh .ca-nut:hover:not(:disabled) {
+        border-color: #234e3a;
+        background: #234e3a;
+    }
+
+    #phong_chup_anh .ca-phu {
+        border-color: #d2ddd0;
+        background: white;
+        color: #35533e;
+    }
+
+    #phong_chup_anh .ca-phu:hover:not(:disabled) {
+        border-color: #afc6af;
+        background: #f0f6ed;
+        color: var(--ca-xanh);
+    }
+
+    #phong_chup_anh button:disabled {
+        opacity: .45;
+        cursor: not-allowed;
+    }
+
+    #phong_chup_anh :focus-visible {
+        outline: 3px solid #89ae92;
+        outline-offset: 3px;
+    }
+
+    /* Chọn chế độ */
+
+    #phong_chup_anh .ca-che-do {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 18px;
+        padding: 6px;
+        border: 1px solid #e0e7dc;
+        border-radius: 12px;
+        background: #f2f5ee;
+    }
+
+    #phong_chup_anh .ca-che-do .ca-nut {
+        min-height: 48px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--ca-phu-moi);
+        box-shadow: none;
+    }
+
+    #phong_chup_anh .ca-che-do .ca-nut[aria-pressed="true"] {
+        border-color: #d2dfcf;
+        background: white;
+        color: var(--ca-xanh);
+        box-shadow: 0 2px 5px rgb(30 55 36 / 5%);
+    }
+
+    /* Camera */
+
+    #phong_chup_anh .ca-camera {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        border: 1px solid #21372b;
+        border-radius: 12px;
+        background: #17251d;
+    }
+
+    #phong_chup_anh .ca-camera canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    #phong_chup_anh .ca-camera strong {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        color: white;
+        font-size: clamp(54px, 7vw, 82px);
+        font-weight: 700;
+        text-shadow: 0 2px 18px rgb(0 0 0 / 45%);
+    }
+
+    #phong_chup_anh .ca-hang-chup {
+        display: grid;
+        grid-template-columns: minmax(100px, 140px) minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    #phong_chup_anh .ca-nhan-truong {
+        display: block;
+        margin-bottom: 7px;
+        color: #526456;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    #phong_chup_anh select {
+        width: 100%;
+        max-width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid #ccd8c9;
+        border-radius: 8px;
+        background: white;
+        color: var(--ca-chu-moi);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    #phong_chup_anh #ca_chup {
+        min-height: 46px;
+    }
+
+    #phong_chup_anh .ca-trang-thai {
+        min-height: 0;
+        margin: 16px 0 0;
+        padding: 13px 15px;
+        border: 1px solid #dce8d7;
+        border-radius: 9px;
+        background: #eff6eb;
+        color: #355c3e;
+        font-size: 13px;
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+    }
+
+    #phong_chup_anh .ca-trang-thai .ca-nut {
+        margin: 10px 0 0;
+    }
+
+    /* Khay ảnh */
+
+    #phong_chup_anh .ca-dem-anh {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        padding: 3px 9px;
+        border: 1px solid #dce7d9;
+        border-radius: 7px;
+        background: #f0f5ed;
+        color: var(--ca-xanh);
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    #phong_chup_anh .ca-khay {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+        max-height: 430px;
+        padding: 16px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #b4c6ac transparent;
+    }
+
+    #phong_chup_anh .ca-khay > p {
+        grid-column: 1 / -1;
+        margin: 0;
+        padding: 24px 12px;
+        color: var(--ca-phu-moi);
+        font-size: 14px;
+        line-height: 1.8;
+        text-align: center;
+    }
+
+    #phong_chup_anh .ca-o-anh {
+        min-width: 0;
+        padding: 8px;
+        border: 1px solid #e0e7dd;
+        border-radius: 10px;
+        background: #fbfcf9;
+    }
+
+    #phong_chup_anh .ca-o-anh img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border: 1px solid #e3e9df;
+        border-radius: 6px;
+        background: #edf1e8;
+        object-fit: contain;
+        cursor: pointer;
+    }
+
+    #phong_chup_anh .ca-o-anh .ca-hang {
+        gap: 5px;
+        margin-top: 8px;
+    }
+
+    #phong_chup_anh .ca-o-anh .ca-nut {
+        flex: 1;
+        min-height: 32px;
+        padding: 5px 6px;
+        border-radius: 6px;
+        font-size: 11px;
+    }
+
+    /* Khung ảnh và xem trước */
+
+    #phong_chup_anh .ca-chon-khung {
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--ca-vien);
+        background: #fcfdfb;
+    }
+
+    #phong_chup_anh .ca-chon-khung h3 {
+        margin: 0 0 10px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    #phong_chup_anh #ca_cac_khung {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    #phong_chup_anh #ca_cac_khung .ca-nut {
+        min-height: 42px;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    #phong_chup_anh #ca_cac_khung .ca-nut[aria-pressed="true"] {
+        border-color: var(--ca-xanh);
+        background: #eaf3e5;
+        color: var(--ca-xanh);
+        box-shadow: inset 0 0 0 1px var(--ca-xanh);
+    }
+
+    #phong_chup_anh .ca-vung-xem {
+        display: grid;
+        place-items: center;
+        min-height: 260px;
+        padding: 22px;
+        border-bottom: 1px solid var(--ca-vien);
+        background-color: #edf0e8;
+        background-image: radial-gradient(#d5decf .8px, transparent .8px);
+        background-size: 14px 14px;
+    }
+
+    #phong_chup_anh .ca-ket-qua {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        max-height: 510px;
+        margin: 0 auto;
+        border: 1px solid #d7dfd0;
+        border-radius: 6px;
+        background: white;
+        box-shadow: 0 8px 24px rgb(43 63 41 / 9%);
+        cursor: pointer;
+        touch-action: manipulation;
+    }
+
+    #phong_chup_anh .ca-goi-y {
+        margin: 0;
+        color: var(--ca-phu-moi);
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    #phong_chup_anh .ca-huong-dan-o {
+        padding: 13px 20px;
+        border-bottom: 1px solid var(--ca-vien);
+        background: #fcfdfb;
+    }
+
+    #phong_chup_anh #ca_can_anh {
+        min-width: 0;
+        margin: 18px 20px 20px;
+        padding: 15px;
+        border: 1px solid var(--ca-vien);
+        border-radius: 10px;
+        background: #fafcf8;
+    }
+
+    #phong_chup_anh #ca_can_anh legend {
+        padding: 0 7px;
+        color: #526456;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    #phong_chup_anh #ca_can_anh > label {
+        display: grid;
+        grid-template-columns: 90px minmax(0, 1fr);
+        align-items: center;
+        gap: 12px;
+        margin: 10px 0;
+        color: var(--ca-phu-moi);
+        font-size: 12px;
+    }
+
+    #phong_chup_anh #ca_can_anh input {
+        width: 100%;
+        min-width: 0;
+        accent-color: var(--ca-xanh);
+    }
+
+    #phong_chup_anh .ca-chuyen-o {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    #phong_chup_anh .ca-chuyen-o .ca-nut {
+        min-height: 36px;
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    /* Lưu và chia sẻ */
+
+    #phong_chup_anh .ca-xuat-anh {
+        display: grid;
+        grid-template-columns: 115px minmax(0, 1fr);
+        align-items: end;
+        gap: 12px;
+    }
+
+    #phong_chup_anh .ca-xuat-anh .ca-nut {
+        width: 100%;
+    }
+
+    #phong_chup_anh #ca_luu {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    #phong_chup_anh .ca-khu-chia-se {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid var(--ca-vien);
+    }
+
+    #phong_chup_anh .ca-khu-chia-se > p:first-child {
+        margin: 0 0 10px;
+        color: var(--ca-chu-moi);
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    #phong_chup_anh .ca-nut-chia-se {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    #phong_chup_anh .ca-nut-chia-se .ca-nut {
+        min-height: 42px;
+        padding: 9px 7px;
+        font-size: 12px;
+    }
+
+    #phong_chup_anh .ca-lien-ket {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        color: var(--ca-xanh);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.7;
+        text-decoration: none;
+    }
+
+    #phong_chup_anh .ca-lien-ket:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+    /* Trạng thái mất tóc */
+
+    #phong_chup_anh #ca_bao_mat_toc {
+        margin: 24px;
+        padding: 36px 24px;
+        border: 1px solid #eadac0;
+        border-radius: 14px;
+        background: #fffaf0;
+        color: #6e562c;
+        text-align: center;
+    }
+
+    #phong_chup_anh .ca-icon-mat-toc {
+        display: grid;
+        place-items: center;
+        width: 54px;
+        height: 54px;
+        margin: 0 auto 16px;
+        border: 1px solid #e8d9ba;
+        border-radius: 16px;
+        background: #fff1d5;
+        color: #967237;
+    }
+
+    #phong_chup_anh #ca_bao_mat_toc h3 {
+        margin: 0 0 10px;
+        font-size: 21px;
+        line-height: 1.5;
+    }
+
+    #phong_chup_anh #ca_bao_mat_toc p {
+        max-width: 540px;
+        margin: 0 auto;
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    /* Xem ảnh lớn */
+
+    #phong_chup_anh #ca_anh_lon {
+        margin-top: 18px;
+        padding: 15px;
+        border: 1px solid var(--ca-vien);
+        border-radius: 11px;
+        background: #f7faf3;
+    }
+
+    #phong_chup_anh #ca_anh_lon img {
+        display: block;
+        width: 100%;
+        max-height: 600px;
+        margin-bottom: 12px;
+        border-radius: 7px;
+        object-fit: contain;
+    }
+
+    #phong_chup_anh #ca_dong_anh_lon {
+        width: 100%;
+    }
+
+    @media (max-width: 1050px) {
+        #phong_chup_anh .ca-noi-dung {
+            gap: 18px;
+            padding: 18px;
+        }
+
+        #phong_chup_anh .ca-hang-chup {
+            grid-template-columns: minmax(90px, 120px) minmax(0, 1fr);
+        }
+
+        #phong_chup_anh #ca_huy {
+            grid-column: 1 / -1;
+        }
+
+        #phong_chup_anh .ca-nut-chia-se {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 850px) {
+        #phong_chup_anh {
+            width: 100vw;
+            max-width: 100vw;
+            height: 100dvh;
+            max-height: 100dvh;
+            border-radius: 0;
+        }
+
+        #phong_chup_anh .ca-noi-dung {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        #phong_chup_anh .ca-dau {
+            padding: 17px 18px;
+        }
+
+        #phong_chup_anh .ca-mo-ta-dau {
+            display: none;
+        }
+
+        #phong_chup_anh .ca-bieu-tuong {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+        }
+
+        #phong_chup_anh .ca-nut-chia-se {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        #phong_chup_anh .ca-ket-qua {
+            max-height: 470px;
+        }
+
+        #phong_chup_anh .ca-hang-chup {
+            grid-template-columns: 120px minmax(0, 1fr) auto;
+        }
+
+        #phong_chup_anh #ca_huy {
+            grid-column: auto;
+        }
+    }
+
+    @media (max-width: 500px) {
+        #phong_chup_anh .ca-dau {
+            gap: 14px;
+        }
+
+        #phong_chup_anh .ca-thuong-hieu {
+            gap: 10px;
+        }
+
+        #phong_chup_anh #ca_dong {
+            width: 100%;
+            min-height: 40px;
+        }
+
+        #phong_chup_anh .ca-noi-dung {
+            padding: 12px;
+            gap: 16px;
+        }
+
+        #phong_chup_anh .ca-than-khoi,
+        #phong_chup_anh .ca-dau-khoi,
+        #phong_chup_anh .ca-chon-khung {
+            padding: 16px;
+        }
+
+        #phong_chup_anh .ca-ten-khoi h3 {
+            font-size: 16px;
+        }
+
+        #phong_chup_anh .ca-hang-chup {
+            grid-template-columns: 100px minmax(0, 1fr);
+        }
+
+        #phong_chup_anh #ca_huy {
+            grid-column: 1 / -1;
+        }
+
+        #phong_chup_anh .ca-khay {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 12px;
+        }
+
+        #phong_chup_anh .ca-vung-xem {
+            min-height: 220px;
+            padding: 16px;
+        }
+
+        #phong_chup_anh .ca-huong-dan-o {
+            padding: 12px 16px;
+        }
+
+        #phong_chup_anh #ca_can_anh {
+            margin: 16px;
+        }
+
+        #phong_chup_anh #ca_cac_khung {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        #phong_chup_anh .ca-nut-chia-se {
+            grid-template-columns: 1fr;
+        }
+
+        #phong_chup_anh #ca_bao_mat_toc {
+            margin: 16px;
+            padding: 28px 18px;
+        }
+    }
+</style>
+
+<dialog id="phong_chup_anh"
+        class="ca-phong"
+        data-tai-khoan="{{ user.pk }}"
+        data-luu="{% url 'thu_toc:luu_anh_da_chup' %}"
+        aria-labelledby="ca_tieu_de">
+
+    <header class="ca-dau">
+        <div class="ca-thuong-hieu">
+            <span class="ca-bieu-tuong" aria-hidden="true">
+                <svg width="25"
+                     height="25"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.7"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <path d="M14.5 4h-5L8 7H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/>
+                    <circle cx="12" cy="13.5" r="3.5"/>
+                    <path d="M18 10h.01"/>
+                </svg>
+            </span>
+
+            <div>
+                <span class="ca-nhan">
+                    HAULONGHAIR · GÓC CHỤP CÁ NHÂN
+                </span>
+
+                <h2 id="ca_tieu_de">
+                    Giữ lại diện mạo bạn thích
+                </h2>
+
+                <p class="ca-mo-ta-dau">
+                    Chụp, chọn ảnh và tạo một khung hình của riêng bạn.
+                </p>
+            </div>
+        </div>
+
+        <button type="button"
+                class="ca-nut ca-phu"
+                id="ca_dong">
+            <span aria-hidden="true">←</span>
+            Thoát về phòng thử tóc
+        </button>
+    </header>
+
+    <div id="ca_bao_mat_toc"
+         class="ca-trang-thai"
+         role="alert"
+         hidden>
+
+        <span class="ca-icon-mat-toc" aria-hidden="true">
+            <svg width="27"
+                 height="27"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.7"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path d="M10.3 3.9 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
+                <path d="M12 9v4M12 17h.01"/>
+            </svg>
+        </span>
+
+        <h3>Cần chọn lại kiểu tóc</h3>
+
+        <p>
+            Đã mất kiểu tóc đang thử.
+            Bấm <strong>“Thoát về phòng thử tóc”</strong>
+            để quét lại khuôn mặt và chọn kiểu tóc
+            trước khi tiếp tục.
+        </p>
+    </div>
+
+    <div class="ca-noi-dung" id="ca_noi_dung">
+        <!-- CỘT CAMERA VÀ KHAY ẢNH -->
+        <section class="ca-cot" aria-label="Chụp và chọn ảnh">
+            <section class="ca-khoi"
+                     aria-labelledby="ca_tieu_de_camera">
+
+                <div class="ca-dau-khoi">
+                    <div class="ca-ten-khoi">
+                        <span class="ca-so-buoc" aria-hidden="true">
+                            01
+                        </span>
+
+                        <div>
+                            <h3 id="ca_tieu_de_camera">
+                                Tạo dáng theo cách của bạn
+                            </h3>
+
+                            <p>
+                                Kiểu tóc và các thông số vừa chỉnh
+                                được giữ nguyên trên camera.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ca-than-khoi">
+                    <div class="ca-che-do"
+                         role="group"
+                         aria-label="Chế độ chụp">
+
+                        <button type="button"
+                                class="ca-nut"
+                                id="ca_don"
+                                aria-pressed="true">
+                            <span aria-hidden="true">▣</span>
+                            Chụp Basic
+                        </button>
+
+                        <button type="button"
+                                class="ca-nut ca-phu"
+                                id="ca_khung"
+                                aria-pressed="false">
+                            <span aria-hidden="true">▦</span>
+                            Chụp Photobooth
+                        </button>
+                    </div>
+
+                    <div class="ca-camera">
+                        <canvas id="ca_xem_camera"
+                                aria-label="Camera với tóc đang thử"></canvas>
+
+                        <strong id="ca_dem"
+                                aria-live="polite"></strong>
+                    </div>
+
+                    <div class="ca-hang-chup">
+                        <label for="ca_hen_gio">
+                            <span class="ca-nhan-truong">
+                                Thời gian chuẩn bị
+                            </span>
+
+                            <select id="ca_hen_gio">
+                                <option value="3">3 giây</option>
+                                <option value="5">5 giây</option>
+                                <option value="0">Chụp ngay</option>
+                            </select>
+                        </label>
+
+                        <button type="button"
+                                class="ca-nut"
+                                id="ca_chup">
+                            📷 Chụp ảnh
+                        </button>
+
+                        <button type="button"
+                                class="ca-nut ca-phu"
+                                id="ca_huy"
+                                disabled>
+                            Dừng chụp
+                        </button>
+                    </div>
+
+                    <p class="ca-trang-thai"
+                       id="ca_thong_bao"
+                       role="status">
+                        Chụp thêm đến khi ưng.
+                        Các ảnh sẽ xuất hiện trong khay bên dưới.
+                    </p>
+                </div>
+            </section>
+
+            <section class="ca-khoi"
+                     aria-labelledby="ca_tieu_de_khay">
+
+                <div class="ca-dau-khoi">
+                    <div class="ca-ten-khoi">
+                        <span class="ca-so-buoc" aria-hidden="true">
+                            02
+                        </span>
+
+                        <div>
+                            <h3 id="ca_tieu_de_khay">
+                                Những khoảnh khắc đã chụp
+                            </h3>
+
+                            <p>
+                                Bấm ảnh để chọn.
+                                Với khung ảnh, chọn ô trước rồi chọn ảnh.
+                            </p>
+                        </div>
+                    </div>
+
+                    <span class="ca-dem-anh"
+                          title="Số ảnh trong khay"
+                          aria-label="Số ảnh đã chụp">
+                        <span id="ca_so_anh">0</span>
+                    </span>
+                </div>
+
+                <div id="ca_khay"
+                     class="ca-khay"
+                     aria-label="Ảnh đã chụp"></div>
+            </section>
+        </section>
+
+        <!-- CỘT XEM TRƯỚC VÀ XUẤT ẢNH -->
+        <section class="ca-cot" aria-label="Ghép khung và lưu ảnh">
+            <section class="ca-khoi"
+                     aria-labelledby="ca_ten_xem">
+
+                <div class="ca-dau-khoi">
+                    <div class="ca-ten-khoi">
+                        <span class="ca-so-buoc" aria-hidden="true">
+                            03
+                        </span>
+
+                        <div>
+                            <h3 id="ca_ten_xem">
+                                Ảnh đang chọn
+                            </h3>
+
+                            <p>
+                                Xem trước thành phẩm
+                                và căn chỉnh trước khi lưu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ca_tuy_chon_khung"
+                     class="ca-chon-khung"
+                     hidden>
+
+                    <h3>Chọn bố cục khung</h3>
+
+                    <div class="ca-hang"
+                         id="ca_cac_khung"
+                         role="group"
+                         aria-label="Bố cục khung"></div>
+
+                    <label for="ca_mau">
+                        <span class="ca-nhan-truong">
+                            Mẫu trang trí
+                        </span>
+
+                        <select id="ca_mau">
+                            <option value="xanh">
+                                Xanh thanh lịch
+                            </option>
+
+                            <option value="hong">
+                                Hồng ngọt ngào
+                            </option>
+
+                            <option value="xanh_duong">
+                                Xanh sao nhỏ
+                            </option>
+
+                            <option value="trang">
+                                Trắng tối giản
+                            </option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="ca-vung-xem">
+                    <canvas id="ca_ket_qua"
+                            class="ca-ket-qua"
+                            tabindex="0"
+                            aria-label="Ảnh xuất; bấm vào ô để chọn vị trí ghép"></canvas>
+                </div>
+
+                <div class="ca-huong-dan-o">
+                    <p class="ca-goi-y" id="ca_goi_y_o">
+                        Chụp ảnh hoặc chọn ảnh trong khay để xem.
+                    </p>
+                </div>
+
+                <fieldset id="ca_can_anh" disabled>
+                    <legend>Căn ảnh trong ô đang chọn</legend>
+
+                    <label for="ca_phong">
+                        <span>Phóng to</span>
+
+                        <input type="range"
+                               id="ca_phong"
+                               min="1"
+                               max="3"
+                               step="0.01"
+                               value="1">
+                    </label>
+
+                    <label for="ca_ngang">
+                        <span>Trái / phải</span>
+
+                        <input type="range"
+                               id="ca_ngang"
+                               min="-1"
+                               max="1"
+                               step="0.01"
+                               value="0">
+                    </label>
+
+                    <label for="ca_doc">
+                        <span>Lên / xuống</span>
+
+                        <input type="range"
+                               id="ca_doc"
+                               min="-1"
+                               max="1"
+                               step="0.01"
+                               value="0">
+                    </label>
+
+                    <div class="ca-chuyen-o">
+                        <button type="button"
+                                class="ca-nut ca-phu"
+                                id="ca_truoc">
+                            ← Ô trước
+                        </button>
+
+                        <button type="button"
+                                class="ca-nut ca-phu"
+                                id="ca_sau">
+                            Ô sau →
+                        </button>
+                    </div>
+                </fieldset>
+            </section>
+
+            <section class="ca-khoi"
+                     aria-labelledby="ca_tieu_de_luu">
+
+                <div class="ca-dau-khoi">
+                    <div class="ca-ten-khoi">
+                        <span class="ca-so-buoc" aria-hidden="true">
+                            04
+                        </span>
+
+                        <div>
+                            <h3 id="ca_tieu_de_luu">
+                                Lưu lại hoặc chia sẻ
+                            </h3>
+
+                            <p>
+                                Tải về thiết bị hoặc giữ ảnh
+                                trong tài khoản của bạn.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ca-than-khoi">
+                    <div class="ca-xuat-anh">
+                        <label for="ca_dinh_dang">
+                            <span class="ca-nhan-truong">
+                                Định dạng
+                            </span>
+
+                            <select id="ca_dinh_dang">
+                                <option value="png">PNG</option>
+                                <option value="jpeg">JPEG</option>
+                            </select>
+                        </label>
+
+                        <button type="button"
+                                class="ca-nut ca-phu"
+                                id="ca_tai"
+                                disabled>
+                            <span aria-hidden="true">↓</span>
+                            Tải ảnh về máy
+                        </button>
+                    </div>
+
+                    <button type="button"
+                            class="ca-nut"
+                            id="ca_luu"
+                            disabled>
+                        Lưu vào ảnh của tôi
+                    </button>
+
+                    <div class="ca-khu-chia-se">
+                        <p>Chia sẻ khoảnh khắc</p>
+
+                        <div class="ca-nut-chia-se"
+                             role="group"
+                             aria-label="Chia sẻ ảnh">
+
+                            <button type="button"
+                                    class="ca-nut ca-phu"
+                                    id="ca_facebook"
+                                    disabled>
+                                Facebook ↗
+                            </button>
+
+                            <button type="button"
+                                    class="ca-nut ca-phu"
+                                    id="ca_instagram"
+                                    disabled>
+                                Instagram ↗
+                            </button>
+
+                            <button type="button"
+                                    class="ca-nut ca-phu"
+                                    id="ca_chia_se"
+                                    disabled>
+                                Chia sẻ…
+                            </button>
+                        </div>
+
+                        <p class="ca-goi-y">
+                            Chia sẻ trực tiếp tùy thiết bị.
+                            Nếu không hỗ trợ, tải ảnh rồi chọn ảnh
+                            trong ứng dụng. Bạn tự xác nhận đăng.
+                        </p>
+                    </div>
+
+                    <a class="ca-lien-ket"
+                       href="{% url 'thu_toc:trang_chu' %}#anh_cua_toi">
+                        Xem ảnh đã lưu trên trang chủ
+                        <span aria-hidden="true">→</span>
+                    </a>
+
+                    <div id="ca_anh_lon" hidden>
+                        <img alt="Ảnh chụp đang xem"
+                             id="ca_anh_lon_hinh">
+
+                        <button type="button"
+                                class="ca-nut ca-phu"
+                                id="ca_dong_anh_lon">
+                            Đóng xem lớn
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+</dialog>

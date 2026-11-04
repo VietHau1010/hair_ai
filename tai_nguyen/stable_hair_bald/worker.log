@@ -1,0 +1,167 @@
+The cache for model files in Transformers v4.22.0 has been updated. Migrating your old cache. This is a one-time only operation. You can interrupt this and resume the migration later on by calling `transformers.utils.move_cache()`.
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+W1015 13:07:15.598000 12908 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:00,  4.36it/s]Loading pipeline components...:  40%|████      | 2/5 [00:00<00:00,  6.07it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  5.78it/s]Loading pipeline components...:  80%|████████  | 4/5 [00:00<00:00,  5.53it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  6.23it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+W1015 14:03:13.721000 12236 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:00,  7.13it/s]Loading pipeline components...:  40%|████      | 2/5 [00:00<00:00,  7.54it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  5.68it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  5.49it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  5.75it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+W1015 14:04:20.242000 34660 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:00,  5.46it/s]Loading pipeline components...:  40%|████      | 2/5 [00:00<00:00,  6.95it/s]Loading pipeline components...:  80%|████████  | 4/5 [00:00<00:00,  5.76it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  7.00it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+W1015 14:07:07.969000 2120 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  40%|████      | 2/5 [00:00<00:00,  5.71it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  5.28it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  7.33it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  6.71it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+W1015 14:08:16.675000 8704 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  40%|████      | 2/5 [00:00<00:00,  4.73it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  4.71it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  7.45it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  6.47it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+W1015 14:46:14.499000 7164 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:00,  5.59it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  8.62it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00, 11.34it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+W1015 15:06:58.142000 24620 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:01,  3.65it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  3.76it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  5.94it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  5.25it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+Traceback (most recent call last):
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 155, in worker
+    result = pipe(prompt='', negative_prompt='', image=image, width=512, height=512, num_inference_steps=CFG['steps'], guidance_scale=1.5, controlnet_conditioning_scale=float(request['scale']), generator=torch.Generator(device='cpu').manual_seed(int(request['seed'])))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\utils\_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\tai_nguyen\stable_hair_bald\source\utils\pipeline_cn.py", line 899, in __call__
+    prompt_embeds, negative_prompt_embeds = self.encode_prompt(
+                                            ^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\tai_nguyen\stable_hair_bald\source\utils\pipeline_cn.py", line 341, in encode_prompt
+    prompt_embeds = self.text_encoder(text_input_ids.to(device), attention_mask=attention_mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\accelerate\hooks.py", line 166, in new_forward
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 806, in forward
+    return self.text_model(
+           ^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 711, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 638, in forward
+    layer_outputs = encoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 380, in forward
+    hidden_states, attn_weights = self.self_attn(
+                                  ^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 305, in forward
+    attn_weights = nn.functional.softmax(attn_weights, dim=-1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\functional.py", line 2137, in softmax
+    ret = input.softmax(dim)
+          ^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W1015 15:07:22.792000 20828 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\outputs.py:63: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Loading official Stable-Hair Bald Converter...
+Loading pipeline components...:   0%|          | 0/5 [00:00<?, ?it/s]Loading pipeline components...:  20%|██        | 1/5 [00:00<00:00,  4.39it/s]Loading pipeline components...:  40%|████      | 2/5 [00:00<00:00,  6.45it/s]Loading pipeline components...:  60%|██████    | 3/5 [00:00<00:00,  4.28it/s]Loading pipeline components...:  80%|████████  | 4/5 [00:00<00:00,  4.62it/s]Loading pipeline components...: 100%|██████████| 5/5 [00:00<00:00,  5.41it/s]
+Ready: NVIDIA GeForce RTX 3050 Laptop GPU
+Traceback (most recent call last):
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 155, in worker
+    result = pipe(prompt='', negative_prompt='', image=image, width=512, height=512, num_inference_steps=CFG['steps'], guidance_scale=1.5, controlnet_conditioning_scale=float(request['scale']), generator=torch.Generator(device='cpu').manual_seed(int(request['seed'])))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\utils\_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\tai_nguyen\stable_hair_bald\source\utils\pipeline_cn.py", line 918, in __call__
+    image = self.prepare_image(
+            ^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\tai_nguyen\stable_hair_bald\source\utils\pipeline_cn.py", line 684, in prepare_image
+    image = self.vae.encode(image).latent_dist.sample()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\utils\accelerate_utils.py", line 46, in wrapper
+    return method(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\autoencoders\autoencoder_kl.py", line 257, in encode
+    encoded_slices = [self.encoder(x_slice) for x_slice in x.split(1)]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\autoencoders\autoencoder_kl.py", line 257, in <listcomp>
+    encoded_slices = [self.encoder(x_slice) for x_slice in x.split(1)]
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\autoencoders\vae.py", line 172, in forward
+    sample = down_block(sample)
+             ^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\unet_2d_blocks.py", line 1323, in forward
+    hidden_states = resnet(hidden_states, temb=None, scale=scale)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\resnet.py", line 258, in forward
+    output_tensor = (input_tensor + hidden_states) / self.output_scale_factor
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 64.00 MiB. GPU 0 has a total capacity of 4.00 GiB of which 2.99 GiB is free. Of the allocated memory 203.71 MiB is allocated by PyTorch, and 10.29 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

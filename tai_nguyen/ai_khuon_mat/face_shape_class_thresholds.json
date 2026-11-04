@@ -1,0 +1,47 @@
+{
+  "Heart": {
+    "threshold": 0.4147402855633112,
+    "val_precision": 0.9029126213592233,
+    "coverage": 0.9809523809523809,
+    "accepted_val_count": 103,
+    "predicted_val_count": 105,
+    "target_reached": true,
+    "status": "target_reached"
+  },
+  "Oblong": {
+    "threshold": 0.5771996151107981,
+    "val_precision": 0.9029850746268657,
+    "coverage": 0.8874172185430463,
+    "accepted_val_count": 134,
+    "predicted_val_count": 151,
+    "target_reached": true,
+    "status": "target_reached"
+  },
+  "Oval": {
+    "threshold": 0.7625338039256078,
+    "val_precision": 0.9012345679012346,
+    "coverage": 0.47368421052631576,
+    "accepted_val_count": 81,
+    "predicted_val_count": 171,
+    "target_reached": true,
+    "status": "target_reached"
+  },
+  "Round": {
+    "threshold": 0.6614349846406565,
+    "val_precision": 0.9015151515151515,
+    "coverage": 0.7904191616766467,
+    "accepted_val_count": 132,
+    "predicted_val_count": 167,
+    "target_reached": true,
+    "status": "target_reached"
+  },
+  "Square": {
+    "threshold": 0.0,
+    "val_precision": 0.9259259259259259,
+    "coverage": 1.0,
+    "accepted_val_count": 135,
+    "predicted_val_count": 135,
+    "target_reached": true,
+    "status": "target_reached"
+  }
+}

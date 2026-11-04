@@ -1,0 +1,18 @@
+{
+  "final_id": "e109cc5862f608fdd835",
+  "backbone": "efficientnetv2s",
+  "image_size": 300,
+  "batch_size": 16,
+  "unfreeze": 100,
+  "stage1_epochs": 8,
+  "stage2_epochs": 25,
+  "stage1_lr": 0.001,
+  "stage2_lr": 2e-05,
+  "label_smoothing": 0.05,
+  "weight_decay": 0.0001,
+  "seed": 42,
+  "mixed_precision": true,
+  "augmentation_version": "flip_rot003_zoom005_translate003_photo01",
+  "selection": "val_macro_f1_then_val_accuracy",
+  "tensorflow": "2.20.0"
+}

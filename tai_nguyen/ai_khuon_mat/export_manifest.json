@@ -1,0 +1,54 @@
+{
+  "run_id": "f85192d832bebfa9fb74",
+  "backbone": "efficientnetv2s",
+  "class_order": [
+    "Heart",
+    "Oblong",
+    "Oval",
+    "Round",
+    "Square"
+  ],
+  "image_size": 300,
+  "tta_flip": true,
+  "export_runtime_versions": {
+    "tensorflow": "2.21.0",
+    "keras": "3.13.2",
+    "mediapipe": "1.1.0",
+    "numpy": "2.1.3",
+    "pillow": "11.3.0"
+  },
+  "files": {
+    "model.keras": {
+      "size_bytes": 84468321,
+      "sha256": "1f9ab60ca2053932c1da6452a4ef4ff2e93e94c5d83dc48e388890cc5882b34c"
+    },
+    "face_shape_labels.json": {
+      "size_bytes": 58,
+      "sha256": "e7a239f81234a230965b3ed3a35c04de6aae67ed3e011c5c7618ccae969b5fe1"
+    },
+    "face_shape_class_thresholds.json": {
+      "size_bytes": 1243,
+      "sha256": "d75335fb50dba26c6559a0117abe5ba91bf7f17be515763241f06b1703bd84b5"
+    },
+    "inference_config.json": {
+      "size_bytes": 656,
+      "sha256": "3b95f999674a21e01276e0c85ebfeb215b9d3aac269711a22ecf7755362d7907"
+    },
+    "calibration_config.json": {
+      "size_bytes": 141,
+      "sha256": "afcdc263aadc89ff416c6d2ac16bcd8de228f22e4b45f15df5235187b66fed21"
+    },
+    "face_landmarker.task": {
+      "size_bytes": 3758596,
+      "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff"
+    },
+    "training_config.json": {
+      "size_bytes": 461,
+      "sha256": "f8cdc7edd438b7486da9a0b80c50ec9fca5a0b66bd257157768a884ff8bf87c4"
+    },
+    "test_seal.json": {
+      "size_bytes": 499,
+      "sha256": "2beda2235c6f51beff32acaba9f94a35a77ebf01a301652998bcf7a7fe7a47ac"
+    }
+  }
+}

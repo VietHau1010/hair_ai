@@ -1,0 +1,121 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+{% load static %}
+
+{% block noi_dung %}
+<link rel="stylesheet"
+      href="{% static 'thu_toc/quan_tri_nguoi_noi_tieng.css' %}">
+
+<div class="dau-muc">
+    <div>
+        <span class="nhan">THƯ VIỆN PHONG CÁCH</span>
+        <h1>Người nổi tiếng</h1>
+        <p class="phu">
+            Một người, nhiều kiểu tóc.
+            Thêm ảnh để tự tạo tóc thử.
+        </p>
+    </div>
+        {% if perms.kieu_toc.add_nguoinoitieng %}
+        <a class="nut nut-phu"
+           href="{% url 'admin:them_ho_so_nguoi_noi_tieng' %}">
+            + Thêm hồ sơ
+        </a>
+    {% endif %}
+
+    {% if duoc_them %}
+        <a class="nut"
+           href="{% url 'admin:them_toc_nguoi_noi_tieng' %}">
+            + Thêm kiểu tóc
+        </a>
+    {% endif %}
+</div>
+
+<form class="the bo-loc" method="get">
+    <label class="tim">
+        Tìm người nổi tiếng
+        <input type="search"
+               name="q"
+               value="{{ tu_khoa }}"
+               placeholder="Tên hoặc nghệ danh">
+    </label>
+
+    <button class="nut" type="submit">
+        Tìm kiếm
+    </button>
+
+    <a class="nut nut-phu"
+       href="{% url 'admin:nguoi_noi_tieng' %}">
+        Đặt lại
+    </a>
+</form>
+
+<p class="phu">
+    {{ trang.paginator.count }} người nổi tiếng
+</p>
+
+<div class="nt-luoi">
+    {% for nguoi in trang %}
+        <article class="the nt-the">
+            <div class="nt-dai-dien">
+                {% if nguoi.anh_dai_dien %}
+                    <img src="{{ nguoi.anh_dai_dien.url }}"
+                         alt="{{ nguoi.ten }}"
+                         loading="lazy">
+                {% else %}
+                    <span aria-hidden="true">
+                        {{ nguoi.ten|first }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <h2>{{ nguoi.ten }}</h2>
+
+            <p class="phu">
+                {{ nguoi.so_toc }} kiểu tóc
+            </p>
+
+            <p>
+                <span class="nhan-trang-thai {% if not nguoi.hien_thi %}nhan-tat{% endif %}">
+                    {% if nguoi.hien_thi %}
+                        Đang hiển thị
+                    {% else %}
+                        Đang ẩn
+                    {% endif %}
+                </span>
+            </p>
+
+            <a class="nut nut-phu"
+               href="{% url 'admin:chi_tiet_nguoi_noi_tieng' nguoi.pk %}">
+                Quản lý kiểu tóc →
+            </a>
+        </article>
+
+    {% empty %}
+        <div class="trong">
+            <h2>Chưa có kết quả</h2>
+            <p class="phu">
+                Thêm kiểu tóc đầu tiên hoặc tìm bằng tên khác.
+            </p>
+        </div>
+    {% endfor %}
+</div>
+
+<nav class="phan-trang" aria-label="Phân trang">
+    {% if trang.has_previous %}
+        <a class="nut nut-phu"
+           href="?q={{ tu_khoa|urlencode }}&amp;trang={{ trang.previous_page_number }}">
+            ← Trước
+        </a>
+    {% endif %}
+
+    <span class="phu">
+        Trang {{ trang.number }} / {{ trang.paginator.num_pages }}
+    </span>
+
+    {% if trang.has_next %}
+        <a class="nut nut-phu"
+           href="?q={{ tu_khoa|urlencode }}&amp;trang={{ trang.next_page_number }}">
+            Sau →
+        </a>
+    {% endif %}
+</nav>
+{% endblock %}

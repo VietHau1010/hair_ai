@@ -1,0 +1,186 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+
+{% block noi_dung %}
+<style>
+    .tk-the {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tk-the .phu {
+        flex: 1;
+    }
+
+    .tk-the .nut {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    .tk-buoc {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        padding-left: 22px;
+        margin: 24px 0;
+    }
+
+    .tk-buoc li {
+        padding-left: 5px;
+    }
+
+    .tk-buoc li::marker {
+        color: var(--xanh);
+        font-weight: 700;
+    }
+
+    .tk-buoc h3 {
+        margin-top: 0;
+        font-size: 16px;
+    }
+
+    .tk-buoc p {
+        margin-bottom: 0;
+    }
+
+    @media (max-width: 700px) {
+        .tk-buoc {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+</style>
+
+<div class="dau-muc">
+    <div>
+        <span class="nhan">TRUNG TÂM ĐIỀU HÀNH</span>
+
+        <h1>
+            Chào {{ user.first_name|default:user.username }}.
+        </h1>
+
+        <p class="phu">
+            Hôm nay, {% now "d/m/Y" %}.
+            Chọn công việc bạn muốn thực hiện.
+        </p>
+    </div>
+</div>
+
+<section class="loi-chao" aria-labelledby="loi_chao">
+    <h2 id="loi_chao">
+        Chăm chút từng kiểu tóc.<br>
+        Hoàn thiện từng trải nghiệm.
+    </h2>
+
+    <p>
+        Quản lý hình ảnh, nội dung và dữ liệu tư vấn.
+        Sau khi lưu, mở website để kiểm tra kết quả.
+    </p>
+
+    <div class="hang-nut">
+        <a class="nut"
+           href="{% url 'thu_toc:trang_chu' %}">
+            Về trang chủ ↗
+        </a>
+
+        <a class="nut"
+           href="{% url 'thu_toc:phong_thu_toc' %}">
+            Mở phòng thử tóc ↗
+        </a>
+    </div>
+</section>
+
+<div style="margin-bottom:18px">
+    <h2>Các mục quản lý</h2>
+    <p class="phu">
+        Dữ liệu và chức năng hiển thị theo quyền của bạn.
+    </p>
+</div>
+
+<section class="luoi" aria-label="Các mục quản lý">
+    {% for the in cac_the %}
+        <article class="the tk-the">
+            <h3>{{ the.ten }}</h3>
+
+            <div class="so-luong">
+                {{ the.so_luong }}
+            </div>
+
+            <p class="phu">{{ the.mo_ta }}</p>
+
+            <a class="nut nut-phu"
+               href="{% url 'admin:danh_sach' the.ma %}"
+               aria-label="Mở quản lý {{ the.ten }}">
+                Mở quản lý →
+            </a>
+        </article>
+
+    {% empty %}
+        {% for muc in menu_quan_tri %}
+            <article class="the tk-the">
+                <h3>{{ muc.ten }}</h3>
+
+                <p class="phu">
+                    Mở danh sách để xem và cập nhật dữ liệu.
+                </p>
+
+                <a class="nut nut-phu"
+                   href="{% url 'admin:danh_sach' muc.ma %}"
+                   aria-label="Mở quản lý {{ muc.ten }}">
+                    Mở quản lý →
+                </a>
+            </article>
+
+        {% empty %}
+            <div class="trong" style="grid-column:1 / -1">
+                <h2>Chưa có mục quản lý được cấp quyền</h2>
+
+                <p class="phu">
+                    Liên hệ quản trị viên cấp cao
+                    để được cấp quyền quản lý dữ liệu.
+                </p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</section>
+
+<section class="the" style="margin-top:24px"
+         aria-labelledby="bat_dau">
+    <h2 id="bat_dau">Bắt đầu từ đâu?</h2>
+
+    <p class="phu">
+        Ba bước để cập nhật nội dung trên website.
+    </p>
+
+    <ol class="tk-buoc">
+        <li>
+            <h3>Chọn nội dung</h3>
+            <p class="phu">
+                Mở Kiểu tóc để cập nhật tên, mô tả,
+                hình ảnh và dạng mặt phù hợp.
+            </p>
+        </li>
+
+        <li>
+            <h3>Kiểm tra và lưu</h3>
+            <p class="phu">
+                Chọn Thêm mới hoặc Sửa, kiểm tra thông tin
+                rồi bấm Lưu thay đổi.
+            </p>
+        </li>
+
+        <li>
+            <h3>Xem kết quả</h3>
+            <p class="phu">
+                Mở danh mục hoặc phòng thử tóc
+                để kiểm tra nội dung vừa cập nhật.
+            </p>
+        </li>
+    </ol>
+
+    <p class="phu"
+       style="margin:0;padding-top:18px;border-top:1px solid var(--vien)">
+        Quản lý tài khoản và nhóm quyền
+        chỉ dành cho quản trị viên cấp cao.
+    </p>
+</section>
+{% endblock %}

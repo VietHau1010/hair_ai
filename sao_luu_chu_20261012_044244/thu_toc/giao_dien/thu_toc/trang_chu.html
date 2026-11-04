@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="HAULONGHAIR — phân tích dáng khuôn mặt, khám phá và lựa chọn kiểu tóc phù hợp.">
+
+    <title>HAULONGHAIR — Tóc bạn XẤU để tôi lo</title>
+
+    <style>
+        :root {
+            --nen: #f7f5ef;
+            --giay: #fffdf8;
+            --chu: #202720;
+            --chu-phu: #64695f;
+            --xanh: #284d39;
+            --xanh-dam: #183525;
+            --vien: #dedfd4;
+            --vang: #ebce85;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--nen);
+            color: var(--chu);
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        summary:focus-visible {
+            outline: 3px solid #b8882c;
+            outline-offset: 5px;
+        }
+
+        .bo-qua {
+            position: fixed;
+            top: -100px;
+            left: 16px;
+            z-index: 100;
+            padding: 12px 18px;
+            background: white;
+            border: 1px solid var(--xanh);
+        }
+
+        .bo-qua:focus {
+            top: 12px;
+        }
+
+        .khung-rong {
+            width: min(1200px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        /* Thanh điều hướng */
+
+        .dau-trang {
+            background: var(--giay);
+            border-bottom: 1px solid var(--vien);
+        }
+
+        .thanh-dieu-huong {
+            min-height: 88px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .thuong-hieu {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .bieu-tuong {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            background: var(--xanh);
+            color: var(--giay);
+            border-radius: 50%;
+            font-family: Georgia, serif;
+            font-size: 23px;
+            font-style: italic;
+        }
+
+        .ten-thuong-hieu {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 1.1px;
+        }
+
+        .dieu-huong {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .lien-ket-menu {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 0;
+        }
+
+        .lien-ket-menu:hover {
+            color: var(--xanh);
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        .nut {
+            min-height: 46px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 22px;
+            border: 1px solid var(--xanh);
+            border-radius: 8px;
+            background: var(--xanh);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.4;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .nut:hover {
+            background: var(--xanh-dam);
+            border-color: var(--xanh-dam);
+        }
+
+        .nut-phu {
+            background: transparent;
+            color: var(--xanh);
+            border-color: #c6ccbf;
+        }
+
+        .nut-phu:hover {
+            background: #e8ece2;
+            border-color: var(--xanh);
+        }
+
+        .menu-tai-khoan {
+            position: relative;
+        }
+
+        .menu-tai-khoan summary {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 220px;
+            padding: 10px 12px;
+            border: 1px solid var(--vien);
+            border-radius: 8px;
+            cursor: pointer;
+            list-style: none;
+            font-size: 14px;
+            background: white;
+        }
+
+        .menu-tai-khoan summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .ten-nguoi-dung {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .menu-tai-khoan[open] summary {
+            border-color: var(--xanh);
+        }
+
+        .danh-sach-tai-khoan {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            z-index: 20;
+            width: 250px;
+            padding: 8px;
+            border: 1px solid var(--vien);
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 12px 30px #20272012;
+        }
+
+        .danh-sach-tai-khoan a,
+        .nut-dang-xuat {
+            display: block;
+            width: 100%;
+            padding: 13px 12px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            text-align: left;
+            color: var(--chu);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .danh-sach-tai-khoan a:hover,
+        .nut-dang-xuat:hover {
+            background: #f0f3eb;
+        }
+
+        .danh-sach-tai-khoan form {
+            margin: 5px 0 0;
+            padding-top: 5px;
+            border-top: 1px solid var(--vien);
+        }
+
+        .nut-dang-xuat {
+            color: #923c2c;
+        }
+
+        /* Thông báo */
+
+        .cac-thong-bao {
+            margin-top: 22px;
+        }
+
+        .thong-bao {
+            margin-bottom: 12px;
+            padding: 15px 18px;
+            border: 1px solid #cad8c7;
+            border-radius: 8px;
+            background: #edf3e9;
+            color: var(--xanh);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Phần giới thiệu */
+
+        .gioi-thieu {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 70px;
+            padding: 78px 0 72px;
+        }
+
+        .dong-mo-dau {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 25px;
+            color: var(--xanh);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .dong-mo-dau::before {
+            content: "";
+            width: 32px;
+            height: 1px;
+            background: var(--xanh);
+        }
+
+        h1 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(44px, 5.2vw, 72px);
+            font-weight: 400;
+            line-height: 1.12;
+            letter-spacing: -2px;
+        }
+
+        h1 em {
+            color: var(--xanh);
+            font-weight: 400;
+        }
+
+        .mo-ta {
+            max-width: 490px;
+            margin: 26px 0 0;
+            color: var(--chu-phu);
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .cac-nut-chinh {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .ghi-chu-dang-nhap {
+            margin: 17px 0 0;
+            color: var(--chu-phu);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        
+
+        .minh-hoa {
+            position: relative;
+            min-height: 450px;
+            padding: 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 120px 120px 18px 18px;
+            background: #e5e9dd;
+            overflow: hidden;
+        }
+
+        .nhan-minh-hoa {
+            align-self: center;
+            margin-top: 8px;
+            color: var(--xanh);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .hinh-guong {
+            width: 100%;
+            max-width: 270px;
+            height: 275px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .chu-tren-minh-hoa {
+            margin: 0;
+            text-align: center;
+            color: var(--xanh);
+            font-family: Georgia, serif;
+            font-size: 29px;
+            font-style: italic;
+            line-height: 1.25;
+        }
+
+        .chu-duoi-minh-hoa {
+            margin: 12px 0 0;
+            text-align: center;
+            color: #68715e;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* Các bước sử dụng */
+
+        .phan-cach {
+            border-top: 1px solid var(--vien);
+        }
+
+        .huong-dan {
+            padding: 55px 0 65px;
+        }
+
+        .dau-muc {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dau-muc h2 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(28px, 3vw, 36px);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        .dau-muc p {
+            margin: 0;
+            color: var(--chu-phu);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .cac-buoc {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .the-buoc {
+            padding: 28px;
+            border: 1px solid var(--vien);
+            border-radius: 12px;
+            background: var(--giay);
+        }
+
+        .so-buoc {
+            display: block;
+            margin-bottom: 30px;
+            color: #8d967f;
+            font-family: Georgia, serif;
+            font-size: 32px;
+        }
+
+        .the-buoc h3 {
+            margin: 0 0 13px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        .the-buoc p {
+            margin: 0;
+            color: var(--chu-phu);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .nhan-trang-thai {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: #eeeae0;
+            color: #756448;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Lối vào các chức năng */
+
+        .loi-vao {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            padding-bottom: 65px;
+        }
+
+        .the-loi-vao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 30px;
+            border-radius: 12px;
+            background: #e9ecdf;
+            border: 1px solid #dce1d1;
+        }
+
+        .the-loi-vao h2 {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+
+        .the-loi-vao p {
+            margin: 0;
+            color: var(--chu-phu);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .mui-ten {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border: 1px solid #b6c2ac;
+            border-radius: 50%;
+            color: var(--xanh);
+            font-size: 23px;
+            transition: background 0.15s;
+        }
+
+        .the-loi-vao:hover .mui-ten {
+            background: #d5ddc9;
+        }
+
+        /* Chân trang */
+
+        footer {
+            padding: 28px 0;
+            border-top: 1px solid var(--vien);
+            background: var(--giay);
+        }
+
+        .noi-dung-chan {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .noi-dung-chan strong {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .noi-dung-chan p {
+            margin: 0;
+            color: var(--chu-phu);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1000px) {
+            .thanh-dieu-huong {
+                flex-wrap: wrap;
+                padding: 20px 0;
+                gap: 18px;
+            }
+
+            .dieu-huong {
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+
+            .gioi-thieu {
+                gap: 35px;
+            }
+
+            .minh-hoa {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .khung-rong {
+                width: calc(100% - 32px);
+            }
+
+            .dieu-huong {
+                width: 100%;
+                gap: 16px;
+                justify-content: flex-start;
+            }
+
+            .gioi-thieu {
+                grid-template-columns: 1fr;
+                padding: 45px 0;
+                gap: 35px;
+            }
+
+            .minh-hoa {
+                min-height: 360px;
+                border-radius: 85px 85px 16px 16px;
+            }
+
+            .hinh-guong {
+                height: 210px;
+            }
+
+            .dau-muc {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .cac-buoc,
+            .loi-vao {
+                grid-template-columns: 1fr;
+            }
+
+            .the-buoc {
+                padding: 24px;
+            }
+
+            .so-buoc {
+                margin-bottom: 18px;
+            }
+
+            .huong-dan {
+                padding: 40px 0;
+            }
+
+            .loi-vao {
+                padding-bottom: 40px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .ten-thuong-hieu {
+                font-size: 17px;
+            }
+
+            .lien-ket-menu {
+                font-size: 13px;
+            }
+
+            .cac-nut-chinh .nut {
+                width: 100%;
+            }
+
+            .menu-tai-khoan summary {
+                max-width: 180px;
+            }
+
+            .danh-sach-tai-khoan {
+                right: auto;
+                left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="bo-qua" href="#noi-dung-chinh">
+        Đến nội dung chính
+    </a>
+
+    <header class="dau-trang">
+        <div class="khung-rong thanh-dieu-huong">
+            <a class="thuong-hieu"
+               href="{% url 'thu_toc:trang_chu' %}"
+               aria-label="HAULONGHAIR — Trang chủ">
+                <span class="bieu-tuong" aria-hidden="true">h</span>
+                <span class="ten-thuong-hieu">HAULONGHAIR</span>
+            </a>
+
+            <nav class="dieu-huong" aria-label="Điều hướng chính">
+                <a class="lien-ket-menu"
+                   href="{% url 'kieu_toc:danh_sach' %}">
+                    Khám phá kiểu tóc
+                </a>
+
+                <a class="lien-ket-menu"
+                   href="{% url 'thu_toc:phong_thu_toc' %}">
+                    Phòng thử tóc
+                </a>
+
+                {% if user.is_authenticated %}
+                    <details class="menu-tai-khoan">
+                        <summary>
+                            <span class="ten-nguoi-dung">
+                                {{ user.username }}
+                            </span>
+                            <span aria-hidden="true">⌄</span>
+                        </summary>
+
+                        <div class="danh-sach-tai-khoan">
+                            <a href="{% url 'tai_khoan:thong_tin' %}">
+                                Tài khoản của tôi
+                            </a>
+
+                            <a href="{% url 'kieu_toc:yeu_thich' %}">
+                                Kiểu tóc yêu thích
+                            </a>
+
+                            {% if user.is_staff %}
+                                <a href="{% url 'admin:index' %}">
+                                    Quản trị hệ thống
+                                </a>
+                            {% endif %}
+
+                            <form method="post"
+                                  action="{% url 'tai_khoan:dang_xuat' %}">
+                                {% csrf_token %}
+                                <button class="nut-dang-xuat" type="submit">
+                                    Đăng xuất
+                                </button>
+                            </form>
+                        </div>
+                    </details>
+                {% else %}
+                    <a class="lien-ket-menu"
+                       href="{% url 'tai_khoan:dang_nhap' %}">
+                        Đăng nhập
+                    </a>
+
+                    <a class="nut"
+                       href="{% url 'tai_khoan:dang_ky' %}">
+                        Đăng ký
+                    </a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main id="noi-dung-chinh" class="khung-rong">
+        {% if messages %}
+            <div class="cac-thong-bao">
+                {% for thong_bao in messages %}
+                    <div class="thong-bao" role="status">
+                        {{ thong_bao }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <section class="gioi-thieu" aria-labelledby="tieu-de-chinh">
+            <div>
+                <p class="dong-mo-dau">Một diện mạo, nhiều lựa chọn</p>
+
+                <h1 id="tieu-de-chinh">
+                    Tóc bạn xấu<br>
+                    <em>để tôi lo.</em>
+                </h1>
+
+                <p class="mo-ta">
+                    Chưa biết chọn kiểu tóc nào?
+                    Bắt đầu từ dáng khuôn mặt của bạn,
+                    khám phá những gợi ý phù hợp và lưu lại
+                    kiểu tóc mình yêu thích.
+                </p>
+
+                <div class="cac-nut-chinh">
+                    <a class="nut"
+                       href="{% url 'thu_toc:phong_thu_toc' %}">
+                        Quét khuôn mặt
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                    <a class="nut nut-phu"
+                       href="{% url 'kieu_toc:danh_sach' %}">
+                        Xem các kiểu tóc
+                    </a>
+                </div>
+
+                {% if user.is_authenticated %}
+                    <p class="ghi-chu-dang-nhap">
+                        Xin chào, {{ user.username }}.
+                        Bạn có thể bắt đầu quét khuôn mặt ngay.
+                    </p>
+                {% else %}
+                    <p class="ghi-chu-dang-nhap">
+                        Đăng nhập để quét khuôn mặt và lưu kiểu tóc yêu thích.
+                    </p>
+                {% endif %}
+            </div>
+
+            <div class="minh-hoa">
+                <span class="nhan-minh-hoa">GÓC NHÌN MỚI CHO BẠN</span>
+
+                <svg class="hinh-guong"
+                     viewBox="0 0 280 280"
+                     fill="none"
+                     aria-hidden="true">
+                    <path d="M47 248V103C47 51 89 16 140 16
+                             C191 16 233 51 233 103V248"
+                          fill="#F7F5EF"
+                          stroke="#A5B198"
+                          stroke-width="2"/>
+
+                    <path d="M59 246V104C59 60 95 29 140 29
+                             C185 29 221 60 221 104V246"
+                          stroke="#D1D8C7"
+                          stroke-width="1"/>
+
+                    <path d="M76 244C79 206 101 188 140 188
+                             C179 188 201 206 204 244"
+                          fill="#C7D2BA"/>
+
+                    <path d="M124 167V192
+                             C130 204 150 204 156 192V167"
+                          fill="#DBBA93"/>
+
+                    <path d="M100 104
+                             C100 77 117 65 140 65
+                             C163 65 181 83 181 108
+                             V131
+                             C181 157 165 179 140 182
+                             C115 179 100 157 100 131Z"
+                          fill="#E9CCAB"/>
+
+                    <path d="M94 118
+                             C84 97 92 70 113 59
+                             C135 46 170 52 183 72
+                             C192 85 191 107 181 123
+                             L176 98
+                             C157 102 133 87 126 78
+                             C121 94 110 103 101 107
+                             L101 128Z"
+                          fill="#284D39"/>
+
+                    <path d="M113 127H120M157 127H164"
+                          stroke="#65533D"
+                          stroke-width="3"
+                          stroke-linecap="round"/>
+
+                    <path d="M140 133L136 145H142"
+                          stroke="#BE9570"
+                          stroke-width="2"
+                          stroke-linecap="round"/>
+
+                    <path d="M130 157C136 161 144 161 151 157"
+                          stroke="#A57757"
+                          stroke-width="2"
+                          stroke-linecap="round"/>
+
+                    <path d="M41 250H239"
+                          stroke="#A5B198"
+                          stroke-width="2"
+                          stroke-linecap="round"/>
+
+                    <circle cx="222" cy="58" r="15" fill="#EBCE85"/>
+                    <path d="M222 49V67M213 58H231"
+                          stroke="#8E7539"
+                          stroke-width="1.5"/>
+                </svg>
+
+                <p class="chu-tren-minh-hoa">
+                    Chọn tóc hợp mặt <br>
+                    
+                </p>
+
+                
+            </div>
+        </section>
+
+        <section class="huong-dan phan-cach"
+                 aria-labelledby="tieu-de-huong-dan">
+            <div class="dau-muc">
+                <h2 id="tieu-de-huong-dan">
+                    Bắt đầu từ khuôn mặt của bạn
+                </h2>
+                <p>Ba bước để tìm một lựa chọn mới.</p>
+            </div>
+
+            <div class="cac-buoc">
+                <article class="the-buoc">
+                    <span class="so-buoc" aria-hidden="true">01</span>
+                    <h3>Quét khuôn mặt</h3>
+                    <p>
+                        Bật camera, nhìn thẳng và chụp trong ánh sáng rõ
+                        để hệ thống phân tích dáng khuôn mặt.
+                    </p>
+                </article>
+
+                <article class="the-buoc">
+                    <span class="so-buoc" aria-hidden="true">02</span>
+                    <h3>Khám phá gợi ý</h3>
+                    <p>
+                        Xem các kiểu tóc được gợi ý theo kết quả quét.
+                        Lưu những lựa chọn bạn muốn xem lại.
+                    </p>
+                </article>
+
+                <article class="the-buoc">
+                    <span class="so-buoc" aria-hidden="true">03</span>
+                    <h3>Thử diện mạo mới</h3>
+                    <p>
+                        So sánh hình ảnh thật với hình ảnh ghép tóc
+                        ngay trên camera.
+                    </p>
+                    <span class="nhan-trang-thai">
+                        Hiệu ứng ghép tóc đang được phát triển
+                    </span>
+                </article>
+            </div>
+        </section>
+
+        <section class="loi-vao" aria-label="Khám phá thêm">
+            <a class="the-loi-vao"
+               href="{% url 'kieu_toc:danh_sach' %}">
+                <div>
+                    <h2>Tìm cảm hứng cho lần cắt tới</h2>
+                    <p>
+                        Xem danh mục tóc và lọc theo dáng khuôn mặt.
+                    </p>
+                </div>
+                <span class="mui-ten" aria-hidden="true">↗</span>
+            </a>
+
+            {% if user.is_authenticated %}
+                <a class="the-loi-vao"
+                   href="{% url 'kieu_toc:yeu_thich' %}">
+                    <div>
+                        <h2>Những kiểu tóc bạn đã lưu</h2>
+                        <p>
+                            Tất cả lựa chọn yêu thích, ở cùng một nơi.
+                        </p>
+                    </div>
+                    <span class="mui-ten" aria-hidden="true">↗</span>
+                </a>
+            {% else %}
+                <a class="the-loi-vao"
+                   href="{% url 'tai_khoan:dang_ky' %}">
+                    <div>
+                        <h2>Lưu lại phong cách của bạn</h2>
+                        <p>
+                            Tạo tài khoản để giữ những kiểu tóc yêu thích.
+                        </p>
+                    </div>
+                    <span class="mui-ten" aria-hidden="true">↗</span>
+                </a>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <div class="khung-rong noi-dung-chan">
+            <strong>HAULONGHAIR</strong>
+            <p>Tóc bạn xấu để tôi lo.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuTaiKhoan = document.querySelector(".menu-tai-khoan");
+
+        if (menuTaiKhoan) {
+            document.addEventListener("click", function (suKien) {
+                if (!menuTaiKhoan.contains(suKien.target)) {
+                    menuTaiKhoan.open = false;
+                }
+            });
+
+            document.addEventListener("keydown", function (suKien) {
+                if (suKien.key === "Escape" && menuTaiKhoan.open) {
+                    menuTaiKhoan.open = false;
+                    menuTaiKhoan.querySelector("summary").focus();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

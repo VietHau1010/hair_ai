@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="HAULONGHAIR — khám phá dáng khuôn mặt, lựa chọn và thử kiểu tóc phù hợp với bạn.">
+    <meta name="theme-color" content="#244d39">
+
+    <title>{% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %}Tổng quan quản trị{% else %}Tóc bạn xấu để tôi lo{% endif %} — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            --nen: #f7f6f0;
+            --giay: #fffef9;
+            --trang: #fff;
+            --chu: #202b24;
+            --phu: #626b62;
+            --xanh: #244d39;
+            --xanh-dam: #173626;
+            --nhat: #e9eee2;
+            --vien: #dde2d6;
+            --vang: #ebd397;
+            --do: #9a3c32;
+            --bo: 22px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 115px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--nen);
+            color: var(--chu);
+            font: 17px/1.65 Arial, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, p { margin: 0; }
+        h1, h2, h3 { line-height: 1.25; }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        a, button, summary {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        summary:focus-visible {
+            outline: 3px solid #b88927;
+            outline-offset: 5px;
+        }
+
+        [hidden] { display: none !important; }
+
+        .khung {
+            width: min(1280px, calc(100% - 64px));
+            margin-inline: auto;
+        }
+
+        .bo-qua {
+            position: fixed;
+            top: -100px;
+            left: 20px;
+            z-index: 100;
+            background: white;
+            border: 1px solid var(--xanh);
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        .bo-qua:focus { top: 12px; }
+
+        .dau-trang {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: var(--giay);
+            border-bottom: 1px solid var(--vien);
+        }
+
+        .thanh {
+            min-height: 94px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .thuong-hieu {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .bieu-tuong {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--xanh);
+            color: white;
+            font: italic 28px Georgia, serif;
+        }
+
+        .ten-thuong-hieu {
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: .8px;
+        }
+
+        .nhan-vai-tro {
+            display: block;
+            color: var(--phu);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            line-height: 1.6;
+            text-transform: uppercase;
+        }
+
+        .dieu-huong {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .lien-ket {
+            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 13px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .lien-ket:hover,
+        .lien-ket[aria-current=page] {
+            background: var(--nhat);
+            color: var(--xanh);
+        }
+
+        .nut {
+            min-height: 54px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 14px 23px;
+            border: 1px solid var(--xanh);
+            border-radius: 11px;
+            color: white;
+            background: var(--xanh);
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.45;
+            transition: background .18s, transform .18s;
+        }
+
+        .nut:hover {
+            background: var(--xanh-dam);
+            transform: translateY(-2px);
+        }
+
+        .nut-phu {
+            background: transparent;
+            color: var(--xanh);
+            border-color: #c5cebd;
+        }
+
+        .nut-phu:hover { background: var(--nhat); }
+
+        .nut-nho {
+            min-height: 46px;
+            padding: 10px 18px;
+            font-size: 15px;
+        }
+
+        .nut-menu {
+            display: none;
+            width: 46px;
+            height: 46px;
+            border: 1px solid var(--vien);
+            border-radius: 10px;
+            background: white;
+            color: var(--xanh);
+        }
+
+        .nut-menu svg {
+            width: 23px;
+            height: 23px;
+            vertical-align: middle;
+        }
+
+        .tai-khoan {
+            position: relative;
+            margin-left: 8px;
+        }
+
+        .tai-khoan summary {
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 11px;
+            background: white;
+            border: 1px solid var(--vien);
+            border-radius: 10px;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .tai-khoan summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 50%;
+            color: var(--xanh);
+            background: var(--nhat);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .ten-nguoi-dung {
+            max-width: 115px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .menu-tai-khoan {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 12px);
+            z-index: 40;
+            width: 270px;
+            padding: 9px;
+            border: 1px solid var(--vien);
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 18px 50px #20302418;
+        }
+
+        .menu-nhan {
+            padding: 11px 12px 13px;
+            color: var(--phu);
+            font-size: 13px;
+            border-bottom: 1px solid var(--vien);
+            margin-bottom: 6px;
+        }
+
+        .menu-tai-khoan a,
+        .nut-dang-xuat {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: left;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            font-size: 15px;
+            color: var(--chu);
+        }
+
+        .menu-tai-khoan a:hover,
+        .nut-dang-xuat:hover {
+            background: #f0f4eb;
+        }
+
+        .menu-tai-khoan form {
+            margin: 6px 0 0;
+            padding-top: 6px;
+            border-top: 1px solid var(--vien);
+        }
+
+        .nut-dang-xuat { color: var(--do); }
+
+        .cac-thong-bao { padding-top: 22px; }
+
+        .thong-bao {
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            border: 1px solid #cad9c3;
+            border-radius: 12px;
+            background: #edf3e7;
+            color: var(--xanh);
+        }
+
+        .thong-bao.error {
+            background: #fff0ed;
+            border-color: #e6c6be;
+            color: var(--do);
+        }
+
+        .thong-bao.warning {
+            background: #fff6de;
+            border-color: #e4d6aa;
+            color: #745d24;
+        }
+
+        .nhan {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            color: var(--xanh);
+        }
+
+        .nhan::before {
+            content: "";
+            width: 25px;
+            height: 2px;
+            background: currentColor;
+        }
+
+        .gioi-thieu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 64px;
+            padding: 64px 0 58px;
+        }
+
+        .gioi-thieu h1 {
+            margin-top: 22px;
+            font-size: clamp(42px, 4.7vw, 66px);
+            letter-spacing: -2.4px;
+            font-weight: 700;
+            line-height: 1.14;
+        }
+
+        .gioi-thieu h1 em {
+            display: block;
+            margin-top: 8px;
+            color: var(--xanh);
+            font-family: Georgia, "Times New Roman", serif;
+            font-weight: 400;
+            letter-spacing: -.8px;
+        }
+
+        .mo-ta {
+            max-width: 535px;
+            color: var(--phu);
+            margin-top: 25px;
+            font-size: 18px;
+            line-height: 1.85;
+        }
+
+        .cac-nut {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .ghi-chu {
+            margin-top: 16px;
+            color: var(--phu);
+            font-size: 14px;
+        }
+
+        .loi-chao {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            max-width: 100%;
+            margin-bottom: 23px;
+            padding: 7px 13px;
+            border: 1px solid var(--vien);
+            border-radius: 30px;
+            background: var(--giay);
+            color: var(--xanh);
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .cham {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #537549;
+        }
+
+        .minh-hoa {
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 26px;
+            border-radius: 150px 150px 25px 25px;
+            background: #e4e9dc;
+            border: 1px solid #dce3d3;
+            overflow: hidden;
+        }
+
+        .nhan-minh-hoa {
+            font-size: 12px;
+            color: var(--xanh);
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .hinh-guong {
+            width: min(100%, 310px);
+            height: 330px;
+            display: block;
+            margin: 12px auto;
+        }
+
+        .chu-minh-hoa {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--xanh);
+            text-align: center;
+        }
+
+        .minh-hoa-duoi {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            color: #606e59;
+            font-size: 13px;
+        }
+
+        .the-noi {
+            position: absolute;
+            right: 20px;
+            top: 170px;
+            max-width: 155px;
+            padding: 13px 16px;
+            border: 1px solid #ffffffc0;
+            border-radius: 13px;
+            background: #fffffff0;
+            box-shadow: 0 10px 26px #244d3910;
+            color: var(--xanh);
+            font-size: 13px;
+        }
+
+        .the-noi strong {
+            display: block;
+            font-size: 16px;
+        }
+
+        .loi-hua {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            padding: 22px 0;
+            border-top: 1px solid var(--vien);
+            border-bottom: 1px solid var(--vien);
+        }
+
+        .loi-hua div {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .dau-tich {
+            width: 29px;
+            height: 29px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--nhat);
+            color: var(--xanh);
+        }
+
+        .muc { padding: 52px 0; }
+
+        .dau-muc {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 25px;
+        }
+
+        .dau-muc h2 {
+            margin-top: 10px;
+            font-size: clamp(26px, 2.6vw, 35px);
+            letter-spacing: -.8px;
+        }
+
+        .dau-muc p {
+            color: var(--phu);
+            font-size: 15px;
+        }
+
+        .lien-ket-mui-ten {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--xanh);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .lien-ket-mui-ten:hover {
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
+
+        .luoi-ba {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .the {
+            min-width: 0;
+            padding: 27px;
+            background: var(--giay);
+            border: 1px solid var(--vien);
+            border-radius: var(--bo);
+        }
+
+        .the h3 {
+            font-size: 21px;
+            margin: 17px 0 12px;
+        }
+
+        .the p {
+            color: var(--phu);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .so {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #78886c;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .icon {
+            width: 45px;
+            height: 45px;
+            display: grid;
+            place-items: center;
+            color: var(--xanh);
+            background: var(--nhat);
+            border-radius: 13px;
+        }
+
+        .icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .the .lien-ket-mui-ten { margin-top: 24px; }
+
+        .luoi-hai {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .loi-vao {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 165px;
+            padding: 27px;
+            border: 1px solid var(--vien);
+            border-radius: var(--bo);
+            background: #edf0e6;
+            transition: border-color .18s, background .18s;
+        }
+
+        .loi-vao:hover {
+            background: #e4eadb;
+            border-color: #b2c1a7;
+        }
+
+        .loi-vao h3 {
+            margin: 5px 0 9px;
+            font-size: 23px;
+        }
+
+        .loi-vao p {
+            font-size: 16px;
+            color: var(--phu);
+            max-width: 390px;
+        }
+
+        .mui-ten {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border: 1px solid #becab3;
+            border-radius: 50%;
+            color: var(--xanh);
+            font-size: 24px;
+        }
+
+        .ket {
+            margin: 0 0 55px;
+            padding: 32px;
+            border-radius: var(--bo);
+            background: var(--xanh);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .ket h2 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .ket p {
+            color: #d7e3d0;
+            font-size: 16px;
+        }
+
+        .ket .nut {
+            flex-shrink: 0;
+            background: var(--vang);
+            color: #283528;
+            border-color: var(--vang);
+        }
+
+        .ket .nut:hover { background: #f1dda9; }
+
+        footer {
+            border-top: 1px solid var(--vien);
+            background: var(--giay);
+            padding: 27px 0;
+        }
+
+        .chan {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .chan strong {
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        .chan p {
+            font-size: 14px;
+            color: var(--phu);
+        }
+
+        /* Giao diện riêng dành cho admin */
+
+        .trang-admin { background: #f3f5f0; }
+
+        .trang-admin .dau-trang {
+            background: #173a2a;
+            border-color: #2e5240;
+            color: #f6f8f0;
+        }
+
+        .trang-admin .bieu-tuong {
+            background: #e6d098;
+            color: #193d2b;
+        }
+
+        .trang-admin .nhan-vai-tro { color: #b9ceba; }
+
+        .trang-admin .lien-ket:hover,
+        .trang-admin .lien-ket[aria-current=page] {
+            color: white;
+            background: #ffffff12;
+        }
+
+        .trang-admin .tai-khoan summary {
+            background: #244b36;
+            border-color: #42614d;
+        }
+
+        .trang-admin .menu-tai-khoan { color: var(--chu); }
+
+        .trang-admin .nut-menu {
+            background: #244b36;
+            border-color: #42614d;
+            color: white;
+        }
+
+        .admin-dau {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 25px;
+            padding: 43px 0 27px;
+        }
+
+        .admin-dau h1 {
+            font-size: clamp(29px, 3vw, 40px);
+            letter-spacing: -1px;
+            margin: 12px 0;
+        }
+
+        .admin-dau p {
+            max-width: 650px;
+            color: var(--phu);
+            font-size: 16px;
+        }
+
+        .ngay {
+            text-align: right;
+            color: var(--phu);
+            font-size: 14px;
+            white-space: nowrap;
+            padding-top: 8px;
+        }
+
+        .ngay strong {
+            display: block;
+            margin-top: 5px;
+            color: var(--chu);
+            font-size: 16px;
+        }
+
+        .admin-noi-bat {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 32px;
+            padding: 33px;
+            border-radius: 24px;
+            color: white;
+            background: #244b36;
+        }
+
+        .admin-noi-bat h2 {
+            font-size: clamp(25px, 2.6vw, 33px);
+            margin-bottom: 15px;
+        }
+
+        .admin-noi-bat p {
+            max-width: 550px;
+            color: #d2dfcb;
+            font-size: 16px;
+        }
+
+        .admin-noi-bat .nut {
+            background: var(--vang);
+            border-color: var(--vang);
+            color: #243626;
+        }
+
+        .admin-noi-bat .nut-phu {
+            color: white;
+            border-color: #729078;
+            background: transparent;
+        }
+
+        .admin-noi-bat .nut-phu:hover { background: #ffffff12; }
+
+        .phien-quan-tri {
+            padding: 23px;
+            border: 1px solid #ffffff25;
+            border-radius: 17px;
+            background: #ffffff08;
+        }
+
+        .phien-quan-tri h3 {
+            font-size: 16px;
+            margin-bottom: 18px;
+            color: #e7eedf;
+        }
+
+        .dong-quan-tri {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 11px 0;
+            font-size: 14px;
+            border-top: 1px solid #ffffff16;
+        }
+
+        .dong-quan-tri span { color: #c0d2b8; }
+
+        .dong-quan-tri strong {
+            font-weight: 600;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .luoi-quan-ly {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .the-quan-ly {
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            min-height: 250px;
+        }
+
+        .the-quan-ly h3 { font-size: 20px; }
+
+        .the-quan-ly .lien-ket-mui-ten {
+            margin-top: auto;
+            padding-top: 22px;
+        }
+
+        .the-quan-ly p { font-size: 15px; }
+
+        .bang-kiem-tra {
+            padding: 27px;
+            border: 1px solid var(--vien);
+            border-radius: var(--bo);
+            background: var(--giay);
+        }
+
+        .bang-kiem-tra h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .bang-kiem-tra > p {
+            color: var(--phu);
+            font-size: 15px;
+            margin-bottom: 19px;
+        }
+
+        .kiem-tra {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 0;
+            border-top: 1px solid var(--vien);
+        }
+
+        .kiem-tra .so-kiem {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: var(--nhat);
+            color: var(--xanh);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .kiem-tra strong {
+            display: block;
+            font-size: 16px;
+        }
+
+        .kiem-tra p {
+            color: var(--phu);
+            font-size: 14px;
+        }
+
+        .kiem-tra a {
+            margin-left: auto;
+            flex-shrink: 0;
+            color: var(--xanh);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px;
+        }
+
+        .ghi-chu-admin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 22px;
+            margin-bottom: 40px;
+            color: var(--phu);
+            background: #e8ede2;
+            border-radius: 13px;
+            font-size: 14px;
+        }
+
+        @media (min-width: 1001px) {
+            .dieu-huong { display: flex !important; }
+        }
+
+        @media (max-width: 1100px) {
+            .khung { width: calc(100% - 44px); }
+            .gioi-thieu { gap: 32px; }
+
+            .luoi-quan-ly {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .lien-ket {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .thanh {
+                flex-wrap: wrap;
+                gap: 0;
+                min-height: 82px;
+                padding: 17px 0;
+            }
+
+            .nut-menu { display: block; }
+
+            .dieu-huong {
+                width: 100%;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding-top: 17px;
+                margin-top: 16px;
+                border-top: 1px solid var(--vien);
+            }
+
+            .trang-admin .dieu-huong { border-color: #42614d; }
+            .tai-khoan { margin-left: auto; }
+            .minh-hoa { min-height: 445px; }
+            .hinh-guong { height: 290px; }
+            .the-noi { display: none; }
+        }
+
+        @media (max-width: 760px) {
+            html { scroll-padding-top: 95px; }
+
+            .gioi-thieu {
+                grid-template-columns: 1fr;
+                padding: 37px 0;
+                gap: 32px;
+            }
+
+            .gioi-thieu h1 {
+                font-size: 45px;
+                letter-spacing: -1.5px;
+            }
+
+            .mo-ta { font-size: 17px; }
+
+            .minh-hoa {
+                min-height: 410px;
+                max-width: 550px;
+                width: 100%;
+                justify-self: center;
+                border-radius: 100px 100px 22px 22px;
+            }
+
+            .loi-hua {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .luoi-ba,
+            .luoi-hai,
+            .admin-noi-bat {
+                grid-template-columns: 1fr;
+            }
+
+            .dau-muc {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .muc { padding: 35px 0; }
+
+            .ket {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 26px;
+                margin-bottom: 35px;
+            }
+
+            .admin-dau { padding-top: 30px; }
+            .ngay { display: none; }
+
+            .admin-noi-bat {
+                padding: 25px;
+                gap: 25px;
+            }
+
+            .luoi-quan-ly { gap: 14px; }
+        }
+
+        @media (max-width: 480px) {
+            .khung { width: calc(100% - 32px); }
+
+            .ten-thuong-hieu {
+                font-size: 16px;
+                letter-spacing: .4px;
+            }
+
+            .nhan-vai-tro { font-size: 10px; }
+
+            .bieu-tuong {
+                width: 38px;
+                height: 38px;
+            }
+
+            .gioi-thieu h1 { font-size: 39px; }
+            .cac-nut .nut { width: 100%; }
+            .luoi-quan-ly { grid-template-columns: 1fr; }
+            .the-quan-ly { min-height: 225px; }
+            .dieu-huong { position: relative; }
+
+            .tai-khoan {
+                margin-left: 0;
+                position: static;
+            }
+
+            .menu-tai-khoan {
+                right: 0;
+                left: auto;
+                width: min(270px, 100%);
+            }
+
+            .dieu-huong .lien-ket { font-size: 15px; }
+            .kiem-tra { flex-wrap: wrap; }
+            .kiem-tra a { margin-left: 47px; }
+
+            .the,
+            .loi-vao,
+            .bang-kiem-tra {
+                padding: 23px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body{% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %} class="trang-admin"{% endif %}>
+    <a class="bo-qua" href="#noi-dung-chinh">
+        Đến nội dung chính
+    </a>
+
+    <header class="dau-trang">
+        <div class="khung thanh">
+            <a class="thuong-hieu"
+               href="{% url 'thu_toc:trang_chu' %}"
+               aria-label="HAULONGHAIR — Trang chủ">
+
+                <span class="bieu-tuong" aria-hidden="true">h</span>
+
+                <span>
+                    <span class="ten-thuong-hieu">HAULONGHAIR</span>
+
+                    {% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %}
+                        <span class="nhan-vai-tro">
+                            Không gian quản trị
+                        </span>
+                    {% else %}
+                        <span class="nhan-vai-tro">
+                            Tìm phong cách của bạn
+                        </span>
+                    {% endif %}
+                </span>
+            </a>
+
+            <button class="nut-menu"
+                    id="nut_menu"
+                    type="button"
+                    aria-controls="dieu_huong"
+                    aria-expanded="true"
+                    aria-label="Đóng hoặc mở menu">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     aria-hidden="true">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <nav class="dieu-huong"
+                 id="dieu_huong"
+                 aria-label="Điều hướng chính">
+
+                {% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %}
+
+                    <a class="lien-ket"
+                       href="#tong-quan"
+                       aria-current="page">
+                        Tổng quan
+                    </a>
+
+                    <a class="lien-ket" href="#quan-ly">
+                        Quản lý
+                    </a>
+
+                    <a class="lien-ket" href="#kiem-tra">
+                        Kiểm tra trải nghiệm
+                    </a>
+
+                    <a class="lien-ket"
+                       href="{% url 'admin:index' %}">
+                        Quản trị dữ liệu ↗
+                    </a>
+
+                {% else %}
+
+                    <a class="lien-ket"
+                       href="{% url 'thu_toc:trang_chu' %}"
+                       aria-current="page">
+                        Trang chủ
+                    </a>
+
+                    <a class="lien-ket"
+                       href="{% url 'kieu_toc:danh_sach' %}">
+                        Khám phá kiểu tóc
+                    </a>
+
+                    <a class="lien-ket"
+                       href="#thu-toc-nguoi-noi-tieng">
+                        Thử tóc người nổi tiếng
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <a class="lien-ket" href="#anh_cua_toi">
+                            Ảnh của tôi
+                        </a>
+                    {% endif %}
+
+                    <a class="lien-ket"
+                       href="{% url 'thu_toc:phong_thu_toc' %}">
+                        Phòng thử tóc
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <a class="lien-ket"
+                           href="{% url 'kieu_toc:yeu_thich' %}">
+                            Tóc yêu thích
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+
+                {% if user.is_authenticated %}
+
+                    <details class="tai-khoan">
+                        <summary>
+                            <span class="avatar" aria-hidden="true">
+                                {{ user.username|slice:':1' }}
+                            </span>
+
+                            <span class="ten-nguoi-dung">
+                                {{ user.username }}
+                            </span>
+
+                            <span aria-hidden="true">⌄</span>
+                        </summary>
+
+                        <div class="menu-tai-khoan">
+                            <p class="menu-nhan">
+                                {% if user.is_staff or user.is_superuser %}
+                                    Tài khoản quản trị
+                                {% else %}
+                                    Không gian của bạn
+                                {% endif %}
+                            </p>
+
+                            <a href="{% url 'tai_khoan:thong_tin' %}">
+                                Thông tin tài khoản
+                            </a>
+
+                            {% if user.is_staff or user.is_superuser %}
+
+                                <a href="{% url 'admin:index' %}">
+                                    Mở Django Admin
+                                </a>
+
+                                <a href="{% url 'kieu_toc:danh_sach' %}">
+                                    Xem danh mục dành cho khách
+                                </a>
+
+                            {% else %}
+
+                                <a href="{% url 'kieu_toc:yeu_thich' %}">
+                                    Kiểu tóc đã lưu
+                                </a>
+
+                                <a href="{% url 'thu_toc:phong_thu_toc' %}">
+                                    Bắt đầu thử tóc
+                                </a>
+
+                            {% endif %}
+
+                            <form method="post"
+                                  action="{% url 'tai_khoan:dang_xuat' %}">
+                                {% csrf_token %}
+
+                                <button class="nut-dang-xuat"
+                                        type="submit">
+                                    Đăng xuất
+                                </button>
+                            </form>
+                        </div>
+                    </details>
+
+                {% else %}
+
+                    <a class="lien-ket"
+                       href="{% url 'tai_khoan:dang_nhap' %}">
+                        Đăng nhập
+                    </a>
+
+                    <a class="nut nut-nho"
+                       href="{% url 'tai_khoan:dang_ky' %}">
+                        Tạo tài khoản
+                    </a>
+
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main id="noi-dung-chinh" class="khung">
+        {% if messages %}
+            <div class="cac-thong-bao" aria-live="polite">
+                {% for thong_bao in messages %}
+                    <div class="thong-bao {{ thong_bao.tags }}"
+                         role="status">
+                        {{ thong_bao }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %}
+
+            <!-- TRANG CHỦ ADMIN -->
+
+            {% url 'admin:auth_user_changelist' as url_quan_ly_nguoi_dung %}
+
+            <section id="tong-quan"
+                     class="admin-dau"
+                     aria-labelledby="tieu-de-admin">
+
+                <div>
+                    <span class="nhan">Trung tâm điều hành</span>
+
+                    <h1 id="tieu-de-admin">
+                        Xin chào, {{ user.first_name|default:user.username }}.
+                    </h1>
+
+                    <p>
+                        Quản lý nội dung, tài khoản và kiểm tra trải nghiệm
+                        HAULONGHAIR từ một không gian làm việc riêng.
+                    </p>
+                </div>
+
+                <div class="ngay">
+                    Hôm nay
+                    <strong>{% now "d/m/Y" %}</strong>
+                </div>
+            </section>
+
+            <section class="admin-noi-bat"
+                     aria-labelledby="tieu-de-dieu-hanh">
+
+                <div>
+                    <h2 id="tieu-de-dieu-hanh">
+                        Chăm chút từng kiểu tóc.<br>
+                        Hoàn thiện từng trải nghiệm.
+                    </h2>
+
+                    <p>
+                        Bắt đầu với kho dữ liệu, xem lại nội dung hiển thị
+                        và kiểm tra phòng thử trước khi giới thiệu đến người dùng.
+                    </p>
+
+                    <div class="cac-nut">
+                        <a class="nut" href="{% url 'admin:index' %}">
+                            Mở trang quản trị
+                            <span aria-hidden="true">↗</span>
+                        </a>
+
+                        <a class="nut nut-phu"
+                           href="{% url 'thu_toc:phong_thu_toc' %}">
+                            Kiểm tra phòng thử
+                        </a>
+                    </div>
+                </div>
+
+                <div class="phien-quan-tri">
+                    <h3>Thông tin phiên làm việc</h3>
+
+                    <div class="dong-quan-tri">
+                        <span>Tài khoản</span>
+                        <strong>{{ user.username }}</strong>
+                    </div>
+
+                    <div class="dong-quan-tri">
+                        <span>Vai trò</span>
+                        <strong>
+                            {% if user.is_superuser %}
+                                Quản trị viên cấp cao
+                            {% else %}
+                                Nhân sự quản trị
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="dong-quan-tri">
+                        <span>Không gian hiện tại</span>
+                        <strong>Trang chủ quản trị</strong>
+                    </div>
+
+                    <div class="dong-quan-tri">
+                        <span>Quản lý dữ liệu</span>
+                        <strong>Django Admin</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="muc"
+                     id="quan-ly"
+                     aria-labelledby="tieu-de-quan-ly">
+
+                <div class="dau-muc">
+                    <div>
+                        <span class="nhan">Công việc hằng ngày</span>
+                        <h2 id="tieu-de-quan-ly">
+                            Mọi lối vào, đúng nơi cần đến
+                        </h2>
+                    </div>
+
+                    <p>Quản lý dữ liệu và rà soát nội dung.</p>
+                </div>
+
+                <div class="luoi-quan-ly">
+                    <article class="the the-quan-ly">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.6">
+                                <rect x="4" y="3" width="16" height="18" rx="3"/>
+                                <path d="M8 8h8M8 12h8M8 16h5"/>
+                            </svg>
+                        </span>
+
+                        <h3>Kho kiểu tóc</h3>
+
+                        <p>
+                            Vào quản trị để chỉnh nội dung, ảnh giới thiệu
+                            và ảnh tóc dùng cho mô phỏng.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% url 'admin:index' %}">
+                            Quản trị dữ liệu
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+
+                    <article class="the the-quan-ly">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.6">
+                                <circle cx="9" cy="8" r="3"/>
+                                <path d="M3 20v-2a6 6 0 0 1 12 0v2M17 5a3 3 0 0 1 0 6M17 14a5 5 0 0 1 4 5"/>
+                            </svg>
+                        </span>
+
+                        <h3>Tài khoản &amp; quyền</h3>
+
+                        <p>
+                            Xem tài khoản và phân quyền theo các mục
+                            được cấp phép trong Django Admin.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% if url_quan_ly_nguoi_dung %}{{ url_quan_ly_nguoi_dung }}{% else %}{% url 'admin:index' %}{% endif %}">
+                            Mở quản lý tài khoản
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+
+                    <article class="the the-quan-ly">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.6">
+                                <rect x="3" y="4" width="18" height="16" rx="3"/>
+                                <path d="M3 10h18M9 10v10"/>
+                            </svg>
+                        </span>
+
+                        <h3>Nội dung hiển thị</h3>
+
+                        <p>
+                            Kiểm tra tên, mô tả và hình ảnh của các kiểu tóc
+                            như người dùng nhìn thấy.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% url 'kieu_toc:danh_sach' %}">
+                            Xem danh mục tóc
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+
+                    <article class="the the-quan-ly">
+                        <span class="icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.6">
+                                <rect x="3" y="6" width="18" height="14" rx="3"/>
+                                <circle cx="12" cy="13" r="4"/>
+                                <path d="m8 6 1-3h6l1 3"/>
+                            </svg>
+                        </span>
+
+                        <h3>Quét &amp; thử tóc</h3>
+
+                        <p>
+                            Kiểm tra camera, hướng dẫn quét, kết quả
+                            phân tích và khả năng ghép tóc.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% url 'thu_toc:phong_thu_toc' %}">
+                            Mở phòng thử
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="muc"
+                     id="kiem-tra"
+                     aria-labelledby="tieu-de-kiem-tra"
+                     style="padding-top:0">
+
+                <div class="dau-muc">
+                    <div>
+                        <span class="nhan">Trước khi giới thiệu</span>
+                        <h2 id="tieu-de-kiem-tra">
+                            Kiểm tra hành trình người dùng
+                        </h2>
+                    </div>
+
+                    <a class="lien-ket-mui-ten"
+                       href="{% url 'tai_khoan:thong_tin' %}">
+                        Tài khoản của bạn
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+
+                <div class="luoi-hai">
+                    <article class="bang-kiem-tra">
+                        <h3>Danh mục &amp; tư vấn</h3>
+                        <p>Xem lại nội dung trước khi người dùng lựa chọn.</p>
+
+                        <div class="kiem-tra">
+                            <span class="so-kiem">01</span>
+
+                            <div>
+                                <strong>Ảnh và mô tả kiểu tóc</strong>
+                                <p>Rõ ràng, dễ đọc, đúng kiểu tóc.</p>
+                            </div>
+
+                            <a href="{% url 'kieu_toc:danh_sach' %}">
+                                Xem ↗
+                            </a>
+                        </div>
+
+                        <div class="kiem-tra">
+                            <span class="so-kiem">02</span>
+
+                            <div>
+                                <strong>Dữ liệu phục vụ gợi ý</strong>
+                                <p>Rà soát các mục đã đăng ký trong quản trị.</p>
+                            </div>
+
+                            <a href="{% url 'admin:index' %}">
+                                Mở ↗
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="bang-kiem-tra">
+                        <h3>Camera &amp; tài khoản</h3>
+                        <p>Thử các thao tác quan trọng của ứng dụng.</p>
+
+                        <div class="kiem-tra">
+                            <span class="so-kiem">03</span>
+
+                            <div>
+                                <strong>Quét và ghép tóc</strong>
+                                <p>Kiểm tra đủ các bước trên camera thật.</p>
+                            </div>
+
+                            <a href="{% url 'thu_toc:phong_thu_toc' %}">
+                                Thử ↗
+                            </a>
+                        </div>
+
+                        <div class="kiem-tra">
+                            <span class="so-kiem">04</span>
+
+                            <div>
+                                <strong>Thông tin cá nhân</strong>
+                                <p>Kiểm tra thông tin của tài khoản hiện tại.</p>
+                            </div>
+
+                            <a href="{% url 'tai_khoan:thong_tin' %}">
+                                Xem ↗
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <div class="ghi-chu-admin">
+                <span class="dau-tich" aria-hidden="true">i</span>
+
+                <p>
+                    Các thao tác thêm, sửa, xóa và phân quyền được thực hiện
+                    trong Django Admin theo quyền của tài khoản.
+                </p>
+            </div>
+
+        {% else %}
+
+            <!-- TRANG CHỦ NGƯỜI DÙNG VÀ KHÁCH -->
+
+            <section class="gioi-thieu"
+                     aria-labelledby="tieu-de-chinh">
+
+                <div>
+                    {% if user.is_authenticated %}
+                        <p class="loi-chao">
+                            <span class="cham" aria-hidden="true"></span>
+                            Chào {{ user.first_name|default:user.username }},
+                            hôm nay thử một phong cách mới nhé.
+                        </p>
+                    {% endif %}
+
+                    <span class="nhan">
+                        Một diện mạo, nhiều lựa chọn
+                    </span>
+
+                    <h1 id="tieu-de-chinh">
+                        Tóc bạn xấu
+                        <em>để tôi lo.</em>
+                    </h1>
+
+                    <p class="mo-ta">
+                        Hôm nay bạn không biết mang gì ra đường ư ?
+                    </p>
+
+                    <p class="mo-ta">
+                        thì kệ bạn chứ chúng tôi không quan tâm
+                    </p>
+
+                    <p class="mo-ta">
+                        vì ở đây chúng tôi chỉ quan tâm tóc của bạn
+                    </p>
+
+                    <p class="mo-ta">
+                        hãy thử một kiểu tóc mới hôm nay nhé
+                    </p>
+
+                    <div class="cac-nut">
+                        <a class="nut"
+                           href="{% url 'thu_toc:phong_thu_toc' %}">
+                            Bắt đầu quét khuôn mặt
+                            <span aria-hidden="true">↗</span>
+                        </a>
+
+                        <a class="nut nut-phu"
+                           href="{% url 'kieu_toc:danh_sach' %}">
+                            Khám phá kiểu tóc
+                        </a>
+                    </div>
+
+                    <p class="ghi-chu">
+                        {% if user.is_authenticated %}
+
+                        {% else %}
+                            Đăng nhập để quét khuôn mặt và lưu kiểu tóc yêu thích.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="minh-hoa">
+                    <span class="nhan-minh-hoa">
+                        GÓC NHÌN MỚI CHO BẠN
+                    </span>
+
+                    <svg class="hinh-guong"
+                         viewBox="0 0 280 280"
+                         fill="none"
+                         aria-hidden="true">
+
+                        <path d="M47 248V103C47 51 89 16 140 16C191 16 233 51 233 103V248"
+                              fill="#F7F6F0"
+                              stroke="#A5B198"
+                              stroke-width="2"/>
+
+                        <path d="M59 246V104C59 60 95 29 140 29C185 29 221 60 221 104V246"
+                              stroke="#D1D8C7"/>
+
+                        <path d="M76 244C79 206 101 188 140 188C179 188 201 206 204 244"
+                              fill="#C7D2BA"/>
+
+                        <path d="M124 167V192C130 204 150 204 156 192V167"
+                              fill="#DBBA93"/>
+
+                        <path d="M100 104C100 77 117 65 140 65C163 65 181 83 181 108V131C181 157 165 179 140 182C115 179 100 157 100 131Z"
+                              fill="#E9CCAB"/>
+
+                        <path d="M94 118C84 97 92 70 113 59C135 46 170 52 183 72C192 85 191 107 181 123L176 98C157 102 133 87 126 78C121 94 110 103 101 107L101 128Z"
+                              fill="#244D39"/>
+
+                        <path d="M113 127H120M157 127H164"
+                              stroke="#65533D"
+                              stroke-width="3"
+                              stroke-linecap="round"/>
+
+                        <path d="M140 133L136 145H142"
+                              stroke="#BE9570"
+                              stroke-width="2"
+                              stroke-linecap="round"/>
+
+                        <path d="M130 157C136 161 144 161 151 157"
+                              stroke="#A57757"
+                              stroke-width="2"
+                              stroke-linecap="round"/>
+
+                        <path d="M41 250H239"
+                              stroke="#A5B198"
+                              stroke-width="2"
+                              stroke-linecap="round"/>
+
+                        <circle cx="222"
+                                cy="58"
+                                r="15"
+                                fill="#EBD397"/>
+
+                        <path d="M222 49V67M213 58H231"
+                              stroke="#8E7539"
+                              stroke-width="1.5"/>
+                    </svg>
+
+                    <div class="the-noi">
+                        <strong>Bạn sợ à ?</strong>
+                    </div>
+
+                    <div>
+                        <p class="chu-minh-hoa">
+                            Chọn tóc hợp mặt
+                        </p>
+
+                        <p class="minh-hoa-duoi">
+                            Quét khuôn mặt
+                            <span aria-hidden="true">·</span>
+                            Xem gợi ý
+                            <span aria-hidden="true">·</span>
+                            Thử tóc
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="loi-hua" aria-label="Điểm nổi bật">
+                <div>
+                    <span class="dau-tich" aria-hidden="true">✓</span>
+                    Gợi ý theo dáng khuôn mặt
+                </div>
+
+                <div>
+                    <span class="dau-tich" aria-hidden="true">✓</span>
+                    So sánh trước và sau khi thử
+                </div>
+
+                <div>
+                    <span class="dau-tich" aria-hidden="true">✓</span>
+                    Lưu lại kiểu tóc yêu thích
+                </div>
+            </div>
+
+            <section class="muc"
+                     id="thu-toc-nguoi-noi-tieng"
+                     aria-labelledby="tieu-de-huong-dan">
+
+                <div class="dau-muc">
+                    <div>
+                        <span class="nhan">
+                            Dễ bắt đầu, dễ lựa chọn
+                        </span>
+
+                        <h2 id="tieu-de-huong-dan">
+                            Một phong cách mới, chỉ ba bước
+                        </h2>
+                    </div>
+
+                    <p>Làm theo hướng dẫn, từng bước một.</p>
+                </div>
+
+                {% include "kieu_toc/tim_nguoi_noi_tieng.html" %}
+
+                <div class="luoi-ba">
+                    <article class="the">
+                        <div class="so">
+                            <span>BƯỚC 01</span>
+
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="1.6">
+                                    <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M3 16v3a2 2 0 0 0 2 2h3M21 16v3a2 2 0 0 1-2 2h-3"/>
+                                    <ellipse cx="12" cy="11" rx="4" ry="5"/>
+                                </svg>
+                            </span>
+                        </div>
+
+                        <h3>Quét khuôn mặt</h3>
+
+                        <p>
+                            Bật camera, ngồi nơi đủ sáng và làm theo
+                            hướng dẫn trên màn hình để phân tích dáng mặt.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% url 'thu_toc:phong_thu_toc' %}">
+                            Bắt đầu quét
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+
+                    <article class="the">
+                        <div class="so">
+                            <span>BƯỚC 02</span>
+
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="1.6">
+                                    <rect x="3" y="3" width="7" height="7" rx="2"/>
+                                    <rect x="14" y="3" width="7" height="7" rx="2"/>
+                                    <rect x="3" y="14" width="7" height="7" rx="2"/>
+                                    <rect x="14" y="14" width="7" height="7" rx="2"/>
+                                </svg>
+                            </span>
+                        </div>
+
+                        <h3>Tìm kiểu tóc phù hợp</h3>
+
+                        <p>
+                            Xem các gợi ý sau khi quét hoặc khám phá
+                            danh mục tóc để chọn phong cách bạn yêu thích.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% url 'kieu_toc:danh_sach' %}">
+                            Khám phá danh mục
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+
+                    <article class="the">
+                        <div class="so">
+                            <span>BƯỚC 03</span>
+
+                            <span class="icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="1.6">
+                                    <rect x="3" y="4" width="18" height="14" rx="3"/>
+                                    <path d="M8 22h8M12 18v4M12 4v14"/>
+                                </svg>
+                            </span>
+                        </div>
+
+                        <h3>Thử diện mạo mới</h3>
+
+                        <p>
+                            Chọn tóc trong kết quả quét, xem hình mô phỏng
+                            cạnh hình thật và chỉnh tóc cho vừa bạn.
+                        </p>
+
+                        <a class="lien-ket-mui-ten"
+                           href="{% url 'thu_toc:phong_thu_toc' %}">
+                            Vào phòng thử tóc
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="muc"
+                     aria-labelledby="tieu-de-phong-cach"
+                     style="padding-top:0">
+
+                <div class="dau-muc">
+                    <div>
+                        <span class="nhan">Dành riêng cho bạn</span>
+
+                        <h2 id="tieu-de-phong-cach">
+                            Giữ lại những lựa chọn mình thích
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="luoi-hai">
+                    <a class="loi-vao"
+                       href="{% url 'kieu_toc:danh_sach' %}">
+
+                        <div>
+                            <span class="nhan">Khám phá</span>
+                            <h3>Cảm hứng cho lần cắt tới</h3>
+                            <p>
+                                Xem danh mục tóc và tìm lựa chọn
+                                phù hợp với dáng khuôn mặt.
+                            </p>
+                        </div>
+
+                        <span class="mui-ten" aria-hidden="true">↗</span>
+                    </a>
+
+                    {% if user.is_authenticated %}
+
+                        <a class="loi-vao"
+                           href="{% url 'kieu_toc:yeu_thich' %}">
+
+                            <div>
+                                <span class="nhan">Bộ sưu tập của bạn</span>
+                                <h3>Những kiểu tóc đã lưu</h3>
+                                <p>
+                                    Xem lại các lựa chọn yêu thích
+                                    trước khi quyết định đổi kiểu tóc.
+                                </p>
+                            </div>
+
+                            <span class="mui-ten" aria-hidden="true">↗</span>
+                        </a>
+
+                    {% else %}
+
+                        <a class="loi-vao"
+                           href="{% url 'tai_khoan:dang_ky' %}">
+
+                            <div>
+                                <span class="nhan">Không gian cá nhân</span>
+                                <h3>Lưu phong cách của bạn</h3>
+                                <p>
+                                    Tạo tài khoản để giữ các kiểu tóc
+                                    yêu thích ở cùng một nơi.
+                                </p>
+                            </div>
+
+                            <span class="mui-ten" aria-hidden="true">↗</span>
+                        </a>
+
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="ket"
+                     aria-labelledby="tieu-de-san-sang">
+
+                <div>
+                    <h2 id="tieu-de-san-sang">
+                        Sẵn sàng nhìn mình theo cách mới?
+                    </h2>
+
+                    <p>
+                        Bắt đầu từ khuôn mặt.
+                        Chọn phong cách theo cách của bạn.
+                    </p>
+                </div>
+
+                <a class="nut"
+                   href="{% url 'thu_toc:phong_thu_toc' %}">
+                    Thử tóc ngay
+                    <span aria-hidden="true">↗</span>
+                </a>
+            </section>
+
+        {% endif %}
+
+        {% include "thu_toc/anh_cua_toi.html" %}
+    </main>
+
+    <footer>
+        <div class="khung chan">
+            <strong>HAULONGHAIR</strong>
+
+            <p>
+                {% if user.is_authenticated and user.is_staff or user.is_authenticated and user.is_superuser %}
+                    Không gian quản trị · Nội dung &amp; trải nghiệm
+                {% else %}
+                    Tóc bạn xấu để tôi lo.
+                {% endif %}
+            </p>
+
+            <p>© {% now "Y" %} HAULONGHAIR</p>
+        </div>
+    </footer>
+
+    <script>
+        (() => {
+            const nutMenu = document.getElementById("nut_menu");
+            const dieuHuong = document.getElementById("dieu_huong");
+            const kichThuocNho = window.matchMedia("(max-width: 1000px)");
+            const taiKhoan = document.querySelector(".tai-khoan");
+
+            function datMenu(mo) {
+                dieuHuong.hidden = !mo;
+
+                nutMenu.setAttribute(
+                    "aria-expanded",
+                    String(mo)
+                );
+
+                nutMenu.setAttribute(
+                    "aria-label",
+                    mo ? "Đóng menu" : "Mở menu"
+                );
+
+                if (!mo && taiKhoan) {
+                    taiKhoan.open = false;
+                }
+            }
+
+            function dongBoMenu() {
+                datMenu(!kichThuocNho.matches);
+            }
+
+            nutMenu.addEventListener("click", () => {
+                datMenu(dieuHuong.hidden);
+            });
+
+            if (kichThuocNho.addEventListener) {
+                kichThuocNho.addEventListener(
+                    "change",
+                    dongBoMenu
+                );
+            } else {
+                kichThuocNho.addListener(dongBoMenu);
+            }
+
+            dongBoMenu();
+
+            document.addEventListener("click", e => {
+                if (taiKhoan && !taiKhoan.contains(e.target)) {
+                    taiKhoan.open = false;
+                }
+
+                if (
+                    kichThuocNho.matches &&
+                    !dieuHuong.hidden &&
+                    !e.target.closest(".dau-trang")
+                ) {
+                    datMenu(false);
+                }
+            });
+
+            dieuHuong.addEventListener("click", e => {
+                const lienKet = e.target.closest('a[href^="#"]');
+
+                if (kichThuocNho.matches && lienKet) {
+                    const dich = document.querySelector(
+                        lienKet.getAttribute("href")
+                    );
+
+                    datMenu(false);
+
+                    if (dich) {
+                        dich.setAttribute("tabindex", "-1");
+                        dich.focus({ preventScroll: true });
+                    }
+                }
+            });
+
+            document.addEventListener("keydown", e => {
+                if (e.key !== "Escape") return;
+
+                if (taiKhoan && taiKhoan.open) {
+                    taiKhoan.open = false;
+                    taiKhoan.querySelector("summary").focus();
+
+                } else if (
+                    kichThuocNho.matches &&
+                    !dieuHuong.hidden
+                ) {
+                    datMenu(false);
+                    nutMenu.focus();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

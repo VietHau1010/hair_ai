@@ -1,0 +1,242 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+<section id="anh_cua_toi"
+         class="act-khu"
+         data-danh-sach="{% url 'thu_toc:danh_sach_anh_da_chup' %}"
+         aria-labelledby="act_tieu_de">
+
+    <div class="act-dau">
+        <div>
+            <span class="act-nhan">KHOẢNH KHẮC CỦA BẠN</span>
+            <h2 id="act_tieu_de">Ảnh của tôi</h2>
+            <p>
+                Ảnh chụp và khung ảnh bạn đã lưu.
+                Chỉ tài khoản của bạn xem được.
+            </p>
+        </div>
+
+        <a class="act-nut"
+           href="{% url 'thu_toc:phong_thu_toc' %}">
+            Thử tóc &amp; chụp ảnh ↗
+        </a>
+    </div>
+
+    <p id="act_thong_bao" role="status">
+        Đang tải ảnh đã lưu…
+    </p>
+
+    <div id="act_danh_sach" class="act-luoi"></div>
+
+    <button type="button"
+            class="act-nut act-phu"
+            id="act_them"
+            hidden>
+        Xem thêm ảnh
+    </button>
+
+    <form id="act_bao_ve" hidden>
+        {% csrf_token %}
+    </form>
+</section>
+
+<dialog id="act_xem"
+        class="act-hop"
+        aria-labelledby="act_ten">
+
+    <div class="act-dau">
+        <h2 id="act_ten">Ảnh đã lưu</h2>
+
+        <button type="button"
+                class="act-nut act-phu"
+                id="act_dong">
+            Đóng
+        </button>
+    </div>
+
+    <img id="act_hinh_lon"
+         alt="Ảnh đã lưu đang xem">
+
+    <p id="act_chia_se_bao" role="status"></p>
+
+    <div class="act-hang">
+        <a id="act_tai" class="act-nut" download>
+            Tải ảnh
+        </a>
+
+        <button type="button"
+                id="act_chia_se"
+                class="act-nut act-phu">
+            Chia sẻ…
+        </button>
+
+        <button type="button"
+                id="act_fb"
+                class="act-nut act-phu">
+            Facebook ↗
+        </button>
+
+        <button type="button"
+                id="act_ig"
+                class="act-nut act-phu">
+            Instagram ↗
+        </button>
+    </div>
+</dialog>
+
+<style>
+    .act-khu {
+        margin: 36px 0;
+        padding: 28px;
+        border: 1px solid #dedfd4;
+        border-radius: 16px;
+        background: #fffdf8;
+        color: #202720;
+        font: 15px/1.7 Arial, "Segoe UI", sans-serif;
+        scroll-margin-top: 90px;
+    }
+
+    .act-dau {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .act-khu h2 {
+        font-size: 27px;
+        margin: 6px 0;
+    }
+
+    .act-khu p {
+        color: #64695f;
+    }
+
+    .act-nhan {
+        font-size: 11px;
+        font-weight: 700;
+        color: #284d39;
+    }
+
+    .act-luoi {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(min(100%, 210px), 1fr)
+        );
+        gap: 16px;
+        margin: 20px 0;
+    }
+
+    .act-the {
+        border: 1px solid #dedfd4;
+        border-radius: 12px;
+        padding: 12px;
+        min-width: 0;
+    }
+
+    .act-the img {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: contain;
+        background: #f0f3eb;
+        border-radius: 8px;
+    }
+
+    .act-the h3 {
+        font-size: 15px;
+        margin: 10px 0 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .act-the small {
+        color: #64695f;
+    }
+
+    .act-hang {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .act-nut {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 9px 13px;
+        border: 1px solid #284d39;
+        border-radius: 8px;
+        background: #284d39;
+        color: white;
+        font: 600 13px/1.5 Arial, sans-serif;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .act-phu {
+        background: white;
+        color: #284d39;
+        border-color: #c6ccbf;
+    }
+
+    .act-nut:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    .act-hop {
+        width: min(900px, 96vw);
+        max-height: 94dvh;
+        overflow: auto;
+        border: 1px solid #dedfd4;
+        border-radius: 14px;
+        padding: 22px;
+        background: #fffdf8;
+        font-family: Arial, sans-serif;
+    }
+
+    .act-hop::backdrop {
+        background: #12251dbb;
+    }
+
+    .act-hop img {
+        display: block;
+        max-width: 100%;
+        max-height: 68dvh;
+        margin: auto;
+        object-fit: contain;
+    }
+
+    .act-khu :focus-visible,
+    .act-hop :focus-visible {
+        outline: 3px solid #b8882c;
+        outline-offset: 3px;
+    }
+
+    @media (max-width: 600px) {
+        .act-khu {
+            padding: 18px;
+        }
+
+        .act-luoi {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .act-the img {
+            height: 160px;
+        }
+
+        .act-the {
+            padding: 9px;
+        }
+    }
+</style>
+
+<script type="module"
+        src="{% static 'thu_toc/anh_cua_toi.js' %}"></script>
+{% endif %}

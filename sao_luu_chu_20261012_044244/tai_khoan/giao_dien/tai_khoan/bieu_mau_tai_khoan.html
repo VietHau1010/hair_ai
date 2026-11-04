@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ ten_nut }} — HAULONGHAIR</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 35px 20px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f0f5ee;
+            color: #19251f;
+        }
+
+        .thuong-hieu {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #24583d;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .khau-hieu {
+            text-align: center;
+            color: #59665e;
+            margin-bottom: 30px;
+        }
+
+        .khung {
+            width: 100%;
+            max-width: 470px;
+            margin: auto;
+            padding: 32px;
+            background: white;
+            border: 1px solid #dfe7dc;
+            border-radius: 22px;
+            box-shadow: 0 15px 45px #24452e0d;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 27px;
+        }
+
+        .gioi-thieu {
+            color: #59665e;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .truong {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #ccd8c8;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #fcfdfb;
+        }
+
+        input:focus {
+            outline: 2px solid #24583d;
+            outline-offset: 2px;
+        }
+
+        .huong-dan {
+            display: block;
+            margin-top: 7px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #667360;
+        }
+
+        .loi {
+            margin-top: 7px;
+            color: #b42318;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .thong-bao {
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            background: #e7f0e5;
+            border-radius: 10px;
+            color: #24583d;
+            line-height: 1.6;
+        }
+
+        .loi-chung {
+            background: #fff0ed;
+            color: #b42318;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #24583d;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #193f2b;
+        }
+
+        .lien-ket {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .lien-ket a {
+            color: #24583d;
+            font-weight: bold;
+        }
+
+        .ve-trang-chu {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #59665e;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+        HAULONGHAIR
+    </a>
+    <p class="khau-hieu">Tóc bạn xấu để tôi lo</p>
+
+    <main class="khung">
+        <h1>{{ tieu_de }}</h1>
+
+        <p class="gioi-thieu">
+            {% if la_dang_ky %}
+                Tạo tài khoản để bắt đầu khám phá kiểu tóc phù hợp với bạn.
+            {% else %}
+                Đăng nhập để tiếp tục khám phá phong cách của bạn.
+            {% endif %}
+        </p>
+
+        {% for thong_bao in messages %}
+            <div class="thong-bao" role="status">
+                {{ thong_bao }}
+            </div>
+        {% endfor %}
+
+        {% for loi in bieu_mau.non_field_errors %}
+            <div class="thong-bao loi-chung" role="alert">
+                {{ loi }}
+            </div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for truong in bieu_mau %}
+                <div class="truong">
+                    <label for="{{ truong.id_for_label }}">
+                        {{ truong.label }}
+                    </label>
+
+                    {{ truong }}
+
+                    {% if truong.help_text %}
+                        <small class="huong-dan">
+                            {{ truong.help_text }}
+                        </small>
+                    {% endif %}
+
+                    {% for loi in truong.errors %}
+                        <div class="loi" role="alert">{{ loi }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit">{{ ten_nut }}</button>
+        </form>
+
+        <div class="lien-ket">
+            {% if la_dang_ky %}
+                Đã có tài khoản?
+                <a href="{% url 'tai_khoan:dang_nhap' %}">Đăng nhập</a>
+            {% else %}
+                Chưa có tài khoản?
+                <a href="{% url 'tai_khoan:dang_ky' %}">Đăng ký ngay</a>
+            {% endif %}
+        </div>
+    </main>
+
+    <a class="ve-trang-chu" href="{% url 'thu_toc:trang_chu' %}">
+        ← Về trang chủ
+    </a>
+</body>
+</html>

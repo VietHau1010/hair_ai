@@ -1,0 +1,176 @@
+.nt-luoi {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(min(100%, 230px), 1fr)
+    );
+    gap: 18px;
+}
+
+.nt-the {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+}
+
+.nt-the h2 {
+    font-size: 18px;
+    margin: 6px 0 0;
+}
+
+.nt-the p {
+    margin: 0 0 8px;
+}
+
+.nt-the > .nut {
+    margin-top: auto;
+}
+
+.nt-dai-dien {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--nhat);
+    color: var(--xanh);
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    font-weight: 700;
+    overflow: hidden;
+}
+
+.nt-dai-dien img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nt-anh {
+    height: 180px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--vien);
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--nen);
+}
+
+.nt-anh img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    min-height: 0;
+}
+
+.nt-trong-suot {
+    background-color: #fff;
+    background-image: conic-gradient(
+        #e8ede9 25%,
+        transparent 0 50%,
+        #e8ede9 0 75%,
+        transparent 0
+    );
+    background-size: 20px 20px;
+}
+
+.nt-cach {
+    margin-bottom: 22px;
+}
+
+.nt-cach-tren {
+    margin-top: 24px;
+}
+
+.nt-so-sanh {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.nt-khung-anh {
+    height: 320px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--vien);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 14px;
+}
+
+.nt-khung-anh img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    min-height: 0;
+}
+
+.nt-khung-anh p {
+    text-align: center;
+    padding: 15px;
+}
+
+.nt-xem-truoc {
+    display: block;
+    max-width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    border: 1px solid var(--vien);
+    border-radius: 10px;
+    margin-top: 16px;
+}
+
+.nt-tac-vu {
+    display: grid;
+    gap: 0;
+}
+
+.nt-dong {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 15px 0;
+    border-top: 1px solid var(--vien);
+}
+
+.nt-dong small {
+    display: block;
+    margin-top: 3px;
+}
+
+.nt-dong:hover strong {
+    color: var(--xanh);
+}
+
+#nt_bieu_mau .truong > input:not([type="checkbox"]),
+#nt_bieu_mau .truong > textarea {
+    width: 100%;
+}
+
+#nt_bieu_mau input[type="file"] {
+    padding: 12px;
+    border: 1px dashed #b7c8bc;
+    border-radius: 8px;
+    background: var(--nhat);
+}
+
+@media (max-width: 700px) {
+    .nt-so-sanh {
+        grid-template-columns: 1fr;
+    }
+
+    .nt-khung-anh {
+        height: 260px;
+    }
+
+    .nt-dong {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .nt-the {
+        padding: 18px;
+    }
+}

@@ -1,0 +1,228 @@
+{% if muc_hien_tai == 'toc' %}
+    <section class="luoi ql-luoi"
+             aria-label="Danh sách kiểu tóc">
+        {% for doi_tuong in du_lieu %}
+            <article class="the the-toc">
+                <div class="anh-toc">
+                    {% if doi_tuong.anh_gioi_thieu %}
+                        <img src="{{ doi_tuong.anh_gioi_thieu.url }}"
+                             alt="{{ doi_tuong.ten }}"
+                             loading="lazy">
+                    {% else %}
+                        <span>Chưa có ảnh giới thiệu</span>
+                    {% endif %}
+                </div>
+
+                <div class="than-toc">
+                    <h3>{{ doi_tuong.ten }}</h3>
+
+                    <p class="mo-ta-toc">
+                        {{ doi_tuong.mo_ta|default:"Chưa có mô tả."|truncatechars:180 }}
+                    </p>
+
+                    <div class="ql-nhan">
+                        {% for dang_mat in doi_tuong.dang_mat_phu_hop.all %}
+                            <span class="nhan-trang-thai">
+                                {{ dang_mat }}
+                            </span>
+                        {% empty %}
+                            <span class="phu">
+                                Chưa chọn dạng mặt phù hợp
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="chan-toc">
+                    {% url 'admin:sua' muc_hien_tai doi_tuong.pk as url_sua %}
+                    {% url 'admin:xoa' muc_hien_tai doi_tuong.pk as url_xoa %}
+
+                    {% if co_the_sua and url_sua %}
+                        <a class="nut nut-phu"
+                           href="{{ url_sua }}"
+                           aria-label="Sửa kiểu tóc {{ doi_tuong.ten }}">
+                            Chỉnh sửa
+                        </a>
+                    {% endif %}
+
+                    {% if co_the_xoa and url_xoa %}
+                        <details class="xac-nhan">
+                            <summary>Xóa kiểu tóc</summary>
+
+                            <p>
+                                Xóa “{{ doi_tuong.ten }}”?
+                                Thao tác này không thể hoàn tác.
+                            </p>
+
+                            <form method="post" action="{{ url_xoa }}">
+                                {% csrf_token %}
+
+                                <label>
+                                    <input type="checkbox"
+                                           name="xac_nhan"
+                                           value="1"
+                                           required>
+                                    Tôi xác nhận xóa.
+                                </label>
+
+                                <button class="nut nut-do" type="submit">
+                                    Xác nhận xóa
+                                </button>
+                            </form>
+                        </details>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+
+{% else %}
+    <div class="cuon-bang">
+        <table>
+            <caption style="padding:16px 20px;text-align:left;font-weight:600;border-bottom:1px solid var(--vien)">
+                {{ tieu_de|default:"Danh sách dữ liệu" }}
+            </caption>
+
+            <thead>
+                <tr>
+                    {% if muc_hien_tai == 'tai-khoan' %}
+                        <th scope="col">Tài khoản</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Vai trò</th>
+
+                    {% elif muc_hien_tai == 'nhom-quyen' %}
+                        <th scope="col">Nhóm quyền</th>
+                        <th scope="col">Số quyền</th>
+                        <th scope="col">Thông tin</th>
+
+                    {% else %}
+                        <th scope="col">Tên dữ liệu</th>
+                        <th scope="col">Mã</th>
+                        <th scope="col">Mô tả</th>
+                    {% endif %}
+
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for doi_tuong in du_lieu %}
+                    {% url 'admin:sua' muc_hien_tai doi_tuong.pk as url_sua %}
+                    {% url 'admin:xoa' muc_hien_tai doi_tuong.pk as url_xoa %}
+
+                    <tr>
+                        {% if muc_hien_tai == 'tai-khoan' %}
+                            <td>
+                                <strong>{{ doi_tuong.username }}</strong>
+
+                                {% if doi_tuong.get_full_name %}
+                                    <div class="phu">
+                                        {{ doi_tuong.get_full_name }}
+                                    </div>
+                                {% endif %}
+
+                                {% if not doi_tuong.is_active %}
+                                    <span class="nhan-trang-thai nhan-tat">
+                                        Đã khóa
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ doi_tuong.email|default:"Chưa cập nhật" }}
+                            </td>
+
+                            <td>
+                                <span class="nhan-trang-thai">
+                                    {% if doi_tuong.is_superuser %}
+                                        Quản trị viên cấp cao
+                                    {% elif doi_tuong.is_staff %}
+                                        Nhân sự
+                                    {% else %}
+                                        Người dùng
+                                    {% endif %}
+                                </span>
+                            </td>
+
+                        {% elif muc_hien_tai == 'nhom-quyen' %}
+                            <td>
+                                <strong>{{ doi_tuong.name }}</strong>
+                            </td>
+
+                            <td>{{ doi_tuong.permissions.count }}</td>
+
+                            <td class="phu">
+                                Nhóm phân quyền quản trị.
+                            </td>
+
+                        {% else %}
+                            <td>
+                                <strong>
+                                    {{ doi_tuong.ten|default:doi_tuong }}
+                                </strong>
+                            </td>
+
+                            <td>{{ doi_tuong.ma|default:"—" }}</td>
+
+                            <td class="phu">
+                                {{ doi_tuong.mo_ta|default:"Chưa có mô tả."|truncatechars:140 }}
+                            </td>
+                        {% endif %}
+
+                        <td>
+                            {% if co_the_sua and url_sua %}
+                                <a class="nut nut-phu"
+                                   href="{{ url_sua }}"
+                                   aria-label="Sửa {{ doi_tuong }}">
+                                    Chỉnh sửa
+                                </a>
+                            {% endif %}
+
+                            {% if co_the_xoa and url_xoa %}
+                                {% if muc_hien_tai != 'tai-khoan' or doi_tuong.pk != user.pk %}
+                                    <details class="xac-nhan">
+                                        <summary>Xóa dữ liệu</summary>
+
+                                        <p>
+                                            Xóa “{{ doi_tuong }}”?
+                                            Thao tác này không thể hoàn tác.
+                                        </p>
+
+                                        <form method="post"
+                                              action="{{ url_xoa }}">
+                                            {% csrf_token %}
+
+                                            <label>
+                                                <input type="checkbox"
+                                                       name="xac_nhan"
+                                                       value="1"
+                                                       required>
+                                                Tôi xác nhận xóa.
+                                            </label>
+
+                                            <button class="nut nut-do"
+                                                    type="submit">
+                                                Xác nhận xóa
+                                            </button>
+                                        </form>
+                                    </details>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if not co_the_sua and not co_the_xoa %}
+                                <span class="phu">Chỉ xem</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% empty %}
+                    <tr>
+                        <td colspan="4">
+                            Chưa có dữ liệu.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

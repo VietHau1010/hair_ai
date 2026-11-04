@@ -1,0 +1,148 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+{% load static %}
+
+{% block noi_dung %}
+<link rel="stylesheet"
+      href="{% static 'thu_toc/quan_tri_nguoi_noi_tieng.css' %}">
+
+<div class="dau-muc">
+    <div>
+        <span class="nhan">
+            {% if la_them_toc %}
+                THÊM PHONG CÁCH
+            {% else %}
+                CẬP NHẬT HỒ SƠ
+            {% endif %}
+        </span>
+
+        <h1>{{ tieu_de }}</h1>
+
+        <p class="phu">
+            {% if la_them_toc %}
+                Nhập tên, chọn ảnh.
+                Hệ thống tự tách tóc và lưu dữ liệu.
+            {% else %}
+                Cập nhật tên, tên gọi khác và trạng thái hiển thị.
+            {% endif %}
+        </p>
+    </div>
+
+    <a class="nut nut-phu"
+       href="{% url 'admin:nguoi_noi_tieng' %}">
+        ← Danh sách
+    </a>
+</div>
+
+<div class="bo-form">
+    <form class="the"
+          method="post"
+          enctype="multipart/form-data"
+          id="nt_bieu_mau">
+        {% csrf_token %}
+
+        {% if bieu_mau.errors %}
+            <div class="thong-bao error" role="alert">
+                Chưa lưu được.
+                Kiểm tra thông tin bên dưới.
+
+                {{ bieu_mau.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for truong in bieu_mau %}
+            <div class="truong nt-cach {% if truong.errors %}truong-loi{% endif %}">
+                <label for="{{ truong.id_for_label }}">
+                    {{ truong.label }}
+                    {% if truong.field.required %} *{% endif %}
+                </label>
+
+                {{ truong }}
+
+                {% if truong.help_text %}
+                    <div class="giup">
+                        {{ truong.help_text }}
+                    </div>
+                {% endif %}
+
+                {{ truong.errors }}
+            </div>
+        {% endfor %}
+
+        {% if la_them_toc %}
+            <img id="nt_xem_anh"
+                 class="nt-xem-truoc"
+                 alt="Ảnh vừa chọn"
+                 hidden>
+        {% endif %}
+
+        <div class="luu-form">
+            <button class="nut"
+                    type="submit"
+                    id="nt_gui">
+                {% if la_them_toc %}
+                    Lưu và tự tách tóc
+                {% else %}
+                    Lưu thay đổi
+                {% endif %}
+            </button>
+
+            {% if nguoi %}
+                <a class="nut nut-phu"
+                   href="{% url 'admin:chi_tiet_nguoi_noi_tieng' nguoi.pk %}">
+                    Hủy
+                </a>
+            {% else %}
+                <a class="nut nut-phu"
+                   href="{% url 'admin:nguoi_noi_tieng' %}">
+                    Hủy
+                </a>
+            {% endif %}
+        </div>
+    </form>
+
+    <aside class="the goi-y">
+        <h2>
+            {% if la_them_toc %}
+                Ảnh phù hợp cho kết quả đẹp
+            {% else %}
+                Quản lý hồ sơ
+            {% endif %}
+        </h2>
+
+        {% if la_them_toc %}
+            <p>
+                Một người có thể có nhiều kiểu tóc.
+                Khi thêm từ hồ sơ này,
+                tóc mới luôn thuộc đúng người đó.
+            </p>
+
+            <p>
+                Chọn ảnh một người, nhìn gần chính diện,
+                đầu thẳng và tóc không bị cắt sát mép.
+            </p>
+
+            <p>
+                Tránh ảnh mờ, đội mũ hoặc tóc bị che.
+            </p>
+
+            <p>
+                Ảnh đạt kiểm tra sẽ tự tạo kiểu tóc mới.
+                Ảnh lỗi được giữ ở trang kết quả để xem lý do.
+            </p>
+        {% else %}
+            <p>
+                Mỗi tên gọi khác ghi trên một dòng
+                để phục vụ tìm kiếm.
+            </p>
+
+            <p>
+                Ẩn hồ sơ không xóa các kiểu tóc
+                hoặc ảnh gốc đã lưu.
+            </p>
+        {% endif %}
+    </aside>
+</div>
+
+<script src="{% static 'thu_toc/quan_tri_nguoi_noi_tieng.js' %}"
+        defer></script>
+{% endblock %}

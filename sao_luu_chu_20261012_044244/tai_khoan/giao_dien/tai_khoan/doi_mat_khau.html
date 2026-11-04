@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đổi mật khẩu — HAULONGHAIR</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f0f5ee;
+            color: #19251f;
+        }
+
+        .thuong-hieu {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #24583d;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .khau-hieu {
+            text-align: center;
+            color: #59665e;
+            margin-bottom: 30px;
+        }
+
+        main {
+            max-width: 470px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #dfe7dc;
+            border-radius: 20px;
+            background: white;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 28px;
+        }
+
+        .mo-ta {
+            color: #59665e;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .truong { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccd8c8;
+            border-radius: 9px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid #24583d;
+            outline-offset: 2px;
+        }
+
+        .huong-dan {
+            display: block;
+            margin-top: 8px;
+            color: #59665e;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .loi {
+            margin-top: 8px;
+            color: #b42318;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #24583d;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .quay-lai {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #24583d;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+        HAULONGHAIR
+    </a>
+
+    <p class="khau-hieu">Tóc bạn xấu để tôi lo</p>
+
+    <main>
+        <h1>Đổi mật khẩu</h1>
+
+        <p class="mo-ta">
+            Nhập mật khẩu hiện tại và đặt mật khẩu mới cho tài khoản.
+        </p>
+
+        {% for loi in bieu_mau.non_field_errors %}
+            <div class="loi" role="alert">{{ loi }}</div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for truong in bieu_mau %}
+                <div class="truong">
+                    <label for="{{ truong.id_for_label }}">
+                        {{ truong.label }}
+                    </label>
+
+                    {{ truong }}
+
+                    {% if truong.help_text %}
+                        <small class="huong-dan">
+                            {{ truong.help_text }}
+                        </small>
+                    {% endif %}
+
+                    {% for loi in truong.errors %}
+                        <div class="loi" role="alert">{{ loi }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit">Lưu mật khẩu mới</button>
+        </form>
+
+        <a class="quay-lai" href="{% url 'tai_khoan:thong_tin' %}">
+            ← Về tài khoản của tôi
+        </a>
+    </main>
+</body>
+</html>

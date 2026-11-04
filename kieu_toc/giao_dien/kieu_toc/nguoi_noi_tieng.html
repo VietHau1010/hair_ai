@@ -1,0 +1,111 @@
+{% extends "kieu_toc/khung_kham_pha.html" %}
+
+{% block tieu_de %}Phong cách người nổi tiếng{% endblock %}
+
+{% block noi_dung %}
+<div class="dau-trang">
+    <span class="nhan-muc">LẤY CẢM HỨNG TỪ NGƯỜI BẠN THÍCH</span>
+
+    <h1>Phong cách người nổi tiếng</h1>
+
+    <p class="phu">
+        Chọn tóc → bật camera → thử ngay.
+        Không cần quét 5 tư thế.
+    </p>
+</div>
+
+<nav class="cac-nhom" aria-label="Danh mục khám phá">
+    <a href="{% url 'kieu_toc:danh_sach' %}">
+        Danh mục kiểu tóc
+    </a>
+
+    <a class="chon" href="{% url 'kieu_toc:nguoi_noi_tieng' %}">
+        Người nổi tiếng
+    </a>
+
+    <a href="{% url 'kieu_toc:yeu_thich' %}">
+        Yêu thích
+    </a>
+</nav>
+
+<form class="bo-loc" method="get" role="search">
+    <div class="o-tim">
+        <label for="tu_khoa">
+            Tên người nổi tiếng hoặc tên kiểu tóc
+        </label>
+
+        <input id="tu_khoa"
+               name="q"
+               type="search"
+               value="{{ tu_khoa }}"
+               maxlength="100"
+               placeholder="Ví dụ: Sơn Tùng, son tung…">
+    </div>
+
+    <button type="submit">Tìm kiếm</button>
+
+    {% if tu_khoa %}
+        <a class="nut nut-phu"
+           href="{% url 'kieu_toc:nguoi_noi_tieng' %}">
+            Xem tất cả
+        </a>
+    {% endif %}
+</form>
+
+<p class="phu">
+    {{ trang.paginator.count }} kiểu tóc sẵn sàng để thử
+    {% if tu_khoa %} · “{{ tu_khoa }}”{% endif %}
+</p>
+
+<section class="danh-sach" aria-label="Kiểu tóc người nổi tiếng">
+    {% for toc in trang %}
+        <article class="the-toc">
+            <div class="khung-anh">
+                {% if toc.anh_gioi_thieu %}
+                    <img src="{{ toc.anh_gioi_thieu.url }}"
+                         alt="{{ toc.nguoi_noi_tieng.ten }} — {{ toc.ten }}"
+                         loading="lazy">
+                {% endif %}
+
+                <a class="nut nut-thu"
+                   href="{% url 'thu_toc:phong_thu_toc' %}?toc={{ toc.pk }}">
+                    Thử tóc ↗
+                </a>
+            </div>
+
+            <div class="noi-dung">
+                <p class="nguoi">{{ toc.nguoi_noi_tieng.ten }}</p>
+                <h2>{{ toc.ten }}</h2>
+                <p class="mo-ta">{{ toc.mo_ta|truncatechars:140 }}</p>
+            </div>
+        </article>
+    {% empty %}
+        <div class="trong">
+            Chưa tìm thấy kiểu tóc đã tách phù hợp với từ khóa.
+            Thử tên khác hoặc xem tất cả.
+        </div>
+    {% endfor %}
+</section>
+
+{% if trang.paginator.num_pages > 1 %}
+    <nav class="phan-trang" aria-label="Chuyển trang">
+        {% if trang.has_previous %}
+            <a class="nut nut-phu"
+               href="?q={{ tu_khoa|urlencode }}&amp;trang={{ trang.previous_page_number }}">
+                ← Trước
+            </a>
+        {% endif %}
+
+        <span>
+            {{ trang.number }} / {{ trang.paginator.num_pages }}
+        </span>
+
+        {% if trang.has_next %}
+            <a class="nut nut-phu"
+               href="?q={{ tu_khoa|urlencode }}&amp;trang={{ trang.next_page_number }}">
+                Sau →
+            </a>
+        {% endif %}
+    </nav>
+{% endif %}
+{% endblock %}

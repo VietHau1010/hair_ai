@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Khám phá kiểu tóc — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            color-scheme: light;
+            --nen: #f5f7f5;
+            --trang: #ffffff;
+            --chu: #203329;
+            --phu: #68766d;
+            --xanh: #24583d;
+            --xanh-dam: #193f2c;
+            --vien: #e0e8e2;
+            --nhat: #f0f6f1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            scrollbar-gutter: stable;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            min-height: 100svh;
+            margin: 0;
+            background: var(--nen);
+            color: var(--chu);
+            font: 16px/1.7 "Segoe UI", Arial, sans-serif;
+            overflow-wrap: break-word;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            text-underline-offset: 4px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button,
+        a,
+        select {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible {
+            outline: 3px solid #82a991;
+            outline-offset: 4px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px 28px;
+            min-height: 84px;
+            padding: 18px max(24px, calc((100% - 1240px) / 2));
+            border-bottom: 1px solid var(--vien);
+            background: var(--trang);
+        }
+
+        .thuong-hieu {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            max-width: 100%;
+            border-radius: 7px;
+            color: var(--xanh);
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.4;
+        }
+
+        .thuong-hieu::before {
+            display: grid;
+            place-items: center;
+            flex: 0 0 37px;
+            width: 37px;
+            height: 37px;
+            border: 1px solid #dce8df;
+            border-radius: 11px;
+            background: #eef5ef;
+            color: var(--xanh);
+            font: italic 27px Georgia, serif;
+            content: "h";
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-width: 0;
+            font-size: 14px;
+        }
+
+        nav > a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            color: #4e6255;
+            font-weight: 500;
+            transition:
+                color 160ms ease,
+                background-color 160ms ease;
+        }
+
+        nav > a:hover {
+            background: var(--nhat);
+            color: var(--xanh);
+        }
+
+        nav > span {
+            max-width: 100%;
+            padding: 8px 12px;
+            color: var(--phu);
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 1288px;
+            margin: 0 auto;
+            padding: 44px 24px 56px;
+        }
+
+        .dau-trang {
+            position: relative;
+            padding: 32px 36px;
+            border: 1px solid #dfe9e1;
+            border-radius: 20px;
+            background:
+                radial-gradient(
+                    ellipse at 100% 0,
+                    rgba(208, 229, 213, 0.6),
+                    transparent 65%
+                ),
+                #eef4ef;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            color: var(--chu);
+            font-size: clamp(28px, 3.2vw, 40px);
+            font-weight: 700;
+            line-height: 1.35;
+            text-wrap: balance;
+        }
+
+        .mo-ta {
+            max-width: 720px;
+            margin: 0;
+            color: var(--phu);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        main > p[role="status"] {
+            margin: 20px 0;
+            padding: 13px 16px;
+            border: 1px solid #d3e4d6;
+            border-radius: 11px;
+            background: #edf7ef;
+            color: var(--xanh);
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .bo-loc {
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0 0;
+            padding: 20px;
+            border: 1px solid var(--vien);
+            border-radius: 14px;
+            background: var(--trang);
+            box-shadow: 0 3px 12px rgba(32, 51, 41, 0.02);
+        }
+
+        .bo-loc > div {
+            flex: 1 1 260px;
+            min-width: 0;
+            max-width: 460px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #435a4b;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        select {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            min-height: 46px;
+            padding: 10px 36px 10px 14px;
+            border: 1px solid #d4dfd7;
+            border-radius: 9px;
+            background: #fbfdfb;
+            color: var(--chu);
+            font-size: 16px;
+            line-height: 1.5;
+            cursor: pointer;
+            transition:
+                border-color 160ms ease,
+                box-shadow 160ms ease,
+                background-color 160ms ease;
+        }
+
+        select:hover {
+            border-color: #a2b8a9;
+        }
+
+        select:focus {
+            border-color: var(--xanh);
+            background: var(--trang);
+            box-shadow: 0 0 0 4px rgba(36, 88, 61, 0.08);
+        }
+
+        button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 46px;
+            padding: 11px 18px;
+            border: 1px solid var(--xanh);
+            border-radius: 9px;
+            background: var(--xanh);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            cursor: pointer;
+            transition:
+                background-color 160ms ease,
+                border-color 160ms ease,
+                box-shadow 160ms ease;
+        }
+
+        button:hover {
+            border-color: var(--xanh-dam);
+            background: var(--xanh-dam);
+            box-shadow: 0 3px 8px rgba(36, 88, 61, 0.12);
+        }
+
+        button:disabled,
+        select:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        button[aria-busy="true"],
+        form[aria-busy="true"] button {
+            opacity: 0.7;
+            cursor: progress;
+        }
+
+        .bo-loc > button {
+            padding-right: 24px;
+            padding-left: 24px;
+        }
+
+        .bo-loc > a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 10px 18px;
+            border: 1px solid var(--vien);
+            border-radius: 9px;
+            background: var(--trang);
+            color: var(--phu);
+            font-size: 14px;
+            font-weight: 500;
+            transition:
+                background-color 160ms ease,
+                border-color 160ms ease,
+                color 160ms ease;
+        }
+
+        .bo-loc > a:hover {
+            border-color: #c7d7cc;
+            background: var(--nhat);
+            color: var(--xanh);
+        }
+
+        .so-luong {
+            margin: 28px 0 18px;
+            color: var(--phu);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .so-luong strong {
+            color: var(--chu);
+            font-weight: 600;
+        }
+
+        .danh-sach {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 26px;
+        }
+
+        .the-toc {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid var(--vien);
+            border-radius: 16px;
+            background: var(--trang);
+            box-shadow: 0 3px 10px rgba(32, 51, 41, 0.025);
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .the-toc:hover,
+        .the-toc:focus-within {
+            border-color: #b9cebf;
+            box-shadow: 0 10px 26px rgba(32, 51, 41, 0.065);
+        }
+
+        .khung-anh {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            padding: 18px;
+            overflow: hidden;
+            border-bottom: 1px solid #e8eee9;
+            background:
+                radial-gradient(
+                    ellipse at center,
+                    #ffffff 0%,
+                    #f5f7f4 65%,
+                    #eef2ed 100%
+                );
+        }
+
+        .anh-toc {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-width: 0;
+            min-height: 0;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .noi-dung {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: stretch;
+            min-width: 0;
+            padding: 22px;
+        }
+
+        .noi-dung h2 {
+            order: 0;
+            margin: 0 0 12px;
+            color: var(--chu);
+            font-size: 20px;
+            font-weight: 650;
+            line-height: 1.4;
+            overflow-wrap: anywhere;
+        }
+
+        .noi-dung > div:not(.cac-nhan) {
+            order: 1;
+            flex: 1;
+            color: var(--phu);
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .noi-dung p {
+            margin: 0 0 10px;
+            color: var(--phu);
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .noi-dung p:last-child {
+            margin-bottom: 0;
+        }
+
+        .cac-nhan {
+            display: flex;
+            order: 2;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 18px;
+        }
+
+        .nhan {
+            display: inline-flex;
+            align-items: center;
+            max-width: 100%;
+            padding: 4px 10px;
+            border: 1px solid #e0eade;
+            border-radius: 7px;
+            background: #f2f7ef;
+            color: #496442;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .noi-dung > form {
+            order: 3;
+            margin: 20px 0 0;
+            padding-top: 18px;
+            border-top: 1px solid #edf1ed;
+        }
+
+        .noi-dung > form button {
+            width: 100%;
+            border-color: #cdded2;
+            background: #f8fbf8;
+            color: var(--xanh);
+        }
+
+        .noi-dung > form button:hover {
+            border-color: #a3bfab;
+            background: #eaf3ec;
+            box-shadow: none;
+        }
+
+        .noi-dung > a {
+            display: flex;
+            order: 3;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            margin-top: 20px;
+            padding: 11px 12px;
+            border: 1px solid #d7e3da;
+            border-radius: 9px;
+            background: #f8fbf8;
+            color: var(--xanh);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            transition:
+                background-color 160ms ease,
+                border-color 160ms ease;
+        }
+
+        .noi-dung > a:hover {
+            border-color: #a3bfab;
+            background: #eaf3ec;
+        }
+
+        .trong {
+            padding: 48px 28px;
+            border: 1px solid var(--vien);
+            border-radius: 16px;
+            background: var(--trang);
+            color: var(--phu);
+            font-size: 15px;
+            line-height: 1.9;
+            text-align: center;
+        }
+
+        .trong a {
+            display: table;
+            max-width: 100%;
+            min-height: 46px;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            border: 1px solid #cbdccf;
+            border-radius: 9px;
+            background: #f8fbf8;
+            color: var(--xanh);
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 160ms ease;
+        }
+
+        .trong a:hover {
+            background: var(--nhat);
+        }
+
+        .ghi-chu {
+            margin: 36px 0 0;
+            padding-top: 22px;
+            border-top: 1px solid var(--vien);
+            color: var(--phu);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        footer {
+            padding: 22px 24px;
+            border-top: 1px solid var(--vien);
+            background: var(--trang);
+            color: var(--phu);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 1080px) {
+            header {
+                gap: 12px 20px;
+                padding: 18px 24px;
+            }
+
+            nav {
+                justify-content: flex-start;
+            }
+
+            .danh-sach {
+                gap: 20px;
+            }
+
+            .khung-anh {
+                padding: 14px;
+            }
+
+            .noi-dung {
+                padding: 20px;
+            }
+
+            .noi-dung h2 {
+                font-size: 19px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .danh-sach {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 22px;
+            }
+
+            main {
+                padding-top: 32px;
+            }
+
+            .dau-trang {
+                padding: 28px;
+            }
+
+            .khung-anh {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .thuong-hieu {
+                font-size: 20px;
+            }
+
+            nav {
+                width: 100%;
+                gap: 4px;
+                font-size: 13px;
+            }
+
+            nav > a {
+                min-height: 40px;
+                padding: 8px 10px;
+            }
+
+            nav > span {
+                width: 100%;
+                padding: 5px 10px;
+            }
+
+            main {
+                padding: 24px 16px 36px;
+            }
+
+            .dau-trang {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .mo-ta {
+                font-size: 14px;
+            }
+
+            .bo-loc {
+                gap: 10px;
+                margin-top: 18px;
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .bo-loc > div {
+                flex-basis: 100%;
+                max-width: none;
+            }
+
+            .bo-loc > button,
+            .bo-loc > a {
+                flex: 1 1 0;
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .so-luong {
+                margin: 24px 0 16px;
+            }
+
+            .danh-sach {
+                gap: 16px;
+            }
+
+            .the-toc {
+                border-radius: 13px;
+            }
+
+            .khung-anh {
+                padding: 12px;
+            }
+
+            .noi-dung {
+                padding: 16px;
+            }
+
+            .noi-dung h2 {
+                font-size: 18px;
+            }
+
+            .noi-dung > div:not(.cac-nhan) {
+                font-size: 13px;
+            }
+
+            .cac-nhan {
+                gap: 5px;
+                margin-top: 14px;
+            }
+
+            .nhan {
+                padding: 3px 7px;
+                font-size: 11px;
+            }
+
+            .noi-dung > form {
+                margin-top: 16px;
+                padding-top: 14px;
+            }
+
+            .noi-dung > form button,
+            .noi-dung > a {
+                padding-right: 10px;
+                padding-left: 10px;
+                font-size: 13px;
+            }
+
+            .ghi-chu {
+                margin-top: 28px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .danh-sach {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 22px;
+            }
+
+            .the-toc {
+                border-radius: 16px;
+            }
+
+            .khung-anh {
+                aspect-ratio: 4 / 3;
+                padding: 18px;
+            }
+
+            .noi-dung {
+                padding: 22px;
+            }
+
+            .noi-dung h2 {
+                font-size: 21px;
+            }
+
+            .noi-dung > div:not(.cac-nhan) {
+                font-size: 14px;
+            }
+
+            .cac-nhan {
+                gap: 7px;
+                margin-top: 18px;
+            }
+
+            .nhan {
+                padding: 4px 10px;
+                font-size: 12px;
+            }
+
+            .noi-dung > form {
+                margin-top: 20px;
+                padding-top: 18px;
+            }
+
+            .noi-dung > form button,
+            .noi-dung > a {
+                font-size: 14px;
+            }
+
+            .trong {
+                padding: 34px 22px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            main {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .dau-trang {
+                padding: 22px 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .noi-dung {
+                padding: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <style id="sua-chu-tieng-viet">
+        body, h1, h2, h3, h4, h5, h6,
+        p, a, label, button, input, select, textarea,
+        strong, small, em, li, th, td {
+            font-family: "Segoe UI", Arial, sans-serif !important;
+            letter-spacing: normal !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.35 !important;
+        }
+    </style>
+
+    <!-- Bổ sung cho tìm kiếm và thử tóc người nổi tiếng. -->
+    <style id="kham-pha-nguoi-noi-tieng">
+        .nt-kham-pha {
+            margin: 24px 0 0;
+            padding: 22px;
+            border: 1px solid var(--vien);
+            border-radius: 14px;
+            background: var(--trang);
+        }
+
+        .nt-kham-pha h2 {
+            margin: 0 0 8px;
+            font-size: 20px;
+            color: var(--chu);
+        }
+
+        .nt-kham-pha p {
+            margin: 0 0 16px;
+            color: var(--phu);
+            font-size: 14px;
+        }
+
+        .nt-tim {
+            display: flex;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nt-o-tim {
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        .nt-tim input {
+            width: 100%;
+            min-width: 0;
+            min-height: 46px;
+            padding: 10px 14px;
+            border: 1px solid #d4dfd7;
+            border-radius: 9px;
+            background: #fbfdfb;
+            color: var(--chu);
+            font-size: 16px;
+        }
+
+        .nt-tim input:focus {
+            border-color: var(--xanh);
+            background: var(--trang);
+        }
+
+        .nt-xem-tat-ca {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 10px 16px;
+            border: 1px solid var(--vien);
+            border-radius: 9px;
+            color: var(--xanh);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nt-xem-tat-ca:hover {
+            background: var(--nhat);
+        }
+
+        .khung-anh {
+            position: relative;
+        }
+
+        .khung-anh > .nt-thu-toc {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 8px 14px;
+            border: 1px solid var(--xanh);
+            border-radius: 999px;
+            background: var(--xanh);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.5;
+            box-shadow: 0 3px 10px rgba(32, 51, 41, 0.12);
+        }
+
+        .khung-anh > .nt-thu-toc:hover {
+            background: var(--xanh-dam);
+            border-color: var(--xanh-dam);
+        }
+
+        .noi-dung > .nt-ten-nguoi {
+            order: 0;
+            margin: 0 0 12px;
+            color: var(--xanh);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .nt-kham-pha {
+                margin-top: 18px;
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .nt-o-tim {
+                flex-basis: 100%;
+            }
+
+            .nt-tim > button,
+            .nt-tim > .nt-xem-tat-ca {
+                flex: 1 1 0;
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="thuong-hieu"
+           href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav aria-label="Điều hướng">
+            <a href="{% url 'kieu_toc:nguoi_noi_tieng' %}">
+                Người nổi tiếng
+            </a>
+
+            <a href="{% url 'thu_toc:trang_chu' %}">
+                Trang chủ
+            </a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'kieu_toc:yeu_thich' %}">
+                    Kiểu tóc yêu thích
+                </a>
+
+                <a href="{% url 'tai_khoan:thong_tin' %}">
+                    Tài khoản của tôi
+                </a>
+
+                <span>
+                    Xin chào, {{ user.username }}
+                </span>
+
+                {% if user.is_staff %}
+                    <a href="{% url 'admin:index' %}">
+                        Quản trị hệ thống
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'tai_khoan:dang_nhap' %}">
+                    Đăng nhập
+                </a>
+
+                <a href="{% url 'tai_khoan:dang_ky' %}">
+                    Đăng ký
+                </a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        <div class="dau-trang">
+            <h1>
+                {% if la_trang_yeu_thich %}
+                    Kiểu tóc yêu thích
+                {% else %}
+                    Khám phá kiểu tóc
+                {% endif %}
+            </h1>
+
+            <p class="mo-ta">
+                Tìm hiểu các kiểu tóc và lọc theo dáng khuôn mặt của bạn.
+            </p>
+        </div>
+
+        {% for thong_bao in messages %}
+            <p role="status">
+                {{ thong_bao }}
+            </p>
+        {% endfor %}
+
+        {% if not la_trang_yeu_thich %}
+            <section class="nt-kham-pha"
+                     aria-labelledby="nt_tieu_de">
+                <h2 id="nt_tieu_de">
+                    Khám phá phong cách người nổi tiếng
+                </h2>
+
+                <p>
+                    Tìm người bạn thích, chọn kiểu tóc và thử ngay khi camera nhận mặt.
+
+                </p>
+
+                <form class="nt-tim"
+                      action="{% url 'kieu_toc:nguoi_noi_tieng' %}"
+                      method="get"
+                      role="search">
+                    <div class="nt-o-tim">
+                        <label for="nt_tu_khoa">
+                            Tên người nổi tiếng hoặc kiểu tóc
+                        </label>
+
+                        <input id="nt_tu_khoa"
+                               type="search"
+                               name="q"
+                               maxlength="100"
+                               placeholder="Ví dụ: Sơn Tùng, son tung…">
+                    </div>
+
+                    <button type="submit">
+                        Tìm kiểu tóc
+                    </button>
+
+                    <a class="nt-xem-tat-ca"
+                       href="{% url 'kieu_toc:nguoi_noi_tieng' %}">
+                        Xem tất cả
+                    </a>
+                </form>
+            </section>
+
+            <form class="bo-loc" method="get">
+                <div>
+                    <label for="dang_mat">
+                        Dạng khuôn mặt
+                    </label>
+
+                    <select id="dang_mat" name="dang_mat">
+                        <option value="">
+                            Tất cả dạng khuôn mặt
+                        </option>
+
+                        {% for ma, ten in cac_dang_mat %}
+                            <option value="{{ ma }}"
+                                    {% if ma == dang_mat_da_chon %}selected{% endif %}>
+                                {{ ten }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit">
+                    Lọc kiểu tóc
+                </button>
+
+                <a href="{% url 'kieu_toc:danh_sach' %}">
+                    Bỏ lọc
+                </a>
+            </form>
+        {% endif %}
+
+        <p class="so-luong">
+            Tìm thấy <strong>{{ cac_kieu_toc|length }}</strong> kiểu tóc
+        </p>
+
+        {% if cac_kieu_toc %}
+            <section class="danh-sach"
+                     aria-label="Danh sách kiểu tóc">
+                {% for toc in cac_kieu_toc %}
+                    <article class="the-toc">
+                        {% if toc.anh_gioi_thieu %}
+                            <div class="khung-anh">
+                                <img class="anh-toc"
+                                     src="{{ toc.anh_gioi_thieu.url }}"
+                                     alt="{{ toc.ten }}"
+                                     loading="lazy">
+
+                                {% if toc.nguoi_noi_tieng_id and toc.anh_thu_toc %}
+                                    <a class="nt-thu-toc"
+                                       href="{% url 'thu_toc:phong_thu_toc' %}?toc={{ toc.pk }}"
+                                       aria-label="Thử {{ toc.ten }} — {{ toc.nguoi_noi_tieng.ten }}">
+                                        Thử tóc ↗
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <div class="noi-dung">
+                            <h2>{{ toc.ten }}</h2>
+
+                            {% if toc.nguoi_noi_tieng_id %}
+                                <p class="nt-ten-nguoi">
+                                    {{ toc.nguoi_noi_tieng.ten }}
+                                </p>
+                            {% endif %}
+
+                            {% if user.is_authenticated %}
+                                {% if toc.pk in cac_ma_yeu_thich %}
+                                    <form method="post"
+                                          action="{% url 'kieu_toc:bo_yeu_thich' toc.pk %}">
+                                        {% csrf_token %}
+
+                                        {% if la_trang_yeu_thich %}
+                                            <input type="hidden"
+                                                   name="ve_trang"
+                                                   value="yeu_thich">
+                                        {% endif %}
+
+                                        <button type="submit">
+                                            Bỏ yêu thích
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form method="post"
+                                          action="{% url 'kieu_toc:luu_yeu_thich' toc.pk %}">
+                                        {% csrf_token %}
+
+                                        <button type="submit">
+                                            Lưu yêu thích
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'tai_khoan:dang_nhap' %}">
+                                    Đăng nhập để lưu yêu thích
+                                </a>
+                            {% endif %}
+
+                            <div>
+                                {{ toc.mo_ta|linebreaks }}
+                            </div>
+
+                            <div class="cac-nhan">
+                                {% for dang_mat in toc.dang_mat_phu_hop.all %}
+                                    <span class="nhan">
+                                        {{ dang_mat }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <div class="trong">
+                {% if la_trang_yeu_thich %}
+                    Bạn chưa có kiểu tóc yêu thích đang được hiển thị.
+
+                    <a href="{% url 'kieu_toc:danh_sach' %}">
+                        Khám phá kiểu tóc
+                    </a>
+
+                {% elif dang_mat_da_chon %}
+                    Chưa có kiểu tóc cho dạng mặt đã chọn.
+                    Bạn có thể chọn dạng mặt khác hoặc bỏ lọc.
+
+                {% else %}
+                    Kho kiểu tóc chưa có dữ liệu.
+                    Các kiểu tóc sẽ xuất hiện khi quản trị viên bổ sung.
+
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <p class="ghi-chu">
+            Danh sách phù hợp được thiết lập bởi quản trị viên.
+            Tóc người nổi tiếng có thể thử ngay khi camera nhận mặt.
+            Quét 5 tư thế trong phòng thử tóc để mở Hợp khuôn mặt và Phá cách.
+        </p>
+    </main>
+
+    <footer>
+        HAULONGHAIR — Tóc bạn xấu để tôi lo
+    </footer>
+</body>
+</html>

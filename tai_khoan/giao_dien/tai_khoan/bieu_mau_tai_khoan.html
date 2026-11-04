@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ ten_nut }} — HAULONGHAIR</title>
+
+    <style>
+        :root {
+            color-scheme: light;
+            --nen: #f5f7f5;
+            --be-mat: #ffffff;
+            --chu: #1c2922;
+            --chu-phu: #68756d;
+            --chu-dao: #24583d;
+            --chu-dao-hover: #1b4630;
+            --vien: #e2e9e3;
+            --loi: #b42318;
+            --bo-goc: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            margin: 0;
+            padding: 52px 24px 32px;
+            background:
+                radial-gradient(
+                    ellipse at 50% 0,
+                    rgba(204, 225, 208, 0.4),
+                    transparent 58%
+                ),
+                var(--nen);
+            color: var(--chu);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-wrap: break-word;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .thuong-hieu {
+            display: table;
+            max-width: 100%;
+            margin: 0 auto 6px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            color: var(--chu-dao);
+            font-size: clamp(23px, 5vw, 28px);
+            font-weight: 800;
+            line-height: 1.4;
+            text-align: center;
+            text-decoration: none;
+            transition: color 160ms ease;
+        }
+
+        .thuong-hieu:hover {
+            color: var(--chu-dao-hover);
+        }
+
+        .khau-hieu {
+            margin: 0 0 30px;
+            color: var(--chu-phu);
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .khung {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 36px;
+            border: 1px solid var(--vien);
+            border-radius: var(--bo-goc);
+            background: var(--be-mat);
+            box-shadow:
+                0 20px 60px rgba(28, 55, 37, 0.055),
+                0 3px 10px rgba(28, 55, 37, 0.025);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            color: var(--chu);
+            font-size: clamp(25px, 5vw, 29px);
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .gioi-thieu {
+            margin: 0 0 28px;
+            color: var(--chu-phu);
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .truong {
+            margin: 0 0 20px;
+        }
+
+        label {
+            display: block;
+            margin: 0 0 8px;
+            color: #34463b;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        input,
+        select,
+        textarea {
+            max-width: 100%;
+            font: inherit;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+        select,
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            margin: 0;
+            padding: 12px 14px;
+            border: 1px solid #d5dfd7;
+            border-radius: 10px;
+            outline: none;
+            background: #fcfdfc;
+            color: var(--chu);
+            font-size: 16px;
+            line-height: 1.5;
+            transition:
+                border-color 160ms ease,
+                background-color 160ms ease,
+                box-shadow 160ms ease;
+        }
+
+        textarea {
+            min-height: 112px;
+            resize: vertical;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #939e96;
+            opacity: 1;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):hover,
+        select:hover,
+        textarea:hover {
+            border-color: #aebfb2;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--chu-dao);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(36, 88, 61, 0.1);
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            margin: 0 6px 0 0;
+            vertical-align: middle;
+            accent-color: var(--chu-dao);
+        }
+
+        input[aria-invalid="true"],
+        select[aria-invalid="true"],
+        textarea[aria-invalid="true"] {
+            border-color: #d99088;
+        }
+
+        input:disabled,
+        select:disabled,
+        textarea:disabled {
+            background: #f0f3f0;
+            color: #7c887f;
+            cursor: not-allowed;
+        }
+
+        .loi {
+            margin-top: 8px;
+            color: var(--loi);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .thong-bao {
+            margin: 0 0 20px;
+            padding: 13px 15px;
+            border: 1px solid #d7e7da;
+            border-radius: 10px;
+            background: #f0f7f1;
+            color: var(--chu-dao);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .loi-chung {
+            border-color: #f0d5d0;
+            background: #fff5f3;
+            color: var(--loi);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            min-height: 49px;
+            margin: 6px 0 0;
+            padding: 13px 18px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: var(--chu-dao);
+            box-shadow: 0 3px 7px rgba(36, 88, 61, 0.12);
+            color: #ffffff;
+            font: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition:
+                background-color 160ms ease,
+                box-shadow 160ms ease,
+                transform 160ms ease;
+        }
+
+        button:hover {
+            background: var(--chu-dao-hover);
+            box-shadow: 0 5px 12px rgba(36, 88, 61, 0.18);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(36, 88, 61, 0.12);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input[type="checkbox"]:focus-visible,
+        input[type="radio"]:focus-visible {
+            outline: 3px solid rgba(36, 88, 61, 0.65);
+            outline-offset: 4px;
+        }
+
+        .lien-ket {
+            margin-top: 26px;
+            padding-top: 23px;
+            border-top: 1px solid #edf1ed;
+            color: var(--chu-phu);
+            font-size: 14px;
+            line-height: 1.9;
+            text-align: center;
+        }
+
+        .lien-ket a {
+            display: inline-block;
+            margin-left: 3px;
+            border-radius: 3px;
+            color: var(--chu-dao);
+            font-weight: 600;
+            text-decoration: none;
+            text-underline-offset: 4px;
+        }
+
+        .lien-ket a:hover {
+            color: var(--chu-dao-hover);
+            text-decoration: underline;
+        }
+
+        .ve-trang-chu {
+            display: table;
+            max-width: 100%;
+            margin: 20px auto 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: var(--chu-phu);
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: center;
+            text-decoration: none;
+            transition:
+                color 160ms ease,
+                background-color 160ms ease;
+        }
+
+        .ve-trang-chu:hover {
+            background: #eaf0eb;
+            color: var(--chu-dao);
+        }
+
+        @media (max-width: 540px) {
+            body {
+                padding: 30px 16px 24px;
+            }
+
+            .khau-hieu {
+                margin-bottom: 24px;
+            }
+
+            .khung {
+                padding: 28px 24px;
+                border-radius: 16px;
+            }
+
+            .gioi-thieu {
+                margin-bottom: 24px;
+            }
+
+            .lien-ket {
+                margin-top: 24px;
+                padding-top: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .khung {
+                padding: 24px 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <style id="sua-chu-tieng-viet">
+        body, h1, h2, h3, h4, h5, h6,
+        p, a, label, button, input, select, textarea,
+        strong, small, em, li, th, td {
+            font-family: "Segoe UI", Arial, sans-serif !important;
+            letter-spacing: normal !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.35 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+        HAULONGHAIR
+    </a>
+
+    <p class="khau-hieu">Tóc bạn xấu để tôi lo</p>
+
+    <main class="khung">
+        <h1>{{ tieu_de }}</h1>
+
+        <p class="gioi-thieu">
+            {% if la_dang_ky %}
+                Tạo tài khoản để bắt đầu khám phá kiểu tóc phù hợp với bạn.
+            {% else %}
+                Đăng nhập để tiếp tục khám phá phong cách của bạn.
+            {% endif %}
+        </p>
+
+        {% for thong_bao in messages %}
+            <div class="thong-bao" role="status">
+                {{ thong_bao }}
+            </div>
+        {% endfor %}
+
+        {% for loi in bieu_mau.non_field_errors %}
+            <div class="thong-bao loi-chung" role="alert">
+                {{ loi }}
+            </div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for truong in bieu_mau %}
+                <div class="truong">
+                    <label for="{{ truong.id_for_label }}">
+                        {{ truong.label }}
+                    </label>
+
+                    {{ truong }}
+
+                    {% for loi in truong.errors %}
+                        <div class="loi" role="alert">{{ loi }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit">{{ ten_nut }}</button>
+        </form>
+
+        <div class="lien-ket">
+            {% if la_dang_ky %}
+                Đã có tài khoản?
+                <a href="{% url 'tai_khoan:dang_nhap' %}">Đăng nhập</a>
+            {% else %}
+                Chưa có tài khoản?
+                <a href="{% url 'tai_khoan:dang_ky' %}">Đăng ký ngay</a>
+            {% endif %}
+        </div>
+    </main>
+
+    <a class="ve-trang-chu" href="{% url 'thu_toc:trang_chu' %}">
+        ← Về trang chủ
+    </a>
+</body>
+</html>

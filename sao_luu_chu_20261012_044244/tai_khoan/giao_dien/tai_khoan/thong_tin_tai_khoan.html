@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tài khoản của tôi — HAULONGHAIR</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8faf7;
+            color: #19251f;
+        }
+
+        a {
+            text-decoration: none;
+            color: #24583d;
+        }
+
+        header {
+            padding: 22px 7%;
+            background: white;
+            border-bottom: 1px solid #e1e8df;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .thuong-hieu {
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 650px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .khung {
+            background: white;
+            border: 1px solid #e1e8df;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            font-size: 30px;
+        }
+
+        .mo-ta {
+            color: #59665e;
+            line-height: 1.7;
+        }
+
+        .thong-tin {
+            padding: 18px;
+            margin: 25px 0;
+            background: #f0f5ee;
+            border-radius: 12px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .truong {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            font-size: 16px;
+            border: 1px solid #ccd8c8;
+            border-radius: 9px;
+        }
+
+        input:focus {
+            outline: 2px solid #24583d;
+            outline-offset: 2px;
+        }
+
+        .loi {
+            margin-top: 7px;
+            color: #b42318;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .thong-bao {
+            padding: 14px;
+            margin-bottom: 20px;
+            background: #e7f0e5;
+            color: #24583d;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .cac-nut {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 9px;
+            background: #24583d;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .nut-dang-xuat {
+            background: white;
+            color: #24583d;
+            border: 1px solid #ccd8c8;
+        }
+
+        .phan-dang-xuat {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8df;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="thuong-hieu" href="{% url 'thu_toc:trang_chu' %}">
+            HAULONGHAIR
+        </a>
+
+        <nav aria-label="Điều hướng">
+            <a href="{% url 'thu_toc:trang_chu' %}">Trang chủ</a>
+            <a href="{% url 'kieu_toc:danh_sach' %}">
+                Khám phá kiểu tóc
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        {% for thong_bao in messages %}
+            <div class="thong-bao" role="status">
+                {{ thong_bao }}
+            </div>
+        {% endfor %}
+
+        <section class="khung">
+            <h1>Tài khoản của tôi</h1>
+            <p class="mo-ta">
+                Xem và cập nhật thông tin cá nhân của bạn.
+            </p>
+
+            <div class="thong-tin">
+                <div>
+                    <strong>Tên đăng nhập:</strong>
+                    {{ user.username }}
+                </div>
+
+                <div>
+                    <strong>Vai trò:</strong>
+                    {% if user.is_superuser %}
+                        Quản trị viên
+                    {% elif user.is_staff %}
+                        Nhân viên quản trị
+                    {% else %}
+                        Người dùng
+                    {% endif %}
+                </div>
+
+                <div>
+                    <strong>Ngày tham gia:</strong>
+                    {{ user.date_joined|date:"d/m/Y" }}
+                </div>
+            </div>
+
+            {% for loi in bieu_mau.non_field_errors %}
+                <p class="loi" role="alert">{{ loi }}</p>
+            {% endfor %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for truong in bieu_mau %}
+                    <div class="truong">
+                        <label for="{{ truong.id_for_label }}">
+                            {{ truong.label }}
+                        </label>
+
+                        {{ truong }}
+
+                        {% for loi in truong.errors %}
+                            <div class="loi" role="alert">{{ loi }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <div class="cac-nut">
+                    <button type="submit">Lưu thông tin</button>
+                    <a href="{% url 'tai_khoan:doi_mat_khau' %}">
+    Đổi mật khẩu
+</a>
+                    <a href="{% url 'thu_toc:trang_chu' %}">
+                        Về trang chủ
+                    </a>
+                </div>
+            </form>
+
+            <form class="phan-dang-xuat"
+                  method="post"
+                  action="{% url 'tai_khoan:dang_xuat' %}">
+                {% csrf_token %}
+                <button class="nut-dang-xuat" type="submit">
+                    Đăng xuất
+                </button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

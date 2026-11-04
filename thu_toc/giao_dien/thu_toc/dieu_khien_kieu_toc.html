@@ -1,0 +1,473 @@
+    let daQuetId = null;
+    let tocDangCho = null;
+    let doiMatId = null;
+    let doiMatLuc = 0;
+
+    let danhSachDangTai = null;
+    let trangNguoi = 1;
+    let tuKhoaNguoi = "";
+
+    const API_NGUOI =
+        "{% url 'kieu_toc:du_lieu_nguoi_noi_tieng' %}";
+
+    function hienNhomToc(nhom) {
+        if (
+            nhom !== "nguoi" &&
+            (!approved || daQuetId !== approved)
+        ) {
+            return;
+        }
+
+        for (const ten of ["hop", "pha", "nguoi"]) {
+            $("kc_bang_" + ten).hidden = ten !== nhom;
+
+            $("kc_nut_" + ten).setAttribute(
+                "aria-pressed",
+                String(ten === nhom)
+            );
+        }
+    }
+
+    function dongLuaChonSauQuet() {
+        daQuetId = null;
+        tocDangCho = null;
+        doiMatId = null;
+
+        $("kc_chon").dataset.quetThanhCong = "false";
+
+        $("kc_nhom").hidden = true;
+        $("kc_nut_hop").hidden = true;
+        $("kc_nut_pha").hidden = true;
+
+        $("kc_tieu_de").textContent =
+            "Thử tóc người nổi tiếng";
+
+        $("goi_y").replaceChildren();
+        $("kc_pha").replaceChildren();
+
+        hienNhomToc("nguoi");
+
+        $("kc_trang_thai").textContent =
+            "Nhập tên rồi bấm Tìm. " +
+            "Tóc người nổi tiếng không cần quét 5 tư thế.";
+    }
+
+    function taoTheToc(toc, laNguoi = false) {
+        const the = document.createElement("article");
+        the.className = "toc";
+
+        if (toc.anh_gioi_thieu) {
+            const anh = document.createElement("img");
+            anh.src = toc.anh_gioi_thieu;
+            anh.alt = toc.ten;
+            anh.loading = "lazy";
+            the.append(anh);
+        }
+
+        const ten = document.createElement("h4");
+        ten.textContent = toc.ten;
+        the.append(ten);
+
+        if (toc.nguoi_noi_tieng) {
+            const nguoi = document.createElement("p");
+            nguoi.textContent = toc.nguoi_noi_tieng.ten;
+            the.append(nguoi);
+        }
+
+        if (toc.anh_thu_toc) {
+            const nut = document.createElement("button");
+            nut.type = "button";
+            nut.className = "nut nut-thu-toc";
+            nut.dataset.maToc = String(toc.ma);
+
+            const dangThu = hair?.ma === toc.ma;
+
+            nut.textContent = dangThu
+                ? "Đang thử"
+                : "Thử kiểu tóc này";
+
+            nut.setAttribute(
+                "aria-pressed",
+                String(dangThu)
+            );
+
+            nut.addEventListener("click", () => {
+                if (scan || scanBusy) {
+                    $("kc_trang_thai").textContent =
+                        "Hoàn tất hoặc hủy lượt quét trước khi đổi tóc.";
+                    return;
+                }
+
+                if (laNguoi) {
+                    chonTocNguoi(toc, nut);
+
+                } else if (
+                    approved &&
+                    daQuetId === approved
+                ) {
+                    tocDangCho = null;
+                    chooseHair(toc, nut);
+                }
+            });
+
+            the.append(nut);
+        }
+
+        return the;
+    }
+
+    function veDanhSachToc(
+        vung,
+        danhSach,
+        rong,
+        laNguoi = false
+    ) {
+        vung.replaceChildren();
+
+        if (!danhSach.length) {
+            const p = document.createElement("p");
+            p.textContent = rong;
+            vung.append(p);
+        }
+
+        for (const toc of danhSach) {
+            vung.append(taoTheToc(toc, laNguoi));
+        }
+    }
+
+    function moLuaChonSauQuet(k) {
+        daQuetId =
+            k.chap_nhan === true
+                ? approved
+                : null;
+
+        const mo =
+            !!approved &&
+            daQuetId === approved;
+
+        $("kc_chon").dataset.quetThanhCong =
+            String(mo);
+
+        $("kc_nhom").hidden = !mo;
+        $("kc_nut_hop").hidden = !mo;
+        $("kc_nut_pha").hidden = !mo;
+
+        $("kc_tieu_de").textContent = mo
+            ? "Chọn phong cách của bạn"
+            : "Thử tóc người nổi tiếng";
+
+        veDanhSachToc(
+            $("goi_y"),
+            mo ? k.cac_toc_goi_y || [] : [],
+            "Kho chưa có kiểu tóc phù hợp."
+        );
+
+        veDanhSachToc(
+            $("kc_pha"),
+            mo
+                ? (k.cac_toc_pha_cach || []).filter(
+                    toc => !toc.nguoi_noi_tieng
+                )
+                : [],
+            "Chưa có mẫu tóc phá cách khác dạng mặt của bạn."
+        );
+
+        hienNhomToc(mo ? "hop" : "nguoi");
+
+        $("kc_trang_thai").textContent = mo
+            ? "Chọn Hợp khuôn mặt, Phá cách " +
+              "hoặc tìm tóc người nổi tiếng."
+            : "Lượt quét chưa đạt ngưỡng. " +
+              "Quét lại hoặc tìm tóc người nổi tiếng bên dưới.";
+    }
+
+    function chonTocNguoi(toc, nut) {
+        if (
+            !toc.nguoi_noi_tieng ||
+            !toc.anh_thu_toc
+        ) {
+            return;
+        }
+
+        tocDangCho = { toc, nut };
+        doiMatId = null;
+
+        $("kc_trang_thai").textContent =
+            "Đã chọn “" + toc.ten + "”. " +
+            (
+                stream
+                    ? "Nhìn vào camera để thử tóc."
+                    : "Bấm Bật camera để thử tóc."
+            );
+    }
+
+    function thuTocNguoiKhiCoMat(t) {
+        if (
+            !tocDangCho ||
+            !stream ||
+            !ready ||
+            scan ||
+            scanBusy
+        ) {
+            return;
+        }
+
+        const people = current(t);
+
+        const nguoi = approved
+            ? people.find(x => x.id === approved)
+            : (
+                people.length === 1
+                    ? people[0]
+                    : null
+            );
+
+        if (!nguoi) {
+            doiMatId = null;
+
+            $("kc_trang_thai").textContent = approved
+                ? "Đang chờ nhận lại người đang thử tóc."
+                : "Giữ một người trong khung " +
+                  "để chọn đúng người thử tóc.";
+
+            return;
+        }
+
+        if (doiMatId !== nguoi.id) {
+            doiMatId = nguoi.id;
+            doiMatLuc = t;
+            return;
+        }
+
+        if (t - doiMatLuc < 400) return;
+
+        const cho = tocDangCho;
+        tocDangCho = null;
+
+        approved = nguoi.id;
+
+        chooseHair(cho.toc, cho.nut).then(() => {
+            if (hair?.ma === cho.toc.ma) {
+                $("kc_trang_thai").textContent =
+                    "Đang thử “" + hair.ten + "”. " +
+                    "Có thể căn chỉnh và chụp ảnh.";
+            }
+
+            syncHairControls();
+        });
+    }
+
+    function xoaKetQuaTimNguoi() {
+        danhSachDangTai?.abort();
+        danhSachDangTai = null;
+
+        tuKhoaNguoi = "";
+        trangNguoi = 1;
+
+        $("kc_tim").removeAttribute("aria-busy");
+
+        $("kc_nguoi").replaceChildren();
+        $("kc_nguoi").hidden = true;
+
+        $("kc_phan_trang").hidden = true;
+        $("kc_truoc").disabled = true;
+        $("kc_sau").disabled = true;
+        $("kc_so_trang").textContent = "";
+
+        $("kc_thong_bao_tim").textContent =
+            "Nhập tên người bạn muốn tìm rồi bấm Tìm.";
+    }
+
+    async function taiTocNguoi(trang = 1) {
+        // Không gọi API để tải tất cả khi chưa nhập tên.
+        if (!tuKhoaNguoi.trim()) {
+            xoaKetQuaTimNguoi();
+            return;
+        }
+
+        danhSachDangTai?.abort();
+
+        const dieuKhien = new AbortController();
+        danhSachDangTai = dieuKhien;
+
+        const url = new URL(API_NGUOI, location.href);
+        url.searchParams.set("q", tuKhoaNguoi);
+        url.searchParams.set("trang", trang);
+
+        $("kc_tim").setAttribute("aria-busy", "true");
+        $("kc_nguoi").hidden = true;
+        $("kc_phan_trang").hidden = true;
+
+        $("kc_thong_bao_tim").textContent =
+            "Đang tìm kiểu tóc…";
+
+        try {
+            const r = await fetch(url, {
+                signal: dieuKhien.signal
+            });
+
+            if (!r.ok) {
+                throw Error(
+                    "Không tải được danh sách. " +
+                    "Bấm Tìm để thử lại."
+                );
+            }
+
+            const k = await r.json();
+
+            if (danhSachDangTai !== dieuKhien) return;
+
+            if (tocDangCho) {
+                tocDangCho.nut =
+                    document.createElement("button");
+            }
+
+            veDanhSachToc(
+                $("kc_nguoi"),
+                k.cac_kieu_toc || [],
+                "Chưa tìm thấy tóc đã tách của người này.",
+                true
+            );
+
+            $("kc_nguoi").hidden = false;
+
+            trangNguoi = k.trang;
+
+            $("kc_so_trang").textContent =
+                k.trang + " / " + k.tong_trang;
+
+            $("kc_truoc").disabled = !k.co_truoc;
+            $("kc_sau").disabled = !k.co_sau;
+
+            $("kc_phan_trang").hidden =
+                k.tong_trang <= 1;
+
+            $("kc_thong_bao_tim").textContent =
+                "Tìm thấy " + k.tong_so +
+                " kiểu tóc có thể thử.";
+
+        } catch (loi) {
+            if (
+                danhSachDangTai === dieuKhien &&
+                loi.name !== "AbortError"
+            ) {
+                $("kc_thong_bao_tim").textContent =
+                    loi.message;
+            }
+
+        } finally {
+            if (danhSachDangTai === dieuKhien) {
+                $("kc_tim").removeAttribute("aria-busy");
+            }
+        }
+    }
+
+    for (const nhom of ["hop", "pha", "nguoi"]) {
+        $("kc_nut_" + nhom).addEventListener(
+            "click",
+            () => hienNhomToc(nhom)
+        );
+    }
+
+    $("kc_tim").addEventListener("submit", e => {
+        e.preventDefault();
+
+        tuKhoaNguoi =
+            $("kc_tu_khoa").value.trim().slice(0, 100);
+
+        taiTocNguoi(1);
+    });
+
+    $("kc_tu_khoa").addEventListener("input", () => {
+        if (!$("kc_tu_khoa").value.trim()) {
+            xoaKetQuaTimNguoi();
+        }
+    });
+
+    $("kc_truoc").addEventListener("click", () => {
+        taiTocNguoi(trangNguoi - 1);
+    });
+
+    $("kc_sau").addEventListener("click", () => {
+        taiTocNguoi(trangNguoi + 1);
+    });
+
+    $("nut_bo_toc").addEventListener("click", () => {
+        tocDangCho = null;
+    });
+
+    async function nhanTocTuKhamPha() {
+        const ma =
+            new URLSearchParams(location.search).get("toc");
+
+        if (!ma || !/^[0-9]{1,18}$/.test(ma)) return;
+
+        const phien = epoch;
+
+        const url = new URL(API_NGUOI, location.href);
+        url.searchParams.set("ma", ma);
+
+        try {
+            const r = await fetch(url);
+
+            if (!r.ok) {
+                throw Error(
+                    "Không tải được kiểu tóc đã chọn."
+                );
+            }
+
+            const k = await r.json();
+
+            if (
+                phien !== epoch ||
+                document.hidden
+            ) {
+                return;
+            }
+
+            const toc = k.cac_kieu_toc?.[0];
+
+            if (
+                !toc ||
+                String(toc.ma) !== ma ||
+                !toc.nguoi_noi_tieng
+            ) {
+                throw Error(
+                    "Kiểu tóc đã ẩn hoặc chưa sẵn sàng. " +
+                    "Hãy tìm kiểu khác."
+                );
+            }
+
+            $("kc_tu_khoa").value =
+                toc.nguoi_noi_tieng.ten;
+
+            // Chỉ hiện đúng tóc đã chọn từ trang khám phá.
+            veDanhSachToc(
+                $("kc_nguoi"),
+                [toc],
+                "",
+                true
+            );
+
+            $("kc_nguoi").hidden = false;
+            $("kc_phan_trang").hidden = true;
+
+            $("kc_thong_bao_tim").textContent =
+                "Kiểu tóc bạn đã chọn từ trang khám phá.";
+
+            chonTocNguoi(
+                toc,
+                $("kc_nguoi").querySelector("button")
+            );
+
+            await openCamera();
+
+        } catch (loi) {
+            $("kc_trang_thai").textContent =
+                loi.message;
+        }
+    }
+
+    dongLuaChonSauQuet();
+    xoaKetQuaTimNguoi();
+    nhanTocTuKhamPha();

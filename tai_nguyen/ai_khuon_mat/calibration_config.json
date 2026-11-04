@@ -1,0 +1,7 @@
+{
+  "run_id": "f85192d832bebfa9fb74",
+  "use_tta": true,
+  "target_precision": 0.9,
+  "min_coverage": 0.35,
+  "min_accepted_validation": 10
+}

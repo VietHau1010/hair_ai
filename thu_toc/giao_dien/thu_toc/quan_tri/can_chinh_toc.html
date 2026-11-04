@@ -1,0 +1,1381 @@
+{% extends "thu_toc/quan_tri/khung_quan_tri.html" %}
+{% load static %}
+
+{% block noi_dung %}
+<style>
+    .ct-trang {
+        max-width: 1280px;
+    }
+
+    .ct-trang [hidden] {
+        display: none !important;
+    }
+
+    .ct-luoi {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 22px;
+        align-items: start;
+    }
+
+    .ct-the {
+        min-width: 0;
+        padding: 22px;
+        border: 1px solid var(--vien);
+        border-radius: 16px;
+        background: var(--giay, #fff);
+    }
+
+    .ct-the h2 {
+        margin: 0 0 10px;
+        font-size: 20px;
+    }
+
+    .ct-phu {
+        color: var(--phu);
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .ct-camera {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        background: #17251d;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    #ct_video {
+        display: none;
+    }
+
+    #ct_canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: scaleX(-1);
+        touch-action: none;
+        cursor: grab;
+    }
+
+    #ct_canvas:active {
+        cursor: grabbing;
+    }
+
+    #ct_vong {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .ct-man-cho {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: #dce6d8;
+        font-size: 14px;
+        text-align: center;
+        padding: 25px;
+        pointer-events: none;
+    }
+
+    .ct-hang {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    .ct-hang .nut {
+        min-height: 44px;
+    }
+
+    .ct-dieu-khien {
+        display: grid;
+        gap: 22px;
+        padding: 0;
+        margin: 22px 0;
+        border: 0;
+        min-width: 0;
+    }
+
+    .ct-dieu-khien label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .ct-dieu-khien input[type="range"] {
+        display: block;
+        width: 100%;
+        margin: 12px 0 6px;
+        accent-color: var(--xanh);
+    }
+
+    .ct-moc {
+        display: flex;
+        justify-content: space-between;
+        color: var(--phu);
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .ct-png {
+        display: block;
+        width: 100%;
+        height: 145px;
+        padding: 12px;
+        object-fit: contain;
+        border: 1px solid var(--vien);
+        border-radius: 10px;
+        background-color: white;
+        background-image: conic-gradient(
+            #e8ede9 25%,
+            transparent 0 50%,
+            #e8ede9 0 75%,
+            transparent 0
+        );
+        background-size: 20px 20px;
+    }
+
+    .ct-trang-thai {
+        padding: 14px 16px;
+        margin: 16px 0 0;
+        border: 1px solid var(--vien);
+        border-radius: 10px;
+        background: var(--nhat, #edf4ef);
+        line-height: 1.7;
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .ct-trang-thai[data-loi="true"] {
+        color: #a43838;
+        border-color: #edc9c9;
+        background: #fff5f5;
+    }
+
+    .ct-luu {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    .ct-chi-so {
+        display: grid;
+        gap: 5px;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--vien);
+        color: var(--phu);
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 1000px) {
+        .ct-luoi {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="ct-trang">
+    <div class="dau-muc">
+        <div>
+            <span class="nhan">CĂN TÓC BẰNG CAMERA</span>
+            <h1>{{ toc.ten }}</h1>
+
+            <p class="phu">
+                {% if nguoi %}{{ nguoi.ten }} · {% endif %}
+                Căn tóc trực tiếp với khung camera giống phòng thử tóc.
+            </p>
+        </div>
+
+        {% if nguoi %}
+            <a class="nut nut-phu"
+               href="{% url 'admin:sua_toc_nguoi_noi_tieng' nguoi.pk toc.pk %}">
+                ← Về sửa tóc
+            </a>
+        {% else %}
+            <a class="nut nut-phu"
+               href="{% url 'admin:sua' 'toc' toc.pk %}">
+                ← Về sửa tóc
+            </a>
+        {% endif %}
+    </div>
+
+    {% if not toc.anh_thu_toc %}
+        <section class="ct-the">
+            <h2>Chưa có PNG để căn tóc</h2>
+            <p class="ct-phu">
+                Thêm ảnh tóc nền trong suốt trong màn hình sửa tóc,
+                sau đó quay lại đây.
+            </p>
+        </section>
+    {% else %}
+        <form id="ct_form">
+            {% csrf_token %}
+
+            <div class="ct-luoi">
+                <section class="ct-the">
+                    <h2>Hình ảnh căn tóc</h2>
+
+                    <p class="ct-phu">
+                        Chỉ một người trong khung.
+                        Đưa mặt vào vòng hướng dẫn,
+                        nhìn thẳng và giữ đầu ngay.
+                    </p>
+
+                    <div class="ct-camera" id="ct_vung_camera">
+                        <video id="ct_video"
+                               autoplay
+                               muted
+                               playsinline></video>
+
+                        <canvas id="ct_canvas"
+                                width="1280"
+                                height="720"
+                                aria-label="Camera căn chỉnh tóc trực tiếp"></canvas>
+
+                        <canvas id="ct_vong"
+                                aria-hidden="true"></canvas>
+
+                        <div class="ct-man-cho" id="ct_man_cho">
+                            Bấm “Mở camera” để bắt đầu.
+                        </div>
+                    </div>
+
+                    <div class="ct-hang">
+                        <button class="nut"
+                                type="button"
+                                id="ct_mo">
+                            Mở camera
+                        </button>
+
+                        <button class="nut nut-phu"
+                                type="button"
+                                id="ct_tat"
+                                disabled>
+                            Tắt camera
+                        </button>
+
+                        <button class="nut nut-phu"
+                                type="button"
+                                id="ct_hien_toc"
+                                aria-pressed="true"
+                                disabled>
+                            Ẩn tóc để đối chiếu
+                        </button>
+                    </div>
+
+                    <p class="ct-trang-thai"
+                       id="ct_huong_dan"
+                       role="status"
+                       aria-live="polite">
+                        Camera chưa bật.
+                    </p>
+
+                    <div class="ct-chi-so">
+                        <span id="ct_khoang_cach">Kích thước mặt: —</span>
+                        <span id="ct_anh_sang">Ánh sáng: —</span>
+                        <span id="ct_do_net">Độ nét: —</span>
+                        <span id="ct_tu_the">Độ nghiêng: —</span>
+                    </div>
+
+                    <p class="ct-phu">
+                        Vòng xanh: có thể căn tóc và lưu.
+                        Kéo trực tiếp trong ảnh để dịch tóc.
+                    </p>
+                </section>
+
+                <section class="ct-the">
+                    <h2>Điều chỉnh kiểu tóc</h2>
+
+                    <img class="ct-png"
+                         src="{{ toc.anh_thu_toc.url }}"
+                         alt="PNG của {{ toc.ten }}">
+
+                    <fieldset id="ct_dieu_khien"
+                              class="ct-dieu-khien"
+                              disabled>
+                        <legend class="ct-phu">Thông số căn chỉnh</legend>
+
+                        <label for="ct_rong">
+                            Độ rộng tóc
+                            <input id="ct_rong"
+                                   type="range"
+                                   min="0.1"
+                                   max="5"
+                                   step="0.001">
+
+                            <span class="ct-moc">
+                                <span>Nhỏ hơn</span>
+                                <span>Lớn hơn</span>
+                            </span>
+                        </label>
+
+                        <label for="ct_ngang">
+                            Vị trí ngang
+                            <input id="ct_ngang"
+                                   type="range"
+                                   min="-2"
+                                   max="2"
+                                   step="0.001">
+
+                            <span class="ct-moc">
+                                <span>Sang trái</span>
+                                <span>Sang phải</span>
+                            </span>
+                        </label>
+
+                        <label for="ct_doc">
+                            Vị trí dọc
+                            <input id="ct_doc"
+                                   type="range"
+                                   min="-2"
+                                   max="2"
+                                   step="0.001">
+
+                            <span class="ct-moc">
+                                <span>Lên trên</span>
+                                <span>Xuống dưới</span>
+                            </span>
+                        </label>
+
+                        <button class="nut nut-phu"
+                                type="button"
+                                id="ct_khoi_phuc">
+                            Khôi phục thông số đã lưu
+                        </button>
+                    </fieldset>
+
+                    <button class="nut ct-luu"
+                            type="submit"
+                            id="ct_luu"
+                            disabled>
+                        Lưu căn chỉnh
+                    </button>
+
+                    <p class="ct-phu">
+                        Chỉ lưu vị trí và độ rộng mặc định.
+                        Không lưu ảnh camera hoặc thay đổi PNG.
+                    </p>
+
+                    <p class="ct-trang-thai"
+                       id="ct_thong_bao"
+                       role="status"
+                       aria-live="polite">
+                        Chưa có thay đổi được lưu.
+                    </p>
+                </section>
+            </div>
+        </form>
+
+        {{ du_lieu_can|json_script:"ct_du_lieu" }}
+
+        <script type="module">
+            const $ = id => document.getElementById(id);
+            const duLieu = JSON.parse($("ct_du_lieu").textContent);
+
+            const video = $("ct_video");
+            const canvas = $("ct_canvas");
+            const ctx = canvas.getContext("2d");
+
+            const guide = $("ct_vong");
+            const gc = guide.getContext("2d");
+
+            const qcanvas = document.createElement("canvas");
+            qcanvas.width = 160;
+            qcanvas.height = 200;
+
+            const qctx = qcanvas.getContext(
+                "2d",
+                {willReadFrequently: true}
+            );
+
+            const OVAL = [
+                10,338,297,332,284,251,389,356,454,
+                323,361,288,397,365,379,378,400,377,
+                152,148,176,149,150,136,172,58,132,
+                93,234,127,162,21,54,103,67,109
+            ];
+
+            const anhToc = new Image();
+
+            let thongSoGoc = {...duLieu.thong_so};
+            let thongSo = {...thongSoGoc};
+
+            let detector = null;
+            let detectorPromise = null;
+            let stream = null;
+
+            let dangMo = false;
+            let dangLuu = false;
+            let hienToc = true;
+            let daDung = false;
+
+            let mat = null;
+            let matHopLe = false;
+
+            let phien = 0;
+            let raf = null;
+            let lanNhanDien = 0;
+            let videoTimeCu = -1;
+            let keo = null;
+            let trangThaiHuongDan = "";
+
+            function bao(noiDung, loi = false) {
+                $("ct_thong_bao").textContent = noiDung;
+                $("ct_thong_bao").dataset.loi = String(loi);
+            }
+
+            function huongDan(noiDung) {
+                if (trangThaiHuongDan === noiDung) return;
+                trangThaiHuongDan = noiDung;
+                $("ct_huong_dan").textContent = noiDung;
+            }
+
+            function gioiHan(so, min, max) {
+                return Math.max(min, Math.min(max, so));
+            }
+
+            function capNhatNut() {
+                const duocCan = Boolean(
+                    stream &&
+                    matHopLe &&
+                    anhToc.naturalWidth &&
+                    !dangLuu
+                );
+
+                $("ct_mo").disabled =
+                    Boolean(stream) || dangMo || dangLuu;
+
+                $("ct_tat").disabled = !stream || dangLuu;
+                $("ct_hien_toc").disabled = !stream || dangLuu;
+
+                $("ct_dieu_khien").disabled = !duocCan;
+                $("ct_luu").disabled = !duocCan;
+
+                $("ct_mo").textContent = dangMo
+                    ? "Đang mở…"
+                    : "Mở camera";
+
+                $("ct_luu").textContent = dangLuu
+                    ? "Đang lưu…"
+                    : "Lưu căn chỉnh";
+            }
+
+            function dongBoThanhTruot() {
+                $("ct_rong").value = thongSo.ti_le_chieu_rong;
+                $("ct_ngang").value = -thongSo.do_lech_x;
+                $("ct_doc").value = thongSo.do_lech_y;
+            }
+
+            const tocSanSang = new Promise((resolve, reject) => {
+                anhToc.onload = resolve;
+
+                anhToc.onerror = () => reject(
+                    new Error(
+                        "Không tải được PNG tóc. Kiểm tra ảnh trong màn hình sửa."
+                    )
+                );
+            });
+
+            tocSanSang.catch(() => {});
+            anhToc.src = duLieu.anh_png;
+
+            async function layDetector() {
+                if (detector) return detector;
+
+                if (!detectorPromise) {
+                    detectorPromise = (async () => {
+                        const {
+                            FaceLandmarker,
+                            FilesetResolver
+                        } = await import(
+                            "{% static 'thu_toc/mediapipe/vision_bundle.js' %}"
+                        );
+
+                        const heThong =
+                            await FilesetResolver.forVisionTasks(
+                                "{% static 'thu_toc/mediapipe/wasm/' %}"
+                            );
+
+                        const tuyChon = {
+                            baseOptions: {
+                                modelAssetPath:
+                                    "{% static 'thu_toc/mediapipe/face_landmarker.task' %}",
+                                delegate: "GPU"
+                            },
+                            runningMode: "VIDEO",
+                            numFaces: 5,
+                            minFaceDetectionConfidence: 0.6,
+                            minFacePresenceConfidence: 0.6,
+                            minTrackingConfidence: 0.6,
+                            outputFaceBlendshapes: true
+                        };
+
+                        try {
+                            return await FaceLandmarker.createFromOptions(
+                                heThong,
+                                tuyChon
+                            );
+                        } catch {
+                            tuyChon.baseOptions.delegate = "CPU";
+
+                            return FaceLandmarker.createFromOptions(
+                                heThong,
+                                tuyChon
+                            );
+                        }
+                    })();
+                }
+
+                try {
+                    const ketQua = await detectorPromise;
+
+                    if (daDung) {
+                        ketQua.close();
+                        throw new Error("Trang đã đóng.");
+                    }
+
+                    detector = ketQua;
+                    return detector;
+
+                } catch (loi) {
+                    detectorPromise = null;
+                    throw loi;
+                }
+            }
+
+            function tinhMat(p) {
+                const w = canvas.width;
+                const h = canvas.height;
+
+                let a = p[33];
+                let b = p[263];
+
+                if (a.x > b.x) [a, b] = [b, a];
+
+                const dx = (b.x - a.x) * w;
+                const dy = (b.y - a.y) * h;
+
+                const fw = Math.hypot(
+                    (p[454].x - p[234].x) * w,
+                    (p[454].y - p[234].y) * h
+                );
+
+                const fh = Math.hypot(
+                    (p[152].x - p[10].x) * w,
+                    (p[152].y - p[10].y) * h
+                );
+
+                if (Math.hypot(dx, dy) < 1 || fw < 1 || fh < 1) {
+                    return null;
+                }
+
+                const xs = OVAL.map(i => p[i].x);
+                const ys = OVAL.map(i => p[i].y);
+
+                const x = Math.min(...xs);
+                const y = Math.min(...ys);
+
+                return {
+                    x: p[10].x * w,
+                    y: p[10].y * h,
+                    fw,
+                    fh,
+                    g: Math.atan2(dy, dx),
+
+                    muiX: p[1].x,
+                    muiY: p[1].y,
+
+                    box: {
+                        x,
+                        y,
+                        w: Math.max(...xs) - x,
+                        h: Math.max(...ys) - y
+                    }
+                };
+            }
+
+            // Cùng cách đo sáng và độ nét của phòng thử tóc.
+            function chatLuong(m) {
+                const b = m.box;
+
+                qctx.drawImage(
+                    video,
+                    b.x * video.videoWidth,
+                    b.y * video.videoHeight,
+                    b.w * video.videoWidth,
+                    b.h * video.videoHeight,
+                    0, 0, 160, 200
+                );
+
+                const d = qctx.getImageData(
+                    0, 0, 160, 200
+                ).data;
+
+                const g = new Float32Array(32000);
+
+                let sum = 0;
+                let dark = 0;
+                let light = 0;
+
+                for (let i = 0; i < g.length; i++) {
+                    const v =
+                        0.299 * d[i * 4] +
+                        0.587 * d[i * 4 + 1] +
+                        0.114 * d[i * 4 + 2];
+
+                    g[i] = v;
+                    sum += v;
+
+                    if (v < 20) dark++;
+                    if (v > 245) light++;
+                }
+
+                let s = 0;
+                let s2 = 0;
+                let n = 0;
+
+                for (let y = 1; y < 199; y++) {
+                    for (let x = 1; x < 159; x++) {
+                        const i = y * 160 + x;
+
+                        const v =
+                            g[i - 1] + g[i + 1] +
+                            g[i - 160] + g[i + 160] -
+                            4 * g[i];
+
+                        s += v;
+                        s2 += v * v;
+                        n++;
+                    }
+                }
+
+                return {
+                    light: sum / g.length,
+                    sharp: s2 / n - (s / n) ** 2,
+                    dark: dark / g.length,
+                    white: light / g.length
+                };
+            }
+
+            function xoaChiSo() {
+                $("ct_khoang_cach").textContent = "Kích thước mặt: —";
+                $("ct_anh_sang").textContent = "Ánh sáng: —";
+                $("ct_do_net").textContent = "Độ nét: —";
+                $("ct_tu_the").textContent = "Độ nghiêng: —";
+            }
+
+            // Các ngưỡng giống scanQuality của khung Hình ảnh thật.
+            function kiemTraMat(m, blend) {
+                const b = m.box;
+                const q = chatLuong(m);
+
+                const eyeBlink = Math.max(
+                    ...blend
+                        .filter(x => [
+                            "eyeBlinkLeft",
+                            "eyeBlinkRight"
+                        ].includes(x.categoryName))
+                        .map(x => x.score),
+                    0
+                );
+
+                const jawOpen = blend.find(
+                    x => x.categoryName === "jawOpen"
+                )?.score || 0;
+
+                $("ct_khoang_cach").textContent =
+                    "Kích thước mặt: " +
+                    Math.round(b.h * 100) +
+                    "% chiều cao ảnh";
+
+                $("ct_anh_sang").textContent =
+                    "Ánh sáng: " + Math.round(q.light) + "/255";
+
+                $("ct_do_net").textContent =
+                    "Độ nét: " + Math.round(q.sharp);
+
+                $("ct_tu_the").textContent =
+                    "Độ nghiêng: " +
+                    Math.round(Math.abs(m.g) * 180 / Math.PI) +
+                    "°";
+
+                if (
+                    b.x < 0.025 ||
+                    b.y < 0.025 ||
+                    b.x + b.w > 0.975 ||
+                    b.y + b.h > 0.975
+                ) return "Giữ toàn bộ mặt trong khung.";
+
+                if (b.h < 0.42) {
+                    return "Tiến gần camera một chút.";
+                }
+
+                if (b.h > 0.72) {
+                    return "Lùi xa camera một chút.";
+                }
+
+                if (
+                    Math.abs(b.x + b.w / 2 - 0.5) > 0.12 ||
+                    Math.abs(b.y + b.h / 2 - 0.5) > 0.14
+                ) return "Đưa mặt về giữa vòng hướng dẫn.";
+
+                if (Math.abs(m.g) > 12 * Math.PI / 180) {
+                    return "Giữ đầu bớt nghiêng.";
+                }
+
+                if (q.light < 45 || q.dark > 0.35) {
+                    return "Thêm ánh sáng phía trước.";
+                }
+
+                if (q.light > 220 || q.white > 0.25) {
+                    return "Ánh sáng quá gắt.";
+                }
+
+                if (q.sharp < 25) {
+                    return "Giữ yên để camera lấy nét.";
+                }
+
+                if (eyeBlink > 0.65) {
+                    return "Mở mắt tự nhiên.";
+                }
+
+                if (jawOpen > 0.3) {
+                    return "Khép miệng tự nhiên.";
+                }
+
+                return "";
+            }
+
+            // Sao cùng công thức vòng hướng dẫn ở Hình ảnh thật.
+            // Vẽ lớp riêng theo kích thước khung hiển thị.
+            function veVong() {
+                const rect =
+                    $("ct_vung_camera").getBoundingClientRect();
+
+                const W = Math.round(rect.width);
+                const H = Math.round(rect.height);
+
+                if (!W || !H) return;
+
+                if (guide.width !== W || guide.height !== H) {
+                    guide.width = W;
+                    guide.height = H;
+                }
+
+                gc.clearRect(0, 0, W, H);
+
+                if (!stream || !video.videoWidth) return;
+
+                const s = Math.min(
+                    W / video.videoWidth,
+                    H / video.videoHeight
+                );
+
+                const dw = video.videoWidth * s;
+                const dh = video.videoHeight * s;
+
+                gc.strokeStyle = matHopLe
+                    ? "#7bc67a"
+                    : "#ed7d70";
+
+                gc.lineWidth = 3;
+                gc.setLineDash([10, 7]);
+                gc.beginPath();
+
+                gc.ellipse(
+                    W / 2,
+                    H / 2,
+                    Math.min(dw * 0.28, dh * 0.26),
+                    dh * 0.37,
+                    0,
+                    0,
+                    Math.PI * 2
+                );
+
+                gc.stroke();
+                gc.setLineDash([]);
+            }
+
+            function veToc() {
+                if (
+                    !mat ||
+                    !matHopLe ||
+                    !hienToc ||
+                    !anhToc.naturalWidth
+                ) return;
+
+                const cos = Math.cos(mat.g);
+                const sin = Math.sin(mat.g);
+
+                const dx = thongSo.do_lech_x * mat.fw;
+                const dy = thongSo.do_lech_y * mat.fh;
+
+                const x = mat.x + dx * cos - dy * sin;
+                const y = mat.y + dx * sin + dy * cos;
+
+                const rw = mat.fw * thongSo.ti_le_chieu_rong;
+
+                const rh =
+                    rw * anhToc.naturalHeight / anhToc.naturalWidth;
+
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(mat.g);
+
+                // Giữ PNG đúng chiều khi camera hiển thị dạng gương.
+                ctx.scale(-1, 1);
+
+                ctx.drawImage(
+                    anhToc,
+                    -(1 - thongSo.diem_neo_x) * rw,
+                    -thongSo.diem_neo_y * rh,
+                    rw,
+                    rh
+                );
+
+                ctx.restore();
+            }
+
+            function veKhung() {
+                ctx.clearRect(
+                    0, 0, canvas.width, canvas.height
+                );
+
+                if (stream && video.readyState >= 2) {
+                    ctx.drawImage(
+                        video,
+                        0, 0,
+                        canvas.width,
+                        canvas.height
+                    );
+                }
+
+                veToc();
+                veVong();
+            }
+
+            function dongCamera(noiDung = "Camera đã tắt.") {
+                ++phien;
+                dangMo = false;
+
+                if (raf !== null) {
+                    cancelAnimationFrame(raf);
+                    raf = null;
+                }
+
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+
+                stream = null;
+                video.srcObject = null;
+
+                mat = null;
+                matHopLe = false;
+                keo = null;
+
+                $("ct_man_cho").hidden = false;
+                $("ct_man_cho").textContent = noiDung;
+
+                xoaChiSo();
+                huongDan(noiDung);
+                veKhung();
+                capNhatNut();
+            }
+
+            function chayKhung(t, maPhien) {
+                if (!stream || maPhien !== phien || daDung) return;
+
+                try {
+                    if (
+                        video.readyState >= 2 &&
+                        video.videoWidth &&
+                        video.videoHeight
+                    ) {
+                        if (
+                            canvas.width !== video.videoWidth ||
+                            canvas.height !== video.videoHeight
+                        ) {
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                        }
+
+                        if (
+                            t - lanNhanDien >= 100 &&
+                            video.currentTime !== videoTimeCu
+                        ) {
+                            lanNhanDien = t;
+                            videoTimeCu = video.currentTime;
+
+                            const ketQua =
+                                detector.detectForVideo(video, t);
+
+                            const cacMat =
+                                ketQua.faceLandmarks || [];
+
+                            let loi = "";
+
+                            if (cacMat.length !== 1) {
+                                mat = null;
+                                xoaChiSo();
+
+                                loi = cacMat.length
+                                    ? "Chỉ để một người trong khung camera."
+                                    : "Đưa mặt vào vòng hướng dẫn.";
+
+                            } else {
+                                const matMoi = tinhMat(cacMat[0]);
+
+                                if (
+                                    keo && mat && matMoi &&
+                                    Math.hypot(
+                                        matMoi.muiX - mat.muiX,
+                                        matMoi.muiY - mat.muiY
+                                    ) > 0.06
+                                ) {
+                                    keo = null;
+                                }
+
+                                mat = matMoi;
+
+                                loi = mat
+                                    ? kiemTraMat(
+                                        mat,
+                                        ketQua.faceBlendshapes?.[0]
+                                            ?.categories || []
+                                    )
+                                    : "Chưa đo được mặt. Nhìn thẳng vào camera.";
+                            }
+
+                            matHopLe = !loi;
+
+                            if (!matHopLe) {
+                                keo = null;
+                            }
+
+                            huongDan(
+                                loi ||
+                                "Đúng vị trí. Căn tóc rồi bấm Lưu."
+                            );
+
+                            capNhatNut();
+                        }
+
+                        veKhung();
+                    }
+
+                    raf = requestAnimationFrame(
+                        tMoi => chayKhung(tMoi, maPhien)
+                    );
+
+                } catch (loi) {
+                    dongCamera(
+                        "Nhận diện bị gián đoạn. Bấm Mở camera để thử lại."
+                    );
+
+                    bao(
+                        loi.message || "Không xử lý được camera.",
+                        true
+                    );
+                }
+            }
+
+            $("ct_mo").addEventListener("click", async () => {
+                if (dangMo || stream || daDung) return;
+
+                if (!navigator.mediaDevices?.getUserMedia) {
+                    bao(
+                        "Không truy cập được camera. Dùng localhost hoặc HTTPS.",
+                        true
+                    );
+                    return;
+                }
+
+                const maPhien = ++phien;
+
+                dangMo = true;
+                capNhatNut();
+
+                huongDan("Đang chuẩn bị camera và nhận diện…");
+
+                let streamMoi = null;
+
+                try {
+                    await Promise.all([
+                        layDetector(),
+                        tocSanSang
+                    ]);
+
+                    if (maPhien !== phien || daDung) return;
+
+                    // Giống yêu cầu camera của phòng thử tóc.
+                    streamMoi =
+                        await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: {ideal: 1280},
+                                height: {ideal: 720}
+                            },
+                            audio: false
+                        });
+
+                    if (
+                        maPhien !== phien ||
+                        daDung ||
+                        document.hidden
+                    ) {
+                        streamMoi.getTracks().forEach(
+                            track => track.stop()
+                        );
+
+                        if (maPhien === phien && !daDung) {
+                            dongCamera(
+                                "Bấm Mở camera khi quay lại trang."
+                            );
+                        }
+
+                        return;
+                    }
+
+                    stream = streamMoi;
+                    video.srcObject = stream;
+
+                    await video.play();
+
+                    if (maPhien !== phien || daDung) return;
+
+                    for (const track of stream.getVideoTracks()) {
+                        track.addEventListener("ended", () => {
+                            if (maPhien === phien) {
+                                dongCamera(
+                                    "Camera đã ngắt. Bấm Mở camera để kết nối lại."
+                                );
+                            }
+                        });
+                    }
+
+                    mat = null;
+                    matHopLe = false;
+                    lanNhanDien = 0;
+                    videoTimeCu = -1;
+
+                    $("ct_man_cho").hidden = true;
+
+                    huongDan("Đưa mặt vào vòng hướng dẫn.");
+
+                    bao(
+                        "Camera đã mở. Khi vòng xanh, bạn có thể căn tóc và lưu."
+                    );
+
+                    raf = requestAnimationFrame(
+                        t => chayKhung(t, maPhien)
+                    );
+
+                } catch (loi) {
+                    if (maPhien !== phien || daDung) return;
+
+                    streamMoi?.getTracks().forEach(
+                        track => track.stop()
+                    );
+
+                    dongCamera("Chưa mở được camera.");
+
+                    const noiDung = {
+                        NotAllowedError:
+                            "Bạn chưa cho phép sử dụng camera.",
+                        NotFoundError:
+                            "Không tìm thấy camera.",
+                        NotReadableError:
+                            "Camera đang bận hoặc không truy cập được."
+                    };
+
+                    bao(
+                        noiDung[loi.name] ||
+                        loi.message ||
+                        "Không mở được camera.",
+                        true
+                    );
+
+                } finally {
+                    if (maPhien === phien) {
+                        dangMo = false;
+                        capNhatNut();
+                    }
+                }
+            });
+
+            $("ct_tat").addEventListener("click", () => {
+                dongCamera();
+            });
+
+            $("ct_rong").addEventListener("input", event => {
+                thongSo.ti_le_chieu_rong =
+                    Number(event.target.value);
+            });
+
+            $("ct_ngang").addEventListener("input", event => {
+                thongSo.do_lech_x =
+                    -Number(event.target.value);
+            });
+
+            $("ct_doc").addEventListener("input", event => {
+                thongSo.do_lech_y =
+                    Number(event.target.value);
+            });
+
+            $("ct_khoi_phuc").addEventListener("click", () => {
+                thongSo = {...thongSoGoc};
+                dongBoThanhTruot();
+                bao("Đã khôi phục thông số đang lưu.");
+            });
+
+            $("ct_hien_toc").addEventListener("click", () => {
+                hienToc = !hienToc;
+                keo = null;
+
+                $("ct_hien_toc").textContent = hienToc
+                    ? "Ẩn tóc để đối chiếu"
+                    : "Hiện tóc";
+
+                $("ct_hien_toc").setAttribute(
+                    "aria-pressed",
+                    String(hienToc)
+                );
+            });
+
+            function toaDo(event) {
+                const khung = canvas.getBoundingClientRect();
+
+                const tiLe = Math.min(
+                    khung.width / canvas.width,
+                    khung.height / canvas.height
+                );
+
+                const rong = canvas.width * tiLe;
+                const cao = canvas.height * tiLe;
+
+                const trai =
+                    khung.left + (khung.width - rong) / 2;
+
+                const tren =
+                    khung.top + (khung.height - cao) / 2;
+
+                const px = event.clientX - trai;
+                const py = event.clientY - tren;
+
+                if (
+                    px < 0 || px > rong ||
+                    py < 0 || py > cao
+                ) return null;
+
+                return {
+                    x: (1 - px / rong) * canvas.width,
+                    y: py / cao * canvas.height
+                };
+            }
+
+            canvas.addEventListener("pointerdown", event => {
+                if (
+                    !matHopLe ||
+                    !mat ||
+                    dangLuu ||
+                    !hienToc ||
+                    !event.isPrimary ||
+                    event.button !== 0
+                ) return;
+
+                const diem = toaDo(event);
+                if (!diem) return;
+
+                keo = {
+                    id: event.pointerId,
+                    ...diem,
+                    dx: thongSo.do_lech_x,
+                    dy: thongSo.do_lech_y,
+                    fw: mat.fw,
+                    fh: mat.fh,
+                    g: mat.g
+                };
+
+                canvas.setPointerCapture(event.pointerId);
+                event.preventDefault();
+            });
+
+            canvas.addEventListener("pointermove", event => {
+                if (
+                    !keo ||
+                    keo.id !== event.pointerId ||
+                    !matHopLe ||
+                    dangLuu
+                ) return;
+
+                const diem = toaDo(event);
+                if (!diem) return;
+
+                const dx = diem.x - keo.x;
+                const dy = diem.y - keo.y;
+
+                const cos = Math.cos(keo.g);
+                const sin = Math.sin(keo.g);
+
+                thongSo.do_lech_x = gioiHan(
+                    keo.dx + (dx * cos + dy * sin) / keo.fw,
+                    -2,
+                    2
+                );
+
+                thongSo.do_lech_y = gioiHan(
+                    keo.dy + (-dx * sin + dy * cos) / keo.fh,
+                    -2,
+                    2
+                );
+
+                dongBoThanhTruot();
+            });
+
+            for (const ten of [
+                "pointerup",
+                "pointercancel",
+                "lostpointercapture"
+            ]) {
+                canvas.addEventListener(ten, () => {
+                    keo = null;
+                });
+            }
+
+            $("ct_form").addEventListener("submit", async event => {
+                event.preventDefault();
+
+                if (!stream || !matHopLe || dangLuu) return;
+
+                dangLuu = true;
+                keo = null;
+                capNhatNut();
+
+                const banLuu = {...thongSo};
+                const duLieuGui = new FormData($("ct_form"));
+
+                duLieuGui.set("ten_anh", duLieu.ten_anh);
+
+                for (const [ten, giaTri] of Object.entries(thongSoGoc)) {
+                    duLieuGui.set(`cu_${ten}`, String(giaTri));
+                }
+
+                for (const ten of [
+                    "ti_le_chieu_rong",
+                    "do_lech_x",
+                    "do_lech_y"
+                ]) {
+                    duLieuGui.set(ten, String(banLuu[ten]));
+                }
+
+                const dieuKhien = new AbortController();
+
+                const han = setTimeout(
+                    () => dieuKhien.abort(),
+                    20000
+                );
+
+                bao("Đang lưu căn chỉnh…");
+
+                try {
+                    const phanHoi = await fetch(
+                        window.location.pathname,
+                        {
+                            method: "POST",
+                            credentials: "same-origin",
+                            headers: {
+                                Accept: "application/json"
+                            },
+                            body: duLieuGui,
+                            signal: dieuKhien.signal
+                        }
+                    );
+
+                    if (
+                        phanHoi.redirected ||
+                        !phanHoi.headers.get("content-type")?.includes(
+                            "application/json"
+                        )
+                    ) {
+                        throw new Error(
+                            "Không nhận được phản hồi lưu. " +
+                            "Kiểm tra phiên đăng nhập rồi tải lại trang."
+                        );
+                    }
+
+                    const ketQua = await phanHoi.json();
+
+                    if (!phanHoi.ok || !ketQua.thanh_cong) {
+                        throw new Error(
+                            ketQua.thong_bao ||
+                            "Chưa lưu được căn chỉnh."
+                        );
+                    }
+
+                    thongSoGoc = {...ketQua.thong_so};
+                    thongSo = {...thongSoGoc};
+
+                    dongBoThanhTruot();
+
+                    bao(
+                        "Đã lưu. Tải lại phòng thử tóc và chọn lại " +
+                        "kiểu tóc để dùng thông số mới."
+                    );
+
+                } catch (loi) {
+                    bao(
+                        loi.name === "AbortError"
+                            ? "Chưa xác nhận được kết quả lưu. Tải lại trang để kiểm tra."
+                            : loi.message,
+                        true
+                    );
+
+                } finally {
+                    clearTimeout(han);
+                    dangLuu = false;
+                    capNhatNut();
+                }
+            });
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden && (stream || dangMo)) {
+                    dongCamera(
+                        "Camera đã tắt khi rời tab. Bấm Mở camera để tiếp tục."
+                    );
+                }
+            });
+
+            window.addEventListener("pagehide", () => {
+                daDung = true;
+                dongCamera();
+
+                if (detector) {
+                    detector.close();
+                    detector = null;
+                }
+            });
+
+            window.addEventListener("pageshow", event => {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            });
+
+            window.addEventListener("resize", veVong);
+
+            dongBoThanhTruot();
+            capNhatNut();
+            veKhung();
+        </script>
+    {% endif %}
+</div>
+{% endblock %}

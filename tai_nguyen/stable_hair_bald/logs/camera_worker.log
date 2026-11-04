@@ -1,0 +1,475 @@
+2026-10-15 15:06:37.476900: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-15 15:06:42.382190: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792051608.105706    5284 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792051608.138493   14144 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792051608.156521   23600 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792051608.183461   10008 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Bald Converter attempt 1, scale=0.9
+Traceback (most recent call last):
+  File "<string>", line 23, in <module>
+    result = xoa_toc(rgb)
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 470, in xoa_toc
+    return engine.xoa(rgb)
+           ~~~~~~~~~~^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 428, in xoa
+    generated = self.client.generate(crop, scale, CFG['seed'] + attempt)
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 225, in generate
+    self.receive()
+    ~~~~~~~~~~~~^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 192, in receive
+    raise LoiXoaToc('Stable-Hair lỗi: ' + message)
+thu_toc.xoa_toc.LoiXoaToc: Stable-Hair lỗi: ne 638, in forward
+    layer_outputs = encoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 380, in forward
+    hidden_states, attn_weights = self.self_attn(
+                                  ^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\transformers\models\clip\modeling_clip.py", line 305, in forward
+    attn_weights = nn.functional.softmax(attn_weights, dim=-1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\functional.py", line 2137, in softmax
+    ret = input.softmax(dim)
+          ^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+Bald Converter attempt 1, scale=0.9
+Traceback (most recent call last):
+  File "<string>", line 23, in <module>
+    result = xoa_toc(rgb)
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 470, in xoa_toc
+    return engine.xoa(rgb)
+           ~~~~~~~~~~^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 428, in xoa
+    generated = self.client.generate(crop, scale, CFG['seed'] + attempt)
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 225, in generate
+    self.receive()
+    ~~~~~~~~~~~~^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 192, in receive
+    raise LoiXoaToc('Stable-Hair lỗi: ' + message)
+thu_toc.xoa_toc.LoiXoaToc: Stable-Hair lỗi: ^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\unet_2d_blocks.py", line 1323, in forward
+    hidden_states = resnet(hidden_states, temb=None, scale=scale)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\torch\nn\modules\module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\.venv_xoa_toc\Lib\site-packages\diffusers\models\resnet.py", line 258, in forward
+    output_tensor = (input_tensor + hidden_states) / self.output_scale_factor
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 64.00 MiB. GPU 0 has a total capacity of 4.00 GiB of which 2.99 GiB is free. Of the allocated memory 203.71 MiB is allocated by PyTorch, and 10.29 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+2026-10-15 15:35:15.005072: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-15 15:35:17.966347: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792053322.541575    6548 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792053322.550931   22584 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792053322.566993   22584 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792053322.610970   12304 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+2026-10-15 15:40:27.521820: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-15 15:40:30.472472: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792053635.048955    4528 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792053635.058794   31304 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792053635.072304   31304 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792053635.112741   34496 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 654, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 623, in xoa
+    candidate, overlay = render_basic_bald(source, pts, prob, hair, protected, state, channels)
+                         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 423, in render_basic_bald
+    raise LoiXoaToc('Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.')
+thu_toc.xoa_toc.LoiXoaToc: Chưa quan sát được nền sạch phía sau tóc. Camera cần cố định, nền đơn giản.
+2026-10-15 15:42:13.448198: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-15 15:42:17.090974: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792053741.745195   10784 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792053741.753776   32316 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792053741.770000   32316 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792053741.815222    9864 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+2026-10-15 15:53:21.092000: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-15 15:53:23.958456: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792054408.552376    9472 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792054408.562313   32512 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792054408.578580   25680 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792054408.621141   30184 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 645, in xoa
+    raise LoiXoaToc('Góc quay quá lớn để ước lượng vòm sọ ổn định.')
+thu_toc.xoa_toc.LoiXoaToc: Góc quay quá lớn để ước lượng vòm sọ ổn định.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+    hair, alpha, protected = make_mask(prob, pts)
+                             ~~~~~~~~~^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+    raise LoiXoaToc('Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.')
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 645, in xoa
+    raise LoiXoaToc('Góc quay quá lớn để ước lượng vòm sọ ổn định.')
+thu_toc.xoa_toc.LoiXoaToc: Góc quay quá lớn để ước lượng vòm sọ ổn định.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+    hair, alpha, protected = make_mask(prob, pts)
+                             ~~~~~~~~~^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+    raise LoiXoaToc('Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.')
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 645, in xoa
+    raise LoiXoaToc('Góc quay quá lớn để ước lượng vòm sọ ổn định.')
+thu_toc.xoa_toc.LoiXoaToc: Góc quay quá lớn để ước lượng vòm sọ ổn định.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 635, in xoa
+    raise LoiXoaToc('Cần đúng một người trong khung để xóa tóc.')
+thu_toc.xoa_toc.LoiXoaToc: Cần đúng một người trong khung để xóa tóc.
+Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+    from thu_toc.xoa_toc import xoa_toc, LoiXoaToc
+ImportError: cannot import name 'xoa_toc' from 'thu_toc.xoa_toc' (D:\HAULONGHAIR\thu_toc\xoa_toc.py)
+Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+    from thu_toc.xoa_toc import xoa_toc, LoiXoaToc
+ImportError: cannot import name 'xoa_toc' from 'thu_toc.xoa_toc' (D:\HAULONGHAIR\thu_toc\xoa_toc.py)
+2026-10-16 13:10:32.951243: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-16 13:10:37.689254: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792131042.984834   14588 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792131043.019694   25480 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792131043.042161   25480 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792131043.116259   32704 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+    hair, alpha, protected = make_mask(prob, pts)
+                             ~~~~~~~~~^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+    raise LoiXoaToc('Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.')
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 635, in xoa
+    raise LoiXoaToc('Cần đúng một người trong khung để xóa tóc.')
+thu_toc.xoa_toc.LoiXoaToc: Cần đúng một người trong khung để xóa tóc.
+2026-10-16 13:13:41.749608: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-10-16 13:13:44.830191: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+W0000 00:00:1792131229.435804   11016 face_landmarker_graph.cc:180] Sets FaceBlendshapesGraph acceleration to xnnpack by default.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1792131229.448215   16500 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792131229.468534   24856 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1792131229.526859   34336 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+    hair, alpha, protected = make_mask(prob, pts)
+                             ~~~~~~~~~^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+    raise LoiXoaToc('Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.')
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+    hair, alpha, protected = make_mask(prob, pts)
+                             ~~~~~~~~~^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+    raise LoiXoaToc('Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.')
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+    return engine.xoa(rgb, stream_id=stream_id)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+    hair, alpha, protected = make_mask(prob, pts)
+                             ~~~~~~~~~^^^^^^^^^^^
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+    raise LoiXoaToc('Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.')
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 635, in xoa
+thu_toc.xoa_toc.LoiXoaToc: Cần đúng một người trong khung để xóa tóc.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 645, in xoa
+thu_toc.xoa_toc.LoiXoaToc: Góc quay quá lớn để ước lượng vòm sọ ổn định.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
+Traceback (most recent call last):
+  File "<string>", line 24, in <module>
+    result = xoa_toc(rgb, stream_id=request_data.get('stream_id'))
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 694, in xoa_toc
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 659, in xoa
+  File "D:\HAULONGHAIR\thu_toc\xoa_toc.py", line 333, in make_mask
+thu_toc.xoa_toc.LoiXoaToc: Vùng tóc sát mép ảnh camera. Lùi nhẹ để thấy trọn đầu; nếu vẫn báo lỗi cần mở rộng vùng ảnh giao diện gửi lên.
